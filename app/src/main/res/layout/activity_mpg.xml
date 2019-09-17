@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <EditText
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:id="@+id/distance"
+                android:hint="@string/distance"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/distanceTitle"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:textAlignment="center"
+                android:inputType="numberDecimal"
+                android:fontFamily="@font/uknumberplate"
+                android:textSize="28sp"
+                android:textColor="@color/colorSecondary"
+                android:textColorHint="@color/colorSecondary"
+                android:importantForAutofill="no"/>
+
+        <TextView
+                android:id="@+id/distanceTitle"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:text="@string/miles"
+                android:gravity="center|start"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/distance"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"
+                android:textSize="24sp"/>
+
+        <EditText
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:id="@+id/mpg"
+                android:hint="@string/mpg"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/distance"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/mpgTitle"
+                android:layout_margin="16dp"
+                android:textAlignment="center"
+                android:inputType="numberDecimal"
+                android:fontFamily="@font/uknumberplate"
+                android:textSize="28sp"
+                android:textColor="@color/colorSecondary"
+                android:textColorHint="@color/colorSecondary"
+                android:importantForAutofill="no"/>
+
+        <TextView
+                android:id="@+id/mpgTitle"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:text="@string/mpg_text"
+                android:gravity="center|start"
+                app:layout_constraintTop_toBottomOf="@id/distanceTitle"
+                app:layout_constraintStart_toEndOf="@id/mpg"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:textSize="24sp"/>
+
+        <TextView
+                android:id="@+id/requiredFuel"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/mpg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/rounded_corners"
+                android:layout_margin="16dp"
+                android:textSize="24sp"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

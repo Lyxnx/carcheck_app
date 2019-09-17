@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".activity.MainActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+    <EditText
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:id="@+id/input"
+            android:hint="@string/enter_reg"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/buttonGo"
+            android:layout_marginHorizontal="50dp"
+            android:maxLength="7"
+            android:textAlignment="center"
+            android:inputType="textCapCharacters"
+            android:fontFamily="@font/uknumberplate"
+            android:textSize="50sp"
+            android:background="@drawable/rounded_corners"
+            android:textColor="@color/colorSecondary"
+            android:textColorHint="@color/colorSecondary"
+            android:importantForAutofill="no"
+            android:imeOptions="actionDone"/>
+
+    <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:id="@+id/buttonHistory"
+            android:background="@drawable/history"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintEnd_toStartOf="@id/buttonGo"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:id="@+id/buttonGo"
+            android:background="@drawable/tick"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:id="@+id/buttonCalcs"
+            android:background="@drawable/calculator"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/buttonHistory"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <include layout="@layout/progress_layout"/>
+
+</android.support.constraint.ConstraintLayout>
