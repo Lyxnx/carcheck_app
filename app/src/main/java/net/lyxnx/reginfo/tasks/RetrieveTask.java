@@ -1,6 +1,5 @@
 package net.lyxnx.reginfo.tasks;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.lang.ref.WeakReference;
 
@@ -17,10 +17,10 @@ public abstract class RetrieveTask<T> extends AsyncTask<Void, Void, T> {
     private static Vibrator vibrator;
     
     final String reg;
-    protected final WeakReference<Activity> activity;
+    protected final WeakReference<AppCompatActivity> activity;
     private final WeakReference<FrameLayout> progressContainer;
     
-    RetrieveTask(String reg, Activity activity, FrameLayout progressContainer) {
+    RetrieveTask(String reg, AppCompatActivity activity, FrameLayout progressContainer) {
         this.reg = reg;
         this.activity = new WeakReference<>(activity);
         this.progressContainer = new WeakReference<>(progressContainer);

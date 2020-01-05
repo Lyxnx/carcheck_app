@@ -11,7 +11,7 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/Main"
+            android:theme="@style/ThemeDark"
             tools:ignore="GoogleAppIndexingWarning">
 
         <activity
@@ -27,8 +27,9 @@
         <activity android:name=".activity.calculators.JourneyCostActivity"/>
         <activity android:name=".activity.calculators.FinanceActivity"/>
         <activity android:name=".activity.calculators.FuelCostActivity"/>
-        <activity android:name=".activity.MOTInfoActivity"/>
+        <activity android:name=".activity.calculators.SDTActivity" />
         <activity android:name=".activity.VehicleInfoActivity"/>
         <activity android:name=".activity.HistoryActivity"/>
+        <activity android:name=".activity.MoreInfoActivity" />
     </application>
 </manifest>

@@ -4,17 +4,23 @@
 
     <string name="make">Make</string>
     <string name="model">Model</string>
-    <string name="body">Body</string>
     <string name="colour">Colour</string>
     <string name="bhp">BHP</string>
     <string name="engine">Engine Size</string>
     <string name="year">Year</string>
 
+    <string name="tax_status">Tax</string>
+    <string name="tax_cost">Tax Cost</string>
+    <string name="tax_output">CO₂</string>
+
+    <string name="mot_status">MOT</string>
+
     <string name="empty_reg">Please enter a valid registration</string>
-    <string name="no_plate">Could not find information on plate\n(map empty)</string>
+    <string name="invalid_plate">Invalid registration</string>
     <string name="empty_history">There is nothing in history right now</string>
 
     <string name="tooltip_gallery">View images for this car (opens in browser)</string>
+    <string name="tooltip_more">Tax and MOT information</string>
     <string name="tooltip_go">Lookup registration</string>
     <string name="tooltip_clear">Clear lookup history</string>
     <string name="tooltip_calcs">Useful calculators</string>

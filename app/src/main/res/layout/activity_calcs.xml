@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -8,22 +8,21 @@
         android:focusableInTouchMode="true">
 
     <TextView
+            android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="75dp"
-            android:id="@+id/title"
+            android:layout_marginHorizontal="32dp"
+            android:background="@drawable/rounded_corners"
+            android:fontFamily="@font/uknumberplate"
             android:gravity="center"
             android:text="@string/calculators"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/grid"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:textAlignment="center"
-            android:fontFamily="@font/uknumberplate"
-            android:textSize="50sp"
-            android:background="@drawable/rounded_corners"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:textSize="46sp"
+            app:layout_constraintBottom_toTopOf="@id/grid"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <GridLayout
             android:id="@+id/grid"
@@ -36,27 +35,27 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
-                android:layout_width="150dp"
-                android:layout_height="150dp"
                 android:id="@+id/buttonJourneyCost"
-                android:background="@drawable/routes"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_gravity="center"
                 android:layout_margin="16dp"
-                android:layout_columnSpan="2"
-                android:layout_gravity="center"/>
+                android:background="@drawable/routes"
+                android:layout_columnSpan="2"/>
 
         <Button
-                android:layout_width="150dp"
-                android:layout_height="150dp"
                 android:id="@+id/buttonMpg"
-                android:background="@drawable/gas_station"
-                android:layout_margin="16dp"/>
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/gas_station" />
 
         <Button
-                android:layout_width="150dp"
-                android:layout_height="150dp"
                 android:id="@+id/buttonFinance"
-                android:background="@drawable/currency_usd"
-                android:layout_margin="16dp"/>
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/currency_usd" />
 
     </GridLayout>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

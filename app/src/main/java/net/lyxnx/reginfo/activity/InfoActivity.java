@@ -1,12 +1,12 @@
 package net.lyxnx.reginfo.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TableLayout;
 import net.lyxnx.reginfo.R;
 
-import static net.lyxnx.reginfo.reg.Utils.setText;
+import static net.lyxnx.reginfo.util.Utils.setText;
 
 public abstract class InfoActivity extends AppCompatActivity {
     

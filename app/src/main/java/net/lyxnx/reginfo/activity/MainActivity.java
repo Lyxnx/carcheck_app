@@ -3,13 +3,13 @@ package net.lyxnx.reginfo.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.TooltipCompat;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.TooltipCompat;
 import net.lyxnx.reginfo.R;
 import net.lyxnx.reginfo.activity.calculators.CalculatorsActivity;
 import net.lyxnx.reginfo.tasks.History;
@@ -21,10 +21,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+    
         History.getInstance().init(this);
         
-        Button calcs = findViewById(R.id.buttonCalcs);
         Button go = findViewById(R.id.buttonGo);
         EditText input = findViewById(R.id.input);
         
@@ -35,27 +34,28 @@ public class MainActivity extends AppCompatActivity {
             go.performClick();
             return true;
         });
-    
+        
         TooltipCompat.setTooltipText(go, getString(R.string.tooltip_go));
         go.setOnClickListener(v -> {
             String text = input.getText().toString();
-            
+
             if (text.isEmpty()) {
                 Toast.makeText(this, R.string.empty_reg, Toast.LENGTH_LONG).show();
                 return;
             }
-    
+
             // hide the keyboard or it looks bad
             ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
                     .hideSoftInputFromWindow(v.getWindowToken(), 0);
-            
+
             new InfoRetrieveTask(
                     text,
                     this,
                     findViewById(R.id.progressContainer)
             ).execute();
         });
-        
+    
+        Button calcs = findViewById(R.id.buttonCalcs);
         TooltipCompat.setTooltipText(calcs, getString(R.string.tooltip_calcs));
         calcs.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, CalculatorsActivity.class)));

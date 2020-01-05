@@ -4,22 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.TooltipCompat;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.TooltipCompat;
 import net.lyxnx.reginfo.R;
-import net.lyxnx.reginfo.reg.Attribute;
+import net.lyxnx.reginfo.reg.VehicleInfo;
 import net.lyxnx.reginfo.tasks.IntentlessInfoRetrieveTask;
-import net.lyxnx.reginfo.tasks.MOTRetrieveTask;
 
 import java.lang.ref.WeakReference;
-import java.util.Map;
 import java.util.stream.Stream;
 
-import static net.lyxnx.reginfo.reg.Utils.mkString;
-import static net.lyxnx.reginfo.reg.Utils.setText;
+import static net.lyxnx.reginfo.util.Utils.mkString;
+import static net.lyxnx.reginfo.util.Utils.setText;
 
 public class VehicleInfoActivity extends InfoActivity {
     
@@ -28,19 +26,17 @@ public class VehicleInfoActivity extends InfoActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
         
-        Map<Attribute, String> info = (Map<Attribute, String>) getIntent().getSerializableExtra("map");
-        
-        String make = info.get(Attribute.MAKE);
-        String model = info.get(Attribute.MODEL);
-        String body = info.get(Attribute.BODY);
-        String colour = info.get(Attribute.COLOUR);
-        String year = info.get(Attribute.YEAR);
-        
+        VehicleInfo info = (VehicleInfo) getIntent().getSerializableExtra("info");
+    
         TableLayout table = findViewById(R.id.infoTable);
-        populateTable(table, make, model, body, colour, info.get(Attribute.BHP),
-                info.get(Attribute.ENGINE_SIZE), year);
+        populateTable(table, info);
         
-        setText(findViewById(R.id.reg), info.get(Attribute.REG));
+        setText(findViewById(R.id.reg), info.getReg());
+    
+        String make = info.getMake();
+        String model = info.getModel();
+        String colour = info.getColour();
+        String year = info.getRegisteredDate();
         
         Button gallery = findViewById(R.id.gallery);
         TooltipCompat.setTooltipText(gallery, getString(R.string.tooltip_gallery));
@@ -54,7 +50,6 @@ public class VehicleInfoActivity extends InfoActivity {
             String url = "http://google.com#q="
                     + make + "+"
                     + mkString(model.split(" "), "+") + "+"
-                    + mkString(body.split(" "), "+") + "+"
                     + colour + "+"
                     + year
                     + "&tbm=isch";
@@ -63,15 +58,13 @@ public class VehicleInfoActivity extends InfoActivity {
             startActivity(i);
         });
         
-        Button mot = findViewById(R.id.mot);
-        TooltipCompat.setTooltipText(mot, getString(R.string.tooltip_mot));
-        mot.setOnClickListener(v ->
-                new MOTRetrieveTask(
-                        info.get(Attribute.REG),
-                        this,
-                        findViewById(R.id.progressContainer)
-                ).execute()
-        );
+        Button more = findViewById(R.id.more);
+        TooltipCompat.setTooltipText(more, getString(R.string.tooltip_more));
+        more.setOnClickListener(v -> {
+            Intent i = new Intent(VehicleInfoActivity.this, MoreInfoActivity.class);
+            i.putExtra("info", info);
+            startActivity(i);
+        });
         
         EditText reg = findViewById(R.id.reg);
         reg.setOnEditorActionListener((v, actionId, event) -> {
@@ -107,29 +100,20 @@ public class VehicleInfoActivity extends InfoActivity {
         }
         
         @Override
-        public void processResult(Map<Attribute, String> info) {
+        public void processResult(VehicleInfo info) {
             TableLayout table = activity.get().findViewById(R.id.infoTable);
             table.removeAllViews();
-    
-            String make = info.get(Attribute.MAKE);
-            String model = info.get(Attribute.MODEL);
-            String body = info.get(Attribute.BODY);
-            String colour = info.get(Attribute.COLOUR);
-            String year = info.get(Attribute.YEAR);
-    
-            ia.get().populateTable(table, make, model, body, colour, info.get(Attribute.BHP),
-                    info.get(Attribute.ENGINE_SIZE), year);
+            
+            ia.get().populateTable(table, info);
         }
     }
     
-    private void populateTable(TableLayout table, String make, String model, String body, String colour, String bhp,
-                               String engine, String year) {
-        addToTable(table, getString(R.string.make), make);
-        addToTable(table, getString(R.string.model), model);
-        addToTable(table, getString(R.string.body), body);
-        addToTable(table, getString(R.string.colour), colour);
-        addToTable(table, getString(R.string.bhp), bhp);
-        addToTable(table, getString(R.string.engine), engine);
-        addToTable(table, getString(R.string.year), year);
+    private void populateTable(TableLayout table, VehicleInfo info) {
+        addToTable(table, getString(R.string.make), info.getMake());
+        addToTable(table, getString(R.string.model), info.getModel());
+        addToTable(table, getString(R.string.colour), info.getColour());
+        addToTable(table, getString(R.string.bhp), info.getBHP());
+        addToTable(table, getString(R.string.engine), info.getEngineSize());
+        addToTable(table, getString(R.string.year), info.getRegisteredDate());
     }
 }

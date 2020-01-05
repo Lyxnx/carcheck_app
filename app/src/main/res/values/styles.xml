@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Main" parent="Theme.AppCompat.NoActionBar">
+    <style name="ThemeDark" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@color/colorBackground</item>
-        <item name="android:colorPrimaryDark">@color/colorBackground</item>
+        <item name="colorPrimaryDark">@color/colorBackground</item>
     </style>
 </resources>

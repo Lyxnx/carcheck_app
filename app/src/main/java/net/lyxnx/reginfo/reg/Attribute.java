@@ -1,29 +1,29 @@
 package net.lyxnx.reginfo.reg;
 
 import java.util.Arrays;
+import java.util.function.Function;
 
 public enum Attribute {
-    MAKE,
+    MANUFACTURER,
     MODEL,
-    BODY(true),
-    COLOUR(true),
-    BHP,
+    COLOUR,
     ENGINE_SIZE,
-    YEAR,
+    BHP(data -> data.substring(0, data.indexOf("B"))),
+    REGISTERED_DATE(data -> data.substring(data.length() - 4)),
     REG;
     
-    private final boolean capitalise;
-    
-    Attribute(boolean capitalise) {
-        this.capitalise = capitalise;
-    }
+    private final Function<String, String> mutator;
     
     Attribute() {
-        this(false);
+        this.mutator = s -> s;
     }
     
-    public boolean shouldCapitalise() {
-        return capitalise;
+    Attribute(Function<String, String> mutator) {
+        this.mutator = mutator;
+    }
+    
+    public String mutate(String data) {
+        return this.mutator.apply(data);
     }
     
     public static Attribute of(String string) {
