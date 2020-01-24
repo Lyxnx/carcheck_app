@@ -62,7 +62,12 @@ public class RegFetcher {
     private static TaxInfo getTaxInfo(Elements tables) {
         String status = getStatus(tables.get(7));
         
-        String cost = tables.get(11).selectFirst("td > span").text();
+        Element costEl = tables.get(11).selectFirst("td > span");
+        // is null if the tax info is unavailable
+        if (costEl == null)
+            return null;
+        
+        String cost = costEl.text();
         String co2Output = tables.get(12).selectFirst("td > span").text();
         
         return new TaxInfo(status, cost, co2Output);

@@ -29,9 +29,11 @@ public class MoreInfoActivity extends InfoActivity {
         
         ImageView img = findViewById(R.id.co2Image);
     
-        String co2Output = info.getTaxInfo().getCo2Output().toLowerCase(); // ... g/km (A)
-        
-        img.setImageResource(getResId("co2_" + co2Output.charAt(co2Output.length() - 2)));
+        if (info.getTaxInfo() != null) {
+            String co2Output = info.getTaxInfo().getCo2Output().toLowerCase(); // ... g/km (A)
+    
+            img.setImageResource(getResId("co2_" + co2Output.charAt(co2Output.length() - 2)));
+        }
     }
     
     private void populateTable(TableLayout table, VehicleInfo info) {
@@ -39,9 +41,15 @@ public class MoreInfoActivity extends InfoActivity {
         
         TaxInfo taxInfo = info.getTaxInfo();
         
-        addToTable(table, getString(R.string.tax_status), taxInfo.getStatus());
-        addToTable(table, getString(R.string.tax_cost), taxInfo.getCost());
-        addToTable(table, getString(R.string.tax_output), taxInfo.getCo2Output());
+        if (taxInfo == null) {
+            addToTable(table, getString(R.string.tax_status), "N/A");
+            addToTable(table, getString(R.string.tax_cost), "N/A");
+            addToTable(table, getString(R.string.tax_output), "N/A");
+        } else {
+            addToTable(table, getString(R.string.tax_status), taxInfo.getStatus());
+            addToTable(table, getString(R.string.tax_cost), taxInfo.getCost());
+            addToTable(table, getString(R.string.tax_output), taxInfo.getCo2Output());
+        }
     }
     
     /**

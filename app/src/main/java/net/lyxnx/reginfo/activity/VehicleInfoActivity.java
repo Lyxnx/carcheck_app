@@ -21,12 +21,14 @@ import static net.lyxnx.reginfo.util.Utils.setText;
 
 public class VehicleInfoActivity extends InfoActivity {
     
+    private VehicleInfo info;
+    
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
         
-        VehicleInfo info = (VehicleInfo) getIntent().getSerializableExtra("info");
+        info = (VehicleInfo) getIntent().getSerializableExtra("info");
     
         TableLayout table = findViewById(R.id.infoTable);
         populateTable(table, info);
@@ -104,6 +106,7 @@ public class VehicleInfoActivity extends InfoActivity {
             TableLayout table = activity.get().findViewById(R.id.infoTable);
             table.removeAllViews();
             
+            ia.get().info = info;
             ia.get().populateTable(table, info);
         }
     }

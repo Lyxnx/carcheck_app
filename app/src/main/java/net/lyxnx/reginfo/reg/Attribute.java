@@ -8,7 +8,8 @@ public enum Attribute {
     MODEL,
     COLOUR,
     ENGINE_SIZE,
-    BHP(data -> data.substring(0, data.indexOf("B"))),
+    // need the contains check since some BHPs show as "Not Available", causing an exception
+    BHP(data -> data.contains("B") ? data.substring(0, data.indexOf("B")) : data),
     REGISTERED_DATE(data -> data.substring(data.length() - 4)),
     REG;
     
