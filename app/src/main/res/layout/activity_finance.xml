@@ -142,7 +142,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout>
 
-            <net.lyxnx.reginfo.view.RowHeader
+            <net.lyxnx.carcheck.view.RowHeader
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -153,7 +153,7 @@
                     app:layout_constraintEnd_toStartOf="@id/line1"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <net.lyxnx.reginfo.view.RowLine
+            <net.lyxnx.carcheck.view.RowLine
                     android:layout_width="1dp"
                     android:layout_height="0dp"
                     android:id="@+id/line1"
@@ -164,7 +164,7 @@
                     app:layout_constraintEnd_toStartOf="@id/monthly"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <net.lyxnx.reginfo.view.RowValue
+            <net.lyxnx.carcheck.view.RowValue
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/monthly"
@@ -179,7 +179,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout>
 
-            <net.lyxnx.reginfo.view.RowHeader
+            <net.lyxnx.carcheck.view.RowHeader
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -190,7 +190,7 @@
                     app:layout_constraintEnd_toStartOf="@id/line2"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <net.lyxnx.reginfo.view.RowLine
+            <net.lyxnx.carcheck.view.RowLine
                     android:layout_width="1dp"
                     android:layout_height="0dp"
                     android:id="@+id/line2"
@@ -201,7 +201,7 @@
                     app:layout_constraintEnd_toStartOf="@id/total"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <net.lyxnx.reginfo.view.RowValue
+            <net.lyxnx.carcheck.view.RowValue
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/total"

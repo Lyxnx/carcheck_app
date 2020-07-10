@@ -5,9 +5,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.HistoryActivity">
+        tools:context=".HistoryActivity">
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/vrmHistory"
             android:layout_width="match_parent"
             android:layout_height="0dp"

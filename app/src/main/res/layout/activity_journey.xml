@@ -69,7 +69,7 @@
                 android:id="@+id/journeyConsumptionTitle"
                 android:layout_width="0dp"
                 android:layout_height="75dp"
-                android:text="@string/mpg_text"
+                android:text="@string/mpg"
                 android:gravity="center|start"
                 app:layout_constraintTop_toBottomOf="@id/journeyDistanceTitle"
                 app:layout_constraintStart_toEndOf="@id/journeyConsumption"
