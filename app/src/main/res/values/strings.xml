@@ -1,21 +1,23 @@
 <resources>
     <string name="app_name">Car Check</string>
-    <string name="enter_reg">ENTER REG</string>
+    <string name="enter_reg">Enter reg</string>
 
     <string name="make">Make</string>
     <string name="model">Model</string>
     <string name="colour">Colour</string>
     <string name="bhp">BHP</string>
-    <string name="engine">Engine Size</string>
+    <string name="engine_size">Engine Size</string>
     <string name="year">Year</string>
 
-    <string name="tax_status">Tax</string>
+    <string name="delete">Delete</string>
+
+    <string name="tax">Tax</string>
     <string name="tax_cost">Tax Cost</string>
     <string name="tax_output">CO₂</string>
 
-    <string name="mot_status">MOT</string>
+    <string name="mot">MOT</string>
 
-    <string name="empty_reg">Please enter a valid registration</string>
+    <string name="empty_reg">Please enter a registration</string>
     <string name="invalid_plate">Invalid registration</string>
     <string name="empty_history">There is nothing in history right now</string>
 
@@ -23,25 +25,24 @@
     <string name="tooltip_more">Tax and MOT information</string>
     <string name="tooltip_go">Lookup registration</string>
     <string name="tooltip_clear">Clear lookup history</string>
+    <string name="confirm_clear_history">Clear history?</string>
     <string name="tooltip_calcs">Useful calculators</string>
     <string name="tooltip_history">Lookup history</string>
-
     <string name="tooltip_mpg">Fuel consumption</string>
     <string name="tooltip_finance">Finance calculator</string>
     <string name="tooltip_journey">Journey cost calculator</string>
 
     <string name="tooltip_mot">MOT history</string>
 
-    <string name="insuff_info">There is not enough info for this VRM</string>
+    <string name="insufficient_vrm_info">There is not enough info for this VRM</string>
 
-    <string name="calculators">CALCULATORS</string>
+    <string name="calculators">Calculators</string>
 
-    <string name="distance">DISTANCE</string>
-    <string name="mpg">MPG</string>
-    <string name="fuel_cost">FUEL COST</string>
+    <string name="distance">Distance</string>
+    <string name="mpg">mpg</string>
+    <string name="fuel_cost">Fuel cost</string>
 
     <string name="miles">miles</string>
-    <string name="mpg_text">mpg</string>
     <string name="pence_litre">pence/Litre</string>
     <string name="cost_text">Cost: £%1$.2f</string>
     <string name="fuel_text">%1$.2f Litres</string>
@@ -58,11 +59,4 @@
     <string name="no_price">£0.00</string>
 
     <string name="error">An error occurred</string>
-
-    <string name="mot_valid">MOT valid until &lt;b&gt;%1$s&lt;/b&gt;</string>
-    <string name="no_mot_yet">This vehicle has not had an MOT yet</string>
-
-    <string name="expiry_text">Expiry:</string>
-    <string name="refusals_text">Refusals:</string>
-    <string name="advisories_text">Advisories:</string>
 </resources>
