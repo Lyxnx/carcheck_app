@@ -17,7 +17,7 @@ public class MoreInfoActivity extends InfoActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_moreinfo);
 
-        VehicleInfo info = (VehicleInfo) getIntent().getSerializableExtra("info");
+        VehicleInfo info = getIntent().getParcelableExtra("info");
 
         TableLayout table = findViewById(R.id.infoTable);
         populateTable(table, info);
