@@ -16,6 +16,7 @@ import net.lyxnx.carcheck.util.RxUtils;
 import net.lyxnx.carcheck.util.Util;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,10 +26,10 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
     private static final String TAG = HistoryRecyclerViewAdapter.class.getSimpleName();
 
     private final WeakReference<Activity> activityReference;
-    private final History data;
+    private final List<History.Item> data;
     private final LayoutInflater inflater;
 
-    public HistoryRecyclerViewAdapter(Activity activity, History data) {
+    public HistoryRecyclerViewAdapter(Activity activity, List<History.Item> data) {
         this.activityReference = new WeakReference<>(activity);
         this.data = data;
         this.inflater = LayoutInflater.from(activity);

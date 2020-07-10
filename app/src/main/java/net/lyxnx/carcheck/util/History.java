@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -67,11 +68,11 @@ public class History extends ArrayList<History.Item> {
 
     @Override
     public boolean add(Item item) {
-        boolean val = super.add(item);
+        super.add(0, item);
 
         saveItems();
 
-        return val;
+        return true;
     }
 
     @Override
@@ -88,6 +89,12 @@ public class History extends ArrayList<History.Item> {
         super.clear();
         
         saveItems();
+    }
+
+    public List<History.Item> getOrderedItems() {
+        List<History.Item> items = new ArrayList<>(this);
+        Collections.reverse(items);
+        return items;
     }
     
     private void saveItems() {

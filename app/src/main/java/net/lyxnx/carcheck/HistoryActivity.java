@@ -64,4 +64,11 @@ public class HistoryActivity extends AppCompatActivity {
 
         return true;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        adapter.notifyDataSetChanged();
+    }
 }
