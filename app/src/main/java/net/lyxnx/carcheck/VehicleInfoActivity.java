@@ -32,7 +32,7 @@ public class VehicleInfoActivity extends InfoActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        VehicleInfo info = (VehicleInfo) getIntent().getParcelableExtra("info");
+        VehicleInfo info = getIntent().getParcelableExtra("info");
 
         TableLayout table = findViewById(R.id.infoTable);
         populateTable(table, info);

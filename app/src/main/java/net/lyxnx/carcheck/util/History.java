@@ -13,7 +13,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -62,8 +61,8 @@ public class History extends ArrayList<History.Item> {
                 );
     }
     
-    public void insert(String reg) {
-        this.add(new History.Item(reg, LocalDateTime.now()));
+    public void insert(String reg, String vehicleType) {
+        this.add(new History.Item(reg, LocalDateTime.now(), vehicleType));
     }
 
     @Override
@@ -91,12 +90,6 @@ public class History extends ArrayList<History.Item> {
         saveItems();
     }
 
-    public List<History.Item> getOrderedItems() {
-        List<History.Item> items = new ArrayList<>(this);
-        Collections.reverse(items);
-        return items;
-    }
-    
     private void saveItems() {
         Flowable.defer(() -> {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(historyFile))) {
@@ -145,5 +138,6 @@ public class History extends ArrayList<History.Item> {
     public static class Item {
         private final String vrm;
         private final LocalDateTime date;
+        private final String vehicleType;
     }
 }

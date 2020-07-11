@@ -11,8 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.TooltipCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,15 +26,8 @@ public class HistoryActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.vrmHistory);
         adapter = new HistoryRecyclerViewAdapter(this, History.getHistory());
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-                layoutManager.getOrientation());
-        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(HistoryActivity.this, R.drawable.recycler_divider));
-        recyclerView.addItemDecoration(dividerItemDecoration);
 
         Button clear = findViewById(R.id.buttonClear);
         TooltipCompat.setTooltipText(clear, getString(R.string.tooltip_clear));

@@ -40,7 +40,7 @@ public class RxUtils {
                         return;
                     }
 
-                    History.getHistory().insert(result.getReg());
+                    History.getHistory().insert(result.getReg(), result.getVehicleType());
                 });
     }
 }

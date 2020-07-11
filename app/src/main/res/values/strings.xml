@@ -59,4 +59,5 @@
     <string name="no_price">£0.00</string>
 
     <string name="error">An error occurred</string>
+    <string name="vehicle_type">Vehicle type</string>
 </resources>

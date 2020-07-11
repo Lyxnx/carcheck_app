@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="ThemeDark" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@color/colorBackground</item>
-        <item name="colorPrimaryDark">@color/colorBackground</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+    </style>
+
+    <style name="RegularFont">
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+    </style>
+
+    <style name="PrimaryContent" parent="@style/RegularFont">
+        <item name="android:textSize">16sp</item>
     </style>
 </resources>
