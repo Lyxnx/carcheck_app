@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/historyRoot"
     android:layout_width="match_parent"
@@ -19,7 +18,7 @@
         android:paddingTop="20dp"
         android:paddingEnd="10dp"
         android:paddingBottom="20dp"
-        tools:src="@drawable/yes" />
+        tools:src="@drawable/vehicletype_car" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +32,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="4dp"
-            android:textSize="16sp"
             android:textStyle="bold"
             tools:text="AB01 ABC"
             style="@style/PrimaryContent" />

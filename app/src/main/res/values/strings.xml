@@ -25,7 +25,8 @@
     <string name="tooltip_more">Tax and MOT information</string>
     <string name="tooltip_go">Lookup registration</string>
     <string name="tooltip_clear">Clear lookup history</string>
-    <string name="confirm_clear_history">Clear history?</string>
+    <string name="confirm_clear_history_title">Clear history?</string>
+    <string name="confirm_clear_history_text">Do you want to clear lookup history?</string>
     <string name="tooltip_calcs">Useful calculators</string>
     <string name="tooltip_history">Lookup history</string>
     <string name="tooltip_mpg">Fuel consumption</string>

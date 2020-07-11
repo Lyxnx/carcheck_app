@@ -23,11 +23,8 @@
             android:maxLength="7"
             android:textAlignment="center"
             android:inputType="textCapCharacters"
-            android:fontFamily="@font/uknumberplate"
-            android:textSize="50sp"
-            android:background="@drawable/rounded_corners"
-            android:textColor="@color/colorSecondary"
-            android:textColorHint="@color/colorSecondary"
+            style="@style/PlateHeader"
+
             android:importantForAutofill="no"
             android:imeOptions="actionDone"/>
 
