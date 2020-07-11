@@ -7,6 +7,8 @@ public enum Attribute {
     MANUFACTURER,
     MODEL,
     COLOUR,
+    VEHICLE_TYPE,
+    FUEL_TYPE,
     ENGINE_SIZE,
     EURO_STATUS,
     // need the contains check since some BHPs show as "Not Available", causing an exception

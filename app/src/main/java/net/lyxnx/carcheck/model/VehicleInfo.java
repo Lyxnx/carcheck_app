@@ -2,11 +2,12 @@ package net.lyxnx.carcheck.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Data
 @AllArgsConstructor
@@ -25,6 +26,14 @@ public class VehicleInfo implements Parcelable {
     
     public String getColour() {
         return attributes.get(Attribute.COLOUR);
+    }
+
+    public String getVehicleType() {
+        return attributes.get(Attribute.VEHICLE_TYPE);
+    }
+
+    public String getFuelType() {
+        return attributes.get(Attribute.FUEL_TYPE);
     }
     
     public String getBHP() {

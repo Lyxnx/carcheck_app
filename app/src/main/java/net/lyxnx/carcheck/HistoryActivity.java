@@ -1,18 +1,18 @@
 package net.lyxnx.carcheck;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 
 import net.lyxnx.carcheck.adapter.HistoryRecyclerViewAdapter;
 import net.lyxnx.carcheck.util.History;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.TooltipCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,33 +25,48 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("History");
+        }
+
         RecyclerView recyclerView = findViewById(R.id.vrmHistory);
         adapter = new HistoryRecyclerViewAdapter(this, History.getHistory());
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+    }
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-                layoutManager.getOrientation());
-        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(HistoryActivity.this, R.drawable.recycler_divider));
-        recyclerView.addItemDecoration(dividerItemDecoration);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_history, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
-        Button clear = findViewById(R.id.buttonClear);
-        TooltipCompat.setTooltipText(clear, getString(R.string.tooltip_clear));
-        clear.setOnClickListener(v ->
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_delete:
                 new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.confirm_clear_history))
-                        .setMessage(getString(R.string.confirm_clear_history))
-                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle(getString(R.string.confirm_clear_history_title))
+                        .setMessage(getString(R.string.confirm_clear_history_text))
                         .setPositiveButton(android.R.string.ok, (dialog, which) -> {
                             History.getHistory().clear();
                             finish();
                         })
                         .setNegativeButton(android.R.string.cancel, null)
-                        .show()
-        );
+                        .show();
+                return true;
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

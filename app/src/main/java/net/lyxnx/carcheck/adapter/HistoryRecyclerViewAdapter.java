@@ -6,6 +6,7 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.lyxnx.carcheck.R;
@@ -47,13 +48,17 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
     @NonNull
     @Override
     public HistoryRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(inflater.inflate(R.layout.history_layout, parent, false));
+        return new ViewHolder(inflater.inflate(R.layout.layout_history_row, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         History.Item item = getItem(position);
 
+        holder.vehicleType.setImageResource(Util.getDrawableId(
+                "vehicletype_" + item.getVehicleType().toLowerCase(),
+                R.drawable.vehicletype_car
+        ));
         holder.vrm.setText(item.getVrm());
         holder.date.setText(Util.formatDate(item.getDate()));
 
@@ -84,6 +89,7 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
+        private ImageView vehicleType;
         private TextView vrm;
         private TextView date;
 
@@ -92,9 +98,9 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
 
             itemView.findViewById(R.id.historyRoot).setOnCreateContextMenuListener(this);
 
+            this.vehicleType = itemView.findViewById(R.id.historyVehicleType);
             this.vrm = itemView.findViewById(R.id.historyVrm);
             this.date = itemView.findViewById(R.id.historyDate);
-
         }
 
         @Override
