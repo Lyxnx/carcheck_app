@@ -5,9 +5,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.Toast;
@@ -18,8 +19,10 @@ import net.lyxnx.carcheck.util.RxUtils;
 
 import java.util.stream.Stream;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.TooltipCompat;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 
 import static net.lyxnx.carcheck.util.Util.setText;
 
@@ -27,49 +30,28 @@ public class VehicleInfoActivity extends InfoActivity {
 
     private static final String TAG = VehicleInfoActivity.class.getSimpleName();
 
+    private VehicleInfo info;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        VehicleInfo info = getIntent().getParcelableExtra("info");
+        info = getIntent().getParcelableExtra("info");
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Results");
+        }
 
         TableLayout table = findViewById(R.id.infoTable);
         populateTable(table, info);
 
         setText(findViewById(R.id.reg), info.getReg());
-
-        String make = info.getMake();
-        String model = info.getModel();
-        String colour = info.getColour();
-        String year = info.getRegisteredDate();
-
-        Button gallery = findViewById(R.id.gallery);
-        TooltipCompat.setTooltipText(gallery, getString(R.string.tooltip_gallery));
-        gallery.setOnClickListener(v -> {
-            if (Stream.of(make, model, year)
-                    .anyMatch(s -> s == null || s.isEmpty() || s.equals("N/A"))) {
-                Toast.makeText(this, R.string.insufficient_vrm_info, Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            String url = "http://google.com#q="
-                    + make + "+"
-                    + TextUtils.join("+", model.split(" ")) + "+"
-                    + colour + "+"
-                    + year
-                    + "&tbm=isch";
-
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-        });
-
-        Button more = findViewById(R.id.more);
-        TooltipCompat.setTooltipText(more, getString(R.string.tooltip_more));
-        more.setOnClickListener(v -> {
-            Intent i = new Intent(VehicleInfoActivity.this, MoreInfoActivity.class);
-            i.putExtra("info", info);
-            startActivity(i);
-        });
 
         EditText reg = findViewById(R.id.reg);
         reg.setOnEditorActionListener((v, actionId, event) -> {
@@ -102,10 +84,57 @@ public class VehicleInfoActivity extends InfoActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (info != null) {
+            getMenuInflater().inflate(R.menu.menu_info, menu);
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_more:
+                Intent i = new Intent(VehicleInfoActivity.this, MoreInfoActivity.class);
+                i.putExtra("info", info);
+                startActivity(i);
+                return true;
+            case R.id.action_gallery:
+                String make = info.getMake();
+                String model = info.getModel();
+                String colour = info.getColour();
+                String year = info.getRegisteredDate();
+
+                if (Stream.of(make, model, year)
+                        .anyMatch(s -> s == null || s.isEmpty() || s.equals("N/A"))) {
+                    Toast.makeText(this, R.string.insufficient_vrm_info, Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+
+                String url = "http://google.com#q="
+                        + make + "+"
+                        + TextUtils.join("+", model.split(" ")) + "+"
+                        + colour + "+"
+                        + year
+                        + "&tbm=isch";
+
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                return true;
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void populateTable(TableLayout table, VehicleInfo info) {
         addToTable(table, getString(R.string.make), info.getMake());
         addToTable(table, getString(R.string.model), info.getModel());
         addToTable(table, getString(R.string.colour), info.getColour());
+        addToTable(table, getString(R.string.type), info.getVehicleType());
         addToTable(table, getString(R.string.bhp), info.getBHP());
         addToTable(table, getString(R.string.engine_size), info.getEngineSize());
         addToTable(table, getString(R.string.year), info.getRegisteredDate());

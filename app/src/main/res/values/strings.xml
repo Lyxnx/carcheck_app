@@ -5,6 +5,7 @@
     <string name="make">Make</string>
     <string name="model">Model</string>
     <string name="colour">Colour</string>
+    <string name="type">Type</string>
     <string name="bhp">BHP</string>
     <string name="engine_size">Engine Size</string>
     <string name="year">Year</string>

@@ -22,6 +22,7 @@
         <item name="android:background">@drawable/rounded_corners</item>
         <item name="android:textColor">@color/colorSecondary</item>
         <item name="android:textColorHint">@color/colorSecondary</item>
+        <item name="android:layout_marginHorizontal">50dp</item>
     </style>
 
     <style name="ToolbarTheme">
