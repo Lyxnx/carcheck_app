@@ -19,12 +19,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/buttonGo"
-            android:layout_marginHorizontal="50dp"
             android:maxLength="7"
             android:textAlignment="center"
             android:inputType="textCapCharacters"
             style="@style/PlateHeader"
-
             android:importantForAutofill="no"
             android:imeOptions="actionDone"/>
 

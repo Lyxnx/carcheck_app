@@ -22,6 +22,7 @@
         <item name="android:background">@drawable/rounded_corners</item>
         <item name="android:textColor">@color/colorSecondary</item>
         <item name="android:textColorHint">@color/colorSecondary</item>
+        <item name="android:layout_marginHorizontal">50dp</item>
     </style>
 
     <style name="ToolbarTheme">
@@ -41,5 +42,16 @@
         <item name="android:textSize">16sp</item>
         <item name="contentInsetStartWithNavigation">0dp</item>
         <item name="android:elevation">4dp</item>
+    </style>
+
+    <style name="DialogStyle" parent="Theme.Design.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_background</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
     </style>
 </resources>
