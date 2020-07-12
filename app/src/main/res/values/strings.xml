@@ -12,11 +12,15 @@
 
     <string name="delete">Delete</string>
 
-    <string name="tax">Tax</string>
+    <string name="tax_status">Tax</string>
     <string name="tax_cost">Tax Cost</string>
     <string name="tax_output">CO₂</string>
 
-    <string name="mot">MOT</string>
+    <string name="mot_status">MOT</string>
+
+    <string name="euro_status">Euro Status</string>
+    <string name="v5c_issued">V5C Issued</string>
+    <string name="registered_near">Registered</string>
 
     <string name="empty_reg">Please enter a registration</string>
     <string name="invalid_plate">Invalid registration</string>

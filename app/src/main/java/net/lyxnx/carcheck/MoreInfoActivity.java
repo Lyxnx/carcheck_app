@@ -1,7 +1,7 @@
 package net.lyxnx.carcheck;
 
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.Toast;
@@ -9,6 +9,10 @@ import android.widget.Toast;
 import net.lyxnx.carcheck.model.TaxInfo;
 import net.lyxnx.carcheck.model.VehicleInfo;
 import net.lyxnx.carcheck.util.Util;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 
 public class MoreInfoActivity extends InfoActivity {
 
@@ -19,12 +23,17 @@ public class MoreInfoActivity extends InfoActivity {
 
         VehicleInfo info = getIntent().getParcelableExtra("info");
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Extras");
+        }
+
         TableLayout table = findViewById(R.id.infoTable);
         populateTable(table, info);
-
-        Button backBtn = findViewById(R.id.backButton);
-        backBtn.setText(info.getReg());
-        backBtn.setOnClickListener(v -> finish());
 
         ImageView img = findViewById(R.id.co2Image);
 
@@ -42,14 +51,27 @@ public class MoreInfoActivity extends InfoActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void populateTable(TableLayout table, VehicleInfo info) {
-        addToTable(table, getString(R.string.mot), info.getMotInfo().getStatus());
+        addToTable(table, getString(R.string.mot_status), info.getMotInfo().getStatus());
 
         TaxInfo taxInfo = info.getTaxInfo();
         boolean isNull = taxInfo == null;
 
-        addToTable(table, getString(R.string.tax), isNull ? "N/A" : taxInfo.getStatus());
+        addToTable(table, getString(R.string.tax_status), isNull ? "N/A" : taxInfo.getStatus());
         addToTable(table, getString(R.string.tax_cost), isNull ? "N/A" : taxInfo.getCost());
         addToTable(table, getString(R.string.tax_output), isNull ? "N/A" : taxInfo.getCo2Output());
+        addToTable(table, getString(R.string.euro_status), info.getEuroStatus());
+        addToTable(table, getString(R.string.v5c_issued), info.getV5CIssueDate());
+        addToTable(table, getString(R.string.registered_near), info.getRegistryLocation());
     }
 }

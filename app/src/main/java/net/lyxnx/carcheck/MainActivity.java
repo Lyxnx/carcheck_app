@@ -9,16 +9,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import net.lyxnx.carcheck.dialog.HistoryBottomSheetDialog;
 import net.lyxnx.carcheck.util.History;
 import net.lyxnx.carcheck.util.RegFetcher;
 import net.lyxnx.carcheck.util.RxUtils;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.TooltipCompat;
+import androidx.fragment.app.FragmentActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    private HistoryBottomSheetDialog historyDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,16 +71,34 @@ public class MainActivity extends AppCompatActivity {
         calcs.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, CalculatorsActivity.class)));
 
+        historyDialog = new HistoryBottomSheetDialog();
+        historyDialog.setData(History.getHistory());
+
         Button history = findViewById(R.id.buttonHistory);
         TooltipCompat.setTooltipText(history, getString(R.string.tooltip_history));
-        history.setOnClickListener(v -> {
+        history.setOnClickListener(view -> {
             if (History.getHistory().isEmpty()) {
-                Toast.makeText(this, R.string.empty_history, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.empty_history), Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            startActivity(new Intent(MainActivity.this, HistoryActivity.class));
+            if (!historyDialog.isAdded()) {
+                historyDialog.show(getSupportFragmentManager(), HistoryBottomSheetDialog.class.getSimpleName());
+            }
         });
+
+        historyDialog.getSelectedListener()
+                .subscribe(item -> RegFetcher.fetchVehicle(item.getVrm())
+                        .compose(RxUtils.applySchedulers(this))
+                        .subscribe(
+                                result -> {
+                                    Intent i = new Intent(this, VehicleInfoActivity.class);
+                                    i.putExtra("info", result);
+                                    startActivity(i);
+                                },
+                                RxUtils.ERROR_CONSUMER.apply(TAG)
+                        )
+                );
     }
 
     @Override
