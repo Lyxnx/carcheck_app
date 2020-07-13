@@ -21,7 +21,10 @@ public class RxUtils {
 
     public static final Function<String, Consumer<Throwable>> ERROR_CONSUMER = s -> throwable -> {
         if (BuildConfig.DEBUG) {
-            Log.e(s, throwable.toString());
+            Log.e(s, "An error occurred");
+            for (StackTraceElement el : throwable.getStackTrace()) {
+                Log.e(s, el.toString());
+            }
         }
     };
 
@@ -34,6 +37,9 @@ public class RxUtils {
                 .unsubscribeOn(Schedulers.io())
                 .doOnSubscribe(Animations.showProgressSubscriber(activity))
                 .doOnTerminate(Animations.hideProgressSubscriber(activity))
+                .switchIfEmpty(val ->
+                        Toast.makeText(activity, activity.getString(R.string.no_data), Toast.LENGTH_LONG).show()
+                )
                 .doOnNext(result -> {
                     if (result == null) {
                         Toast.makeText(activity, activity.getString(R.string.invalid_plate), Toast.LENGTH_LONG).show();

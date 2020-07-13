@@ -127,6 +127,10 @@ public class History extends ArrayList<History.Item> {
                         new TypeToken<List<History.Item>>() {}.getType()
                 );
                 
+                if (items == null) {
+                    items = new ArrayList<>();
+                }
+                
                 return Flowable.just(new History(items));
             } catch (IOException e) {
                 return Flowable.error(e);
