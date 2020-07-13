@@ -2,14 +2,23 @@ package net.lyxnx.carcheck.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
-@Data
-@AllArgsConstructor
 public class MOTInfo implements Parcelable {
     private final String status;
     private final String daysLeft;
+    
+    public MOTInfo(String status, String daysLeft) {
+        this.status = status;
+        this.daysLeft = daysLeft;
+    }
+    
+    public String getStatus() {
+        return status;
+    }
+    
+    public String getDaysLeft() {
+        return daysLeft;
+    }
     
     public MOTInfo(Parcel parcel) {
         this.status = parcel.readString();

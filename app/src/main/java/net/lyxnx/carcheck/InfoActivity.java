@@ -1,9 +1,10 @@
 package net.lyxnx.carcheck;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TableLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import static net.lyxnx.carcheck.util.Util.setText;
 

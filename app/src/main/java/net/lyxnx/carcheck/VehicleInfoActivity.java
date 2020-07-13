@@ -13,16 +13,15 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+
 import net.lyxnx.carcheck.model.VehicleInfo;
 import net.lyxnx.carcheck.util.RegFetcher;
 import net.lyxnx.carcheck.util.RxUtils;
 
 import java.util.stream.Stream;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 
 import static net.lyxnx.carcheck.util.Util.setText;
 
@@ -33,7 +32,7 @@ public class VehicleInfoActivity extends InfoActivity {
     private VehicleInfo info;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 

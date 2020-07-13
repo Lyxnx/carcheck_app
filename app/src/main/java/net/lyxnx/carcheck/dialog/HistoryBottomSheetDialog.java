@@ -8,6 +8,13 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -19,12 +26,6 @@ import net.lyxnx.carcheck.util.History;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
@@ -37,6 +38,7 @@ public class HistoryBottomSheetDialog extends BottomSheetDialogFragment {
     private PublishSubject<History.Item> selectedListener = PublishSubject.create();
 
     public HistoryBottomSheetDialog() {
+        adapter = new HistoryBottomSheetAdapter();
     }
 
     public void setData(List<History.Item> data) {
@@ -58,7 +60,7 @@ public class HistoryBottomSheetDialog extends BottomSheetDialogFragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.history_sheet, container, false);
-
+    
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         getDialog().setOnShowListener(dialog -> {
             View bottomSheet = ((BottomSheetDialog) dialog).findViewById(com.google.android.material.R.id.design_bottom_sheet);
@@ -81,18 +83,19 @@ public class HistoryBottomSheetDialog extends BottomSheetDialogFragment {
 
         return view;
     }
-
+    
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+    
         RecyclerView historyRecyclerView = getView().findViewById(R.id.historyRecyclerView);
+    
+        adapter.setData(data);
         clearButton = getView().findViewById(R.id.clearButton);
-
-        adapter = new HistoryBottomSheetAdapter(data);
+    
         historyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         historyRecyclerView.setAdapter(adapter);
-
+    
         adapter.getClickListener()
                 .delay(200, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .subscribe(item -> {
@@ -103,7 +106,7 @@ public class HistoryBottomSheetDialog extends BottomSheetDialogFragment {
                     }
                 });
     }
-
+    
     public PublishSubject<History.Item> getSelectedListener() {
         return selectedListener;
     }

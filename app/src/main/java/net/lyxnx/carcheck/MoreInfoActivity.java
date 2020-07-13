@@ -6,18 +6,18 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
-import net.lyxnx.carcheck.model.TaxInfo;
-import net.lyxnx.carcheck.model.VehicleInfo;
-import net.lyxnx.carcheck.util.Util;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
-public class MoreInfoActivity extends InfoActivity {
+import net.lyxnx.carcheck.model.TaxInfo;
+import net.lyxnx.carcheck.model.VehicleInfo;
+import net.lyxnx.carcheck.util.Util;
 
+public class MoreInfoActivity extends InfoActivity {
+    
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_moreinfo);
 

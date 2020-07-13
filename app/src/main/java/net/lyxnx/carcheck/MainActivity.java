@@ -9,18 +9,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.TooltipCompat;
+import androidx.fragment.app.FragmentActivity;
+
 import net.lyxnx.carcheck.dialog.HistoryBottomSheetDialog;
 import net.lyxnx.carcheck.util.History;
 import net.lyxnx.carcheck.util.RegFetcher;
 import net.lyxnx.carcheck.util.RxUtils;
 
-import androidx.appcompat.widget.TooltipCompat;
-import androidx.fragment.app.FragmentActivity;
-
 public class MainActivity extends FragmentActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    private History history;
     private HistoryBottomSheetDialog historyDialog;
 
     @Override
@@ -28,8 +29,9 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        History.getHistory().initialise(this);
-
+        history = History.getHistory();
+        history.initialise(this);
+    
         Button go = findViewById(R.id.buttonGo);
         EditText input = findViewById(R.id.input);
 
@@ -72,12 +74,12 @@ public class MainActivity extends FragmentActivity {
                 startActivity(new Intent(MainActivity.this, CalculatorsActivity.class)));
 
         historyDialog = new HistoryBottomSheetDialog();
-        historyDialog.setData(History.getHistory());
+        historyDialog.setData(history.getItems());
 
-        Button history = findViewById(R.id.buttonHistory);
-        TooltipCompat.setTooltipText(history, getString(R.string.tooltip_history));
-        history.setOnClickListener(view -> {
-            if (History.getHistory().isEmpty()) {
+        Button historyButton = findViewById(R.id.buttonHistory);
+        TooltipCompat.setTooltipText(historyButton, getString(R.string.tooltip_history));
+        historyButton.setOnClickListener(view -> {
+            if (history.isEmpty()) {
                 Toast.makeText(this, getString(R.string.empty_history), Toast.LENGTH_SHORT).show();
                 return;
             }

@@ -3,6 +3,14 @@ package net.lyxnx.carcheck.util;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
@@ -11,16 +19,17 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import lombok.Data;
 
-public class History extends ArrayList<History.Item> {
+public class History {
     
     private static final String TAG = History.class.getSimpleName();
     
@@ -38,15 +47,16 @@ public class History extends ArrayList<History.Item> {
         return instance;
     }
     
-    private History() {
-        super();
-    }
-    
-    private History(List<History.Item> items) {
-        super(items);
-    }
-    
+    private Gson gson;
+    private List<History.Item> items;
     private File historyFile;
+    
+    public History() {
+        this.items = new ArrayList<>();
+        this.gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+                .create();
+    }
     
     public void initialise(Context context) {
         this.historyFile = new File(context.getDataDir(), "history");
@@ -56,44 +66,39 @@ public class History extends ArrayList<History.Item> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(
-                        this::addAll,
+                        items::addAll,
                         RxUtils.ERROR_CONSUMER.apply(TAG)
                 );
     }
     
     public void insert(String reg, String vehicleType) {
-        this.add(new History.Item(reg, LocalDateTime.now(), vehicleType));
-    }
-
-    @Override
-    public boolean add(Item item) {
-        super.add(0, item);
-
+        items.add(new History.Item(reg, LocalDateTime.now(), vehicleType));
         saveItems();
-
-        return true;
     }
 
-    @Override
-    public Item remove(int index) {
-        Item val = super.remove(index);
-
+    public void remove(int index) {
+        items.remove(index);
         saveItems();
-
-        return val;
+    }
+    
+    public boolean isEmpty() {
+        return items.isEmpty();
     }
 
-    @Override
     public void clear() {
-        super.clear();
+        items.clear();
         
         saveItems();
     }
-
+    
+    public List<Item> getItems() {
+        return items;
+    }
+    
     private void saveItems() {
         Flowable.defer(() -> {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(historyFile))) {
-                new Gson().toJson(this, writer);
+                gson.toJson(items, writer);
                 return Flowable.empty();
             } catch (IOException ex) {
                 return Flowable.error(ex);
@@ -108,18 +113,16 @@ public class History extends ArrayList<History.Item> {
                 );
     }
     
-    private Flowable<History> readItems() {
+    private Flowable<List<History.Item>> readItems() {
         return Flowable.defer(() -> {
             if (!historyFile.exists()) {
                 try {
                     historyFile.createNewFile();
-                    return Flowable.just(new History());
+                    return Flowable.just(new ArrayList<>());
                 } catch (IOException e) {
                     return Flowable.error(e);
                 }
             }
-            
-            Gson gson = new Gson();
             
             try (BufferedReader reader = new BufferedReader(new FileReader(historyFile))) {
                 List<History.Item> items = gson.fromJson(
@@ -131,17 +134,57 @@ public class History extends ArrayList<History.Item> {
                     items = new ArrayList<>();
                 }
                 
-                return Flowable.just(new History(items));
+                return Flowable.just(items);
             } catch (IOException e) {
                 return Flowable.error(e);
             }
         });
     }
-
-    @Data
+    
+    public static class LocalDateTimeAdapter implements JsonDeserializer<LocalDateTime>,
+            JsonSerializer<LocalDateTime> {
+        
+        @Override
+        public LocalDateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ofPattern(Util.DATE_PATTERN));
+        }
+    
+        @Override
+        public JsonElement serialize(LocalDateTime src, Type typeOfSrc, JsonSerializationContext context) {
+            return new JsonPrimitive(Util.formatDate(src));
+        }
+    }
+    
     public static class Item {
         private final String vrm;
         private final LocalDateTime date;
         private final String vehicleType;
+        
+        public Item(String vrm, LocalDateTime date, String vehicleType) {
+            this.vrm = vrm;
+            this.date = date;
+            this.vehicleType = vehicleType;
+        }
+    
+        public String getVrm() {
+            return vrm;
+        }
+    
+        public LocalDateTime getDate() {
+            return date;
+        }
+    
+        public String getVehicleType() {
+            return vehicleType;
+        }
+    
+        @Override
+        public String toString() {
+            return "Item{" +
+                    "vrm='" + vrm + '\'' +
+                    ", date=" + date +
+                    ", vehicleType='" + vehicleType + '\'' +
+                    '}';
+        }
     }
 }

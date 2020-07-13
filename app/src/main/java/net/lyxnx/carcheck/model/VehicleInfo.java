@@ -6,15 +6,16 @@ import android.os.Parcelable;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-@Data
-@AllArgsConstructor
 public class VehicleInfo implements Parcelable {
     private final Map<Attribute, String> attributes;
     private final MOTInfo motInfo;
     private final TaxInfo taxInfo;
+    
+    public VehicleInfo(Map<Attribute, String> attributes, MOTInfo motInfo, TaxInfo taxInfo) {
+        this.attributes = attributes;
+        this.motInfo = motInfo;
+        this.taxInfo = taxInfo;
+    }
     
     public String getMake() {
         return attributes.get(Attribute.MANUFACTURER);
@@ -62,6 +63,14 @@ public class VehicleInfo implements Parcelable {
     
     public String getReg() {
         return attributes.get(Attribute.REG);
+    }
+    
+    public MOTInfo getMotInfo() {
+        return motInfo;
+    }
+    
+    public TaxInfo getTaxInfo() {
+        return taxInfo;
     }
     
     @Override

@@ -2,17 +2,36 @@ package net.lyxnx.carcheck.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
-@Data
-@AllArgsConstructor
 public class TaxInfo implements Parcelable {
     private final String status;
     private final String daysLeft;
     
     private final String cost;
     private final String co2Output;
+    
+    public TaxInfo(String status, String daysLeft, String cost, String co2Output) {
+        this.status = status;
+        this.daysLeft = daysLeft;
+        this.cost = cost;
+        this.co2Output = co2Output;
+    }
+    
+    public String getStatus() {
+        return status;
+    }
+    
+    public String getDaysLeft() {
+        return daysLeft;
+    }
+    
+    public String getCost() {
+        return cost;
+    }
+    
+    public String getCo2Output() {
+        return co2Output;
+    }
     
     public TaxInfo(Parcel parcel) {
         this.status = parcel.readString();
