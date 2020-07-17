@@ -1,7 +1,6 @@
 package net.lyxnx.carcheck.util;
 
 import net.lyxnx.carcheck.model.Attribute;
-import net.lyxnx.carcheck.model.MOTInfo;
 import net.lyxnx.carcheck.model.TaxInfo;
 import net.lyxnx.carcheck.model.VehicleInfo;
 
@@ -72,17 +71,14 @@ public class RegFetcher {
             attributes.put(attribute, attribute.mutate(data));
         }
 
-        return new VehicleInfo(attributes, getMotInfo(tables), getTaxInfo(tables));
+        return new VehicleInfo(attributes, getMotStatus(tables), getTaxInfo(tables));
     }
 
-    private static MOTInfo getMotInfo(Elements tables) {
+    private static String getMotStatus(Elements tables) {
         Elements data = tables.get(VEHICLE_MOT_SUMMARY_TABLE)
                 .select(TR_NOT_COLSPAN);
 
-        String status = getTableRowEntry(data.get(0));
-        String daysLeft = getTableRowEntry(data.get(1));
-
-        return new MOTInfo(status, daysLeft);
+        return getTableRowEntry(data.get(0));
     }
 
     private static String getTableRowEntry(Element row) {
@@ -94,7 +90,6 @@ public class RegFetcher {
                 .select(TR_NOT_COLSPAN);
 
         String status = getTableRowEntry(summaryData.get(0));
-        String daysLeft = getTableRowEntry(summaryData.get(1));
 
         Elements taxInfoTable = tables.get(VEHICLE_TAX_DETAIL_TABLE)
                 .select(TR_NOT_COLSPAN);
@@ -108,6 +103,6 @@ public class RegFetcher {
         String cost = costElement.text();
         String co2Output = tables.get(VEHICLE_EMISSION_TABLE).selectFirst("td span").text();
 
-        return new TaxInfo(status, daysLeft, cost, co2Output);
+        return new TaxInfo(status, cost, co2Output);
     }
 }

@@ -62,7 +62,7 @@ public class MoreInfoActivity extends InfoActivity {
     }
 
     private void populateTable(TableLayout table, VehicleInfo info) {
-        addToTable(table, getString(R.string.mot_status), info.getMotInfo().getStatus());
+        addToTable(table, getString(R.string.mot_status), info.getMotStatus());
 
         TaxInfo taxInfo = info.getTaxInfo();
         boolean isNull = taxInfo == null;

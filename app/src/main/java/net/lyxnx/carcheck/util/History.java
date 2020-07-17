@@ -67,7 +67,7 @@ public class History {
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(
                         items::addAll,
-                        RxUtils.ERROR_CONSUMER.apply(TAG)
+                        RxUtils.ERROR_CONSUMER.apply(TAG, context)
                 );
     }
 
@@ -109,7 +109,7 @@ public class History {
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(
                         RxUtils.EMPTY_CONSUMER,
-                        RxUtils.ERROR_CONSUMER.apply(TAG)
+                        RxUtils.ERROR_CONSUMER.apply(TAG, null)
                 );
     }
 

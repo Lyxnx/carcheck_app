@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                                 i.putExtra("info", result);
                                 startActivity(i);
                             },
-                            RxUtils.ERROR_CONSUMER.apply(TAG)
+                            RxUtils.ERROR_CONSUMER.apply(TAG, this)
                     );
         });
 
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                                             i.putExtra("info", result);
                                             startActivity(i);
                                         },
-                                        RxUtils.ERROR_CONSUMER.apply(TAG)
+                                        RxUtils.ERROR_CONSUMER.apply(TAG, this)
                                 )
                 );
     }

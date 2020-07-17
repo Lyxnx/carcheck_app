@@ -74,7 +74,7 @@ public class VehicleInfoActivity extends InfoActivity {
                                 table.removeAllViews();
                                 populateTable(table, result);
                             },
-                            RxUtils.ERROR_CONSUMER.apply(TAG)
+                            RxUtils.ERROR_CONSUMER.apply(TAG, this)
                     );
 
             return true;

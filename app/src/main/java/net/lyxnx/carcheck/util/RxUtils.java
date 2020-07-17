@@ -1,14 +1,13 @@
 package net.lyxnx.carcheck.util;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
 import net.lyxnx.carcheck.BuildConfig;
 import net.lyxnx.carcheck.R;
 import net.lyxnx.carcheck.model.VehicleInfo;
-
-import java.util.function.Function;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.FlowableTransformer;
@@ -20,12 +19,16 @@ public class RxUtils {
     private RxUtils() {
     }
 
-    public static final Function<String, Consumer<Throwable>> ERROR_CONSUMER = s -> throwable -> {
+    public static final BiFunction<String, Context, Consumer<Throwable>> ERROR_CONSUMER = (tag, context) -> throwable -> {
         if (BuildConfig.DEBUG) {
-            Log.e(s, "An error occurred");
+            Log.e(tag, "An error occurred");
             for (StackTraceElement el : throwable.getStackTrace()) {
-                Log.e(s, el.toString());
+                Log.e(tag, el.toString());
             }
+        }
+
+        if (context != null) {
+            Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_LONG).show();
         }
     };
 

@@ -5,24 +5,18 @@ import android.os.Parcelable;
 
 public class TaxInfo implements Parcelable {
     private final String status;
-    private final String daysLeft;
 
     private final String cost;
     private final String co2Output;
 
-    public TaxInfo(String status, String daysLeft, String cost, String co2Output) {
+    public TaxInfo(String status, String cost, String co2Output) {
         this.status = status;
-        this.daysLeft = daysLeft;
         this.cost = cost;
         this.co2Output = co2Output;
     }
 
     public String getStatus() {
         return status;
-    }
-
-    public String getDaysLeft() {
-        return daysLeft;
     }
 
     public String getCost() {
@@ -35,7 +29,6 @@ public class TaxInfo implements Parcelable {
 
     public TaxInfo(Parcel parcel) {
         this.status = parcel.readString();
-        this.daysLeft = parcel.readString();
         this.cost = parcel.readString();
         this.co2Output = parcel.readString();
     }
@@ -48,7 +41,6 @@ public class TaxInfo implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(this.status);
-        parcel.writeString(this.daysLeft);
         parcel.writeString(this.cost);
         parcel.writeString(this.co2Output);
     }

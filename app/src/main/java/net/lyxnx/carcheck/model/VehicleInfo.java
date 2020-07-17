@@ -8,12 +8,12 @@ import java.util.Map;
 
 public class VehicleInfo implements Parcelable {
     private final Map<Attribute, String> attributes;
-    private final MOTInfo motInfo;
+    private final String motStatus;
     private final TaxInfo taxInfo;
 
-    public VehicleInfo(Map<Attribute, String> attributes, MOTInfo motInfo, TaxInfo taxInfo) {
+    public VehicleInfo(Map<Attribute, String> attributes, String motStatus, TaxInfo taxInfo) {
         this.attributes = attributes;
-        this.motInfo = motInfo;
+        this.motStatus = motStatus;
         this.taxInfo = taxInfo;
     }
 
@@ -65,8 +65,8 @@ public class VehicleInfo implements Parcelable {
         return attributes.get(Attribute.REG);
     }
 
-    public MOTInfo getMotInfo() {
-        return motInfo;
+    public String getMotStatus() {
+        return motStatus;
     }
 
     public TaxInfo getTaxInfo() {
@@ -86,7 +86,7 @@ public class VehicleInfo implements Parcelable {
             parcel.writeString(e.getValue());
         }
 
-        parcel.writeParcelable(motInfo, flags);
+        parcel.writeString(motStatus);
         parcel.writeParcelable(taxInfo, flags);
     }
 
@@ -98,7 +98,7 @@ public class VehicleInfo implements Parcelable {
             attributes.put(Attribute.valueOf(parcel.readString()), parcel.readString());
         }
 
-        motInfo = parcel.readParcelable(getClass().getClassLoader());
+        motStatus = parcel.readString();
         taxInfo = parcel.readParcelable(getClass().getClassLoader());
     }
 
