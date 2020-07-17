@@ -13,17 +13,15 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-
 import net.lyxnx.carcheck.model.VehicleInfo;
 import net.lyxnx.carcheck.util.RegFetcher;
 import net.lyxnx.carcheck.util.RxUtils;
 
 import java.util.stream.Stream;
 
-import static net.lyxnx.carcheck.util.Util.setText;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 
 public class VehicleInfoActivity extends InfoActivity {
 
@@ -35,6 +33,7 @@ public class VehicleInfoActivity extends InfoActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
+        setTitle(R.string.title_results);
 
         info = getIntent().getParcelableExtra("info");
 
@@ -44,7 +43,6 @@ public class VehicleInfoActivity extends InfoActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Results");
         }
 
         TableLayout table = findViewById(R.id.infoTable);

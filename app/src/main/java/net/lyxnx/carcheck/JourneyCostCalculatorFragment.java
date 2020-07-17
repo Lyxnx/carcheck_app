@@ -14,34 +14,34 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import static net.lyxnx.carcheck.CalculatorsActivity.isDouble;
+import static net.lyxnx.carcheck.CalculatorsActivity.round;
 import static net.lyxnx.carcheck.CalculatorsActivity.toDouble;
 
-public class JourneyCostActivity extends Fragment {
+public class JourneyCostCalculatorFragment extends Fragment {
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.fragment_journey_cost);
-//
-//        EditText journeyDistance = findViewById(R.id.journeyDistance);
-//        EditText journeyConsumption = findViewById(R.id.journeyConsumption);
-//        EditText fuelCost = findViewById(R.id.fuelCost);
-//        TextView journeyCost = findViewById(R.id.journeyCost);
-//        journeyCost.setText(getString(R.string.cost_text, 0.0));
-//
-//        JourneyCostWatcher jcw = new JourneyCostWatcher(journeyDistance, journeyConsumption, fuelCost, journeyCost);
-//        journeyDistance.addTextChangedListener(jcw);
-//        journeyConsumption.addTextChangedListener(jcw);
-//        fuelCost.addTextChangedListener(jcw);
-//    }
-    
-    
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_journey_cost, container, false);
+        return inflater.inflate(R.layout.fragment_journey_cost_calc, container, false);
     }
-    
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        EditText journeyDistance = view.findViewById(R.id.journeyDistance);
+        EditText journeyConsumption = view.findViewById(R.id.journeyConsumption);
+        EditText fuelCost = view.findViewById(R.id.fuelCost);
+
+        TextView journeyCost = view.findViewById(R.id.journeyCost);
+        journeyCost.setText(getString(R.string.cost_text, 0.0));
+
+        JourneyCostWatcher jcw = new JourneyCostWatcher(journeyDistance, journeyConsumption, fuelCost, journeyCost);
+        journeyDistance.addTextChangedListener(jcw);
+        journeyConsumption.addTextChangedListener(jcw);
+        fuelCost.addTextChangedListener(jcw);
+    }
+
     public class JourneyCostWatcher implements TextWatcher {
         private final EditText distance;
         private final EditText mpg;
@@ -69,14 +69,12 @@ public class JourneyCostActivity extends Fragment {
                 return;
             }
 
-            journeyCost.setText(
-                    getString(R.string.cost_text, journeyCost(toDouble(distance), toDouble(mpg), toDouble(cost)))
-            );
-        }
+            double gallonsUsed = toDouble(distance) / toDouble(mpg);
+            double totalCost = round((gallonsUsed * 4.54609188 * toDouble(cost)) / 100, 2);
 
-        private double journeyCost(double miles, double mpg, double cost) {
-            double gallonsUsed = miles / mpg;
-            return CalculatorsActivity.round(((gallonsUsed * 4.54609188) * cost) / 100, 2);
+            journeyCost.setText(
+                    getString(R.string.cost_text, totalCost)
+            );
         }
     }
 }

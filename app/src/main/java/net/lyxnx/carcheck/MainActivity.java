@@ -9,13 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.TooltipCompat;
-
 import net.lyxnx.carcheck.dialog.HistoryBottomSheetDialog;
 import net.lyxnx.carcheck.util.History;
 import net.lyxnx.carcheck.util.RegFetcher;
 import net.lyxnx.carcheck.util.RxUtils;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.TooltipCompat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         history = History.getHistory();
         history.initialise(this);
-    
+
         Button go = findViewById(R.id.buttonGo);
         EditText input = findViewById(R.id.input);
 
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                                 )
                 );
     }
-    
+
     @Override
     protected void onPause() {
         super.onPause();

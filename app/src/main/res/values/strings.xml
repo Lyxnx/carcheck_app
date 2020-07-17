@@ -2,6 +2,10 @@
     <string name="app_name">Car Check</string>
     <string name="enter_reg">Enter reg</string>
 
+    <string name="title_results">Results</string>
+    <string name="title_extra_info">Extra Info</string>
+    <string name="title_calculators">Calculators</string>
+
     <string name="make">Make</string>
     <string name="model">Model</string>
     <string name="colour">Colour</string>

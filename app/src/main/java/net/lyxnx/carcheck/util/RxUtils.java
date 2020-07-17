@@ -17,7 +17,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class RxUtils {
 
-    private RxUtils() { }
+    private RxUtils() {
+    }
 
     public static final Function<String, Consumer<Throwable>> ERROR_CONSUMER = s -> throwable -> {
         if (BuildConfig.DEBUG) {
@@ -28,7 +29,8 @@ public class RxUtils {
         }
     };
 
-    public static final Consumer<Object> EMPTY_CONSUMER = v -> {};
+    public static final Consumer<Object> EMPTY_CONSUMER = v -> {
+    };
 
     public static FlowableTransformer<VehicleInfo, VehicleInfo> applySchedulers(Activity activity) {
         return observable -> observable

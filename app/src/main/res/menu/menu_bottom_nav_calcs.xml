@@ -4,14 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/action_more"
-        android:icon="@drawable/information"
+        android:id="@+id/action_journey"
+        android:icon="@drawable/routes"
         app:showAsAction="ifRoom"
         tools:ignore="MenuTitle" />
 
     <item
-        android:id="@+id/action_gallery"
-        android:icon="@drawable/gallery"
+        android:id="@+id/action_mpg"
+        android:icon="@drawable/gas_station"
+        app:showAsAction="ifRoom"
+        tools:ignore="MenuTitle" />
+
+    <item
+        android:id="@+id/action_finance"
+        android:icon="@drawable/currency_usd"
         app:showAsAction="ifRoom"
         tools:ignore="MenuTitle" />
 

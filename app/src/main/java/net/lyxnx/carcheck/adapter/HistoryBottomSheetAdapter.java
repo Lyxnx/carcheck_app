@@ -6,15 +6,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import net.lyxnx.carcheck.R;
 import net.lyxnx.carcheck.util.History;
 import net.lyxnx.carcheck.util.Util;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class HistoryBottomSheetAdapter extends RecyclerView.Adapter<HistoryBottomSheetAdapter.ViewHolder> {
@@ -34,7 +33,7 @@ public class HistoryBottomSheetAdapter extends RecyclerView.Adapter<HistoryBotto
     @Override
     public void onBindViewHolder(@NonNull HistoryBottomSheetAdapter.ViewHolder holder, int position) {
         History.Item item = data.get(position);
-    
+
         holder.vehicleType.setImageResource(Util.getDrawableId(
                 "vehicletype_" + item.getVehicleType().toLowerCase(),
                 R.drawable.vehicletype_car

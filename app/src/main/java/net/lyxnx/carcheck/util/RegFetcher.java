@@ -33,7 +33,7 @@ public class RegFetcher {
         return Flowable.defer(() -> {
             try {
                 VehicleInfo info = getVehicleInfo0(reg);
-                
+
                 return info != null ? Flowable.just(info) : Flowable.empty();
             } catch (Exception ex) {
                 return Flowable.error(ex);

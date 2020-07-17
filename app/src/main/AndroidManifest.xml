@@ -24,11 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CalculatorsActivity"/>
-        <activity android:name=".JourneyCostActivity"/>
-        <activity android:name=".FinanceActivity"/>
-        <activity android:name=".FuelCostActivity"/>
         <activity android:name=".VehicleInfoActivity"/>
-        <activity android:name=".HistoryActivity"/>
         <activity android:name=".MoreInfoActivity" />
     </application>
 </manifest>

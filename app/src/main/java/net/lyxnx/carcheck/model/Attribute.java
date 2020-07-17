@@ -17,21 +17,21 @@ public enum Attribute {
     V5C_ISSUE_DATE,
     REGISTERED_NEAR,
     REG;
-    
+
     private final Function<String, String> mutator;
-    
+
     Attribute() {
         this.mutator = s -> s;
     }
-    
+
     Attribute(Function<String, String> mutator) {
         this.mutator = mutator;
     }
-    
+
     public String mutate(String data) {
         return this.mutator.apply(data);
     }
-    
+
     public static Attribute of(String string) {
         return Arrays.stream(values())
                 .filter(a -> a.name().equalsIgnoreCase(string.replace(" ", "_")))
