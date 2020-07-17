@@ -14,13 +14,14 @@ import net.lyxnx.carcheck.util.History;
 import net.lyxnx.carcheck.util.RegFetcher;
 import net.lyxnx.carcheck.util.RxUtils;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.TooltipCompat;
-import androidx.fragment.app.FragmentActivity;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    private History history;
     private HistoryBottomSheetDialog historyDialog;
 
     @Override
@@ -28,7 +29,8 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        History.getHistory().initialise(this);
+        history = History.getHistory();
+        history.initialise(this);
 
         Button go = findViewById(R.id.buttonGo);
         EditText input = findViewById(R.id.input);
@@ -72,12 +74,11 @@ public class MainActivity extends FragmentActivity {
                 startActivity(new Intent(MainActivity.this, CalculatorsActivity.class)));
 
         historyDialog = new HistoryBottomSheetDialog();
-        historyDialog.setData(History.getHistory());
 
-        Button history = findViewById(R.id.buttonHistory);
-        TooltipCompat.setTooltipText(history, getString(R.string.tooltip_history));
-        history.setOnClickListener(view -> {
-            if (History.getHistory().isEmpty()) {
+        Button historyButton = findViewById(R.id.buttonHistory);
+        TooltipCompat.setTooltipText(historyButton, getString(R.string.tooltip_history));
+        historyButton.setOnClickListener(view -> {
+            if (history.isEmpty()) {
                 Toast.makeText(this, getString(R.string.empty_history), Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -88,16 +89,17 @@ public class MainActivity extends FragmentActivity {
         });
 
         historyDialog.getSelectedListener()
-                .subscribe(item -> RegFetcher.fetchVehicle(item.getVrm())
-                        .compose(RxUtils.applySchedulers(this))
-                        .subscribe(
-                                result -> {
-                                    Intent i = new Intent(this, VehicleInfoActivity.class);
-                                    i.putExtra("info", result);
-                                    startActivity(i);
-                                },
-                                RxUtils.ERROR_CONSUMER.apply(TAG)
-                        )
+                .subscribe(item ->
+                        RegFetcher.fetchVehicle(item.getVrm())
+                                .compose(RxUtils.applySchedulers(this))
+                                .subscribe(
+                                        result -> {
+                                            Intent i = new Intent(this, VehicleInfoActivity.class);
+                                            i.putExtra("info", result);
+                                            startActivity(i);
+                                        },
+                                        RxUtils.ERROR_CONSUMER.apply(TAG)
+                                )
                 );
     }
 

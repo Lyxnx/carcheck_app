@@ -20,11 +20,8 @@ import net.lyxnx.carcheck.util.RxUtils;
 import java.util.stream.Stream;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
-
-import static net.lyxnx.carcheck.util.Util.setText;
 
 public class VehicleInfoActivity extends InfoActivity {
 
@@ -33,9 +30,10 @@ public class VehicleInfoActivity extends InfoActivity {
     private VehicleInfo info;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
+        setTitle(R.string.title_results);
 
         info = getIntent().getParcelableExtra("info");
 
@@ -45,7 +43,6 @@ public class VehicleInfoActivity extends InfoActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Results");
         }
 
         TableLayout table = findViewById(R.id.infoTable);

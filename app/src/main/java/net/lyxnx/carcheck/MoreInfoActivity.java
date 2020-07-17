@@ -17,9 +17,10 @@ import androidx.appcompat.widget.Toolbar;
 public class MoreInfoActivity extends InfoActivity {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_moreinfo);
+        setTitle(getString(R.string.title_extra_info));
 
         VehicleInfo info = getIntent().getParcelableExtra("info");
 
@@ -29,7 +30,6 @@ public class MoreInfoActivity extends InfoActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Extras");
         }
 
         TableLayout table = findViewById(R.id.infoTable);

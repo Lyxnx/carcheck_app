@@ -16,8 +16,9 @@ import net.lyxnx.carcheck.R;
 import net.lyxnx.carcheck.adapter.HistoryBottomSheetAdapter;
 import net.lyxnx.carcheck.util.History;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,25 +26,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class HistoryBottomSheetDialog extends BottomSheetDialogFragment {
 
-    private HistoryBottomSheetAdapter adapter;
     private TextView clearButton;
-    private List<History.Item> data;
 
     private PublishSubject<History.Item> selectedListener = PublishSubject.create();
 
     public HistoryBottomSheetDialog() {
-    }
-
-    public void setData(List<History.Item> data) {
-        this.data = data;
-        if (adapter != null) {
-            adapter.setData(data);
-        }
     }
 
     @Override
@@ -63,7 +54,7 @@ public class HistoryBottomSheetDialog extends BottomSheetDialogFragment {
         getDialog().setOnShowListener(dialog -> {
             View bottomSheet = ((BottomSheetDialog) dialog).findViewById(com.google.android.material.R.id.design_bottom_sheet);
             if (bottomSheet != null) {
-                BottomSheetBehavior.from(bottomSheet).setState(BottomSheetBehavior.STATE_EXPANDED);
+                BottomSheetBehavior.from(bottomSheet).setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
 
                 clearButton.setOnClickListener(i -> new AlertDialog.Builder(getContext())
                         .setTitle(getString(R.string.confirm_clear_history_title))
@@ -87,14 +78,20 @@ public class HistoryBottomSheetDialog extends BottomSheetDialogFragment {
         super.onActivityCreated(savedInstanceState);
 
         RecyclerView historyRecyclerView = getView().findViewById(R.id.historyRecyclerView);
+
+        // Wrap in arraylist copy - don't want to reverse the original
+        List<History.Item> items = new ArrayList<>(History.getHistory().getItems());
+        Collections.reverse(items);
+
+        HistoryBottomSheetAdapter adapter = new HistoryBottomSheetAdapter();
+        adapter.setData(items);
+
         clearButton = getView().findViewById(R.id.clearButton);
 
-        adapter = new HistoryBottomSheetAdapter(data);
         historyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         historyRecyclerView.setAdapter(adapter);
 
         adapter.getClickListener()
-                .delay(200, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .subscribe(item -> {
                     selectedListener.onNext(item);
                     Dialog dialog = getDialog();

@@ -21,8 +21,7 @@ public class HistoryBottomSheetAdapter extends RecyclerView.Adapter<HistoryBotto
     private List<History.Item> data;
     private PublishSubject<History.Item> clickListener = PublishSubject.create();
 
-    public HistoryBottomSheetAdapter(List<History.Item> data) {
-        this.data = data;
+    public HistoryBottomSheetAdapter() {
     }
 
     @NonNull

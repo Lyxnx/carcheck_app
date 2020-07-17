@@ -32,8 +32,10 @@ public class RegFetcher {
     public static Flowable<VehicleInfo> fetchVehicle(String reg) {
         return Flowable.defer(() -> {
             try {
-                return Flowable.just(getVehicleInfo0(reg));
-            } catch (IOException ex) {
+                VehicleInfo info = getVehicleInfo0(reg);
+
+                return info != null ? Flowable.just(info) : Flowable.empty();
+            } catch (Exception ex) {
                 return Flowable.error(ex);
             }
         });
