@@ -43,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        TooltipCompat.setTooltipText(go, getString(R.string.tooltip_go));
+        RegFetcher fetcher = RegFetcher.of(this);
+
+        TooltipCompat.setTooltipText(go, getString(R.string.tooltip_lookup));
         go.setOnClickListener(v -> {
             String text = input.getText().toString();
 
@@ -56,8 +58,7 @@ public class MainActivity extends AppCompatActivity {
             ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
                     .hideSoftInputFromWindow(v.getWindowToken(), 0);
 
-            RegFetcher.fetchVehicle(text)
-                    .compose(RxUtils.applySchedulers(this))
+            fetcher.fetchVehicle(text)
                     .subscribe(
                             result -> {
                                 Intent i = new Intent(this, VehicleInfoActivity.class);
@@ -90,8 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
         historyDialog.getSelectedListener()
                 .subscribe(item ->
-                        RegFetcher.fetchVehicle(item.getVrm())
-                                .compose(RxUtils.applySchedulers(this))
+                        fetcher.fetchVehicle(item.getVrm())
                                 .subscribe(
                                         result -> {
                                             Intent i = new Intent(this, VehicleInfoActivity.class);

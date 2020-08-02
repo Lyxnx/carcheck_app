@@ -58,7 +58,7 @@ public class HistoryBottomSheetAdapter extends RecyclerView.Adapter<HistoryBotto
         return clickListener;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView vehicleType;
         private TextView vrm;

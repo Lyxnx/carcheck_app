@@ -33,9 +33,10 @@ public class VehicleInfoActivity extends InfoActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
-        setTitle(R.string.title_results);
 
         info = getIntent().getParcelableExtra("info");
+
+        setTitle(getString(R.string.title_results, info.getReg()));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -66,13 +67,14 @@ public class VehicleInfoActivity extends InfoActivity {
             ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
                     .hideSoftInputFromWindow(v.getWindowToken(), 0);
 
-            RegFetcher.fetchVehicle(text)
-                    .compose(RxUtils.applySchedulers(this))
+            RegFetcher.of(this).fetchVehicle(text)
                     .subscribe(
                             result -> {
                                 // Clear the table for new info
+                                info = result;
                                 table.removeAllViews();
                                 populateTable(table, result);
+                                setTitle(getString(R.string.title_results, result.getReg()));
                             },
                             RxUtils.ERROR_CONSUMER.apply(TAG, this)
                     );
@@ -110,12 +112,13 @@ public class VehicleInfoActivity extends InfoActivity {
                     return true;
                 }
 
-                String url = "http://google.com#q="
-                        + make + "+"
-                        + TextUtils.join("+", model.split(" ")) + "+"
-                        + colour + "+"
-                        + year
-                        + "&tbm=isch";
+                String url = TextUtils.join("+", new Object[]{
+                        "http://google.com#q=",
+                        make,
+                        TextUtils.join("+", model.split(" ")),
+                        colour,
+                        year
+                });
 
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                 return true;

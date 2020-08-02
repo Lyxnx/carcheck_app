@@ -10,12 +10,12 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import net.lyxnx.carcheck.util.Util;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import io.reactivex.rxjava3.subjects.PublishSubject;
-
-import static net.lyxnx.carcheck.CalculatorsActivity.toDouble;
 
 public class FinanceCalculatorFragment extends Fragment {
 
@@ -34,15 +34,15 @@ public class FinanceCalculatorFragment extends Fragment {
         setHeader(view.findViewById(R.id.monthlyRow), getString(R.string.monthly_payment));
         setHeader(view.findViewById(R.id.totalRow), getString(R.string.total_payment));
 
-        SeekBar price = view.findViewById(R.id.price);
-        TextView priceDisplay = view.findViewById(R.id.priceDisplay);
+        SeekBar price = view.findViewById(R.id.finance_price_item);
+        TextView priceDisplay = view.findViewById(R.id.finance_price_display);
         priceDisplay.setText(getString(R.string.price_text, (float) price.getProgress() * 1000));
 
-        SeekBar period = view.findViewById(R.id.period);
-        TextView periodDisplay = view.findViewById(R.id.periodDisplay);
+        SeekBar period = view.findViewById(R.id.finance_period_item);
+        TextView periodDisplay = view.findViewById(R.id.finance_period_display);
         periodDisplay.setText(getString(R.string.period_text, period.getProgress()));
 
-        EditText apr = view.findViewById(R.id.apr);
+        EditText apr = view.findViewById(R.id.finance_apr_item);
 
         progressChangeListener
                 .subscribe(result -> {
@@ -51,7 +51,7 @@ public class FinanceCalculatorFragment extends Fragment {
                     }
 
                     double total = price.getProgress() * 1000;
-                    double interest = toDouble(apr);
+                    double interest = Util.toDouble(apr);
                     int months = period.getProgress();
 
                     double monthlyInterest = (interest / 12) * .01;

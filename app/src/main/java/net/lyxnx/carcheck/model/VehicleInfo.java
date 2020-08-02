@@ -8,13 +8,23 @@ import java.util.Map;
 
 public class VehicleInfo implements Parcelable {
     private final Map<Attribute, String> attributes;
-    private final String motStatus;
-    private final TaxInfo taxInfo;
+    private final StatusItem motStatus;
+    private final StatusItem taxStatus;
+    private final CO2Info co2Info;
+    private final String insuranceGroup;
+    private final FuelEconomy fuelEconomy;
+    private final VehiclePerformance performance;
 
-    public VehicleInfo(Map<Attribute, String> attributes, String motStatus, TaxInfo taxInfo) {
+    public VehicleInfo(Map<Attribute, String> attributes, StatusItem motStatus, StatusItem taxStatus,
+                       CO2Info co2Info, String insuranceGroup, FuelEconomy fuelEconomy,
+                       VehiclePerformance performance) {
         this.attributes = attributes;
         this.motStatus = motStatus;
-        this.taxInfo = taxInfo;
+        this.taxStatus = taxStatus;
+        this.co2Info = co2Info;
+        this.insuranceGroup = insuranceGroup;
+        this.fuelEconomy = fuelEconomy;
+        this.performance = performance;
     }
 
     public String getMake() {
@@ -65,12 +75,28 @@ public class VehicleInfo implements Parcelable {
         return attributes.get(Attribute.REG);
     }
 
-    public String getMotStatus() {
+    public StatusItem getMotStatus() {
         return motStatus;
     }
 
-    public TaxInfo getTaxInfo() {
-        return taxInfo;
+    public StatusItem getTaxStatus() {
+        return taxStatus;
+    }
+
+    public CO2Info getCo2Info() {
+        return co2Info;
+    }
+
+    public String getInsuranceGroup() {
+        return insuranceGroup;
+    }
+
+    public FuelEconomy getFuelEconomy() {
+        return fuelEconomy;
+    }
+
+    public VehiclePerformance getPerformance() {
+        return performance;
     }
 
     @Override
@@ -86,8 +112,12 @@ public class VehicleInfo implements Parcelable {
             parcel.writeString(e.getValue());
         }
 
-        parcel.writeString(motStatus);
-        parcel.writeParcelable(taxInfo, flags);
+        parcel.writeParcelable(motStatus, flags);
+        parcel.writeParcelable(taxStatus, flags);
+        parcel.writeParcelable(co2Info, flags);
+        parcel.writeString(insuranceGroup);
+        parcel.writeParcelable(fuelEconomy, flags);
+        parcel.writeParcelable(performance, flags);
     }
 
     public VehicleInfo(Parcel parcel) {
@@ -98,8 +128,12 @@ public class VehicleInfo implements Parcelable {
             attributes.put(Attribute.valueOf(parcel.readString()), parcel.readString());
         }
 
-        motStatus = parcel.readString();
-        taxInfo = parcel.readParcelable(getClass().getClassLoader());
+        motStatus = parcel.readParcelable(getClass().getClassLoader());
+        taxStatus = parcel.readParcelable(getClass().getClassLoader());
+        co2Info = parcel.readParcelable(getClass().getClassLoader());
+        insuranceGroup = parcel.readString();
+        fuelEconomy = parcel.readParcelable(getClass().getClassLoader());
+        performance = parcel.readParcelable(getClass().getClassLoader());
     }
 
     public static final Parcelable.Creator<VehicleInfo> CREATOR = new Parcelable.Creator<VehicleInfo>() {

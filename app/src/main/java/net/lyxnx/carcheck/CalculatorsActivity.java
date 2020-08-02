@@ -2,26 +2,26 @@ package net.lyxnx.carcheck;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.EditText;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import net.lyxnx.carcheck.adapter.CalculatorsPagerAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
 public class CalculatorsActivity extends AppCompatActivity {
+
+    private ViewPager2 pager;
+    private MenuItem previousItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calcs);
-        setTitle(getString(R.string.title_calculators));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -31,31 +31,44 @@ public class CalculatorsActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        loadFragment(new JourneyCostCalculatorFragment());
-
         BottomNavigationView navigation = findViewById(R.id.navigation);
+
         navigation.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.action_journey:
-                    loadFragment(new JourneyCostCalculatorFragment());
+                    pager.setCurrentItem(CalculatorsPagerAdapter.JOURNEY);
                     return true;
                 case R.id.action_mpg:
-                    loadFragment(new FuelCostCalculatorFragment());
+                    pager.setCurrentItem(CalculatorsPagerAdapter.MPG);
                     return true;
                 case R.id.action_finance:
-                    loadFragment(new FinanceCalculatorFragment());
+                    pager.setCurrentItem(CalculatorsPagerAdapter.FINANCE);
                     return true;
                 default:
                     return false;
             }
         });
-    }
 
-    private void loadFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_content, fragment)
-                .addToBackStack(null)
-                .commit();
+        CalculatorsPagerAdapter adapter = new CalculatorsPagerAdapter(this);
+
+        pager = findViewById(R.id.main_content);
+        pager.setOffscreenPageLimit(1);
+        pager.setAdapter(adapter);
+        pager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                if (previousItem != null) {
+                    previousItem.setChecked(false);
+                } else {
+                    navigation.getMenu().getItem(0).setChecked(false);
+                }
+
+                MenuItem item = navigation.getMenu().getItem(position);
+                item.setChecked(true);
+                previousItem = item;
+                setTitle(getString(R.string.title_calculators, adapter.getTitle(position)));
+            }
+        });
     }
 
     @Override
@@ -66,27 +79,5 @@ public class CalculatorsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public static double round(double value, int dp) {
-        BigDecimal bd = new BigDecimal(Double.toString(value));
-        bd = bd.setScale(dp, RoundingMode.HALF_UP);
-        return bd.doubleValue();
-    }
-
-    public static double toDouble(EditText e) {
-        return Double.parseDouble(e.getText().toString());
-    }
-
-    public static boolean isDouble(EditText e) {
-        if (e.getText().toString().isEmpty())
-            return false;
-
-        try {
-            toDouble(e);
-            return true;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
     }
 }
