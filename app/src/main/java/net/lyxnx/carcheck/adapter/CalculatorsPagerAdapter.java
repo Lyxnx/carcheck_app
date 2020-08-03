@@ -3,6 +3,7 @@ package net.lyxnx.carcheck.adapter;
 import net.lyxnx.carcheck.FinanceCalculatorFragment;
 import net.lyxnx.carcheck.FuelCostCalculatorFragment;
 import net.lyxnx.carcheck.JourneyCostCalculatorFragment;
+import net.lyxnx.carcheck.R;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,10 +18,16 @@ public class CalculatorsPagerAdapter extends FragmentStateAdapter {
 
     private static final int TAB_COUNT = 3;
 
-    private final String[] titles = new String[]{"Journey", "Fuel Cost", "Finance"};
+    private final String[] titles;
 
     public CalculatorsPagerAdapter(@NonNull FragmentActivity fa) {
         super(fa);
+
+        this.titles = new String[]{
+                fa.getString(R.string.title_journey),
+                fa.getString(R.string.title_fuel_cost),
+                fa.getString(R.string.title_finance)
+        };
     }
 
     @NonNull

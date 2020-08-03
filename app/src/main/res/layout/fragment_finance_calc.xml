@@ -106,7 +106,6 @@
                     android:textColorHint="@color/primary_content" />
 
                 <TextView
-                    android:id="@+id/finance_apr_display"
                     android:layout_width="150dp"
                     android:layout_height="50dp"
                     style="@style/FinanceDisplay"
@@ -115,7 +114,6 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/summary"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             style="@style/MiniTitle"
