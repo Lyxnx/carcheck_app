@@ -9,7 +9,6 @@
     app:behavior_peekHeight="0dp">
 
     <ImageView
-        android:id="@+id/bottom_sheet_handle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -19,32 +18,33 @@
         android:src="@drawable/bottom_sheet_handle"
         tools:ignore="contentDescription" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/history_sheet_title"
+        style="@style/MiniTitle" />
+
+    <TextView
+        android:id="@+id/clearButton"
+        style="@style/PrimaryContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/tooltip_clear" />
+
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:overScrollMode="ifContentScrolls">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/historyRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            tools:listitem="@layout/layout_history_row"
+            tools:itemCount="8" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/historyRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:listitem="@layout/layout_history_row"
-                tools:itemCount="8" />
-
-            <TextView
-                android:id="@+id/clearButton"
-                style="@style/PrimaryContent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="16dp"
-                android:text="@string/tooltip_clear" />
-        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

@@ -3,11 +3,11 @@ package net.lyxnx.carcheck.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class MOTInfo implements Parcelable {
+public class StatusItem implements Parcelable {
     private final String status;
     private final String daysLeft;
 
-    public MOTInfo(String status, String daysLeft) {
+    public StatusItem(String status, String daysLeft) {
         this.status = status;
         this.daysLeft = daysLeft;
     }
@@ -20,7 +20,7 @@ public class MOTInfo implements Parcelable {
         return daysLeft;
     }
 
-    public MOTInfo(Parcel parcel) {
+    public StatusItem(Parcel parcel) {
         this.status = parcel.readString();
         this.daysLeft = parcel.readString();
     }
@@ -36,16 +36,16 @@ public class MOTInfo implements Parcelable {
         parcel.writeString(this.daysLeft);
     }
 
-    public static final Parcelable.Creator<MOTInfo> CREATOR = new Parcelable.Creator<MOTInfo>() {
+    public static final Parcelable.Creator<StatusItem> CREATOR = new Parcelable.Creator<StatusItem>() {
 
         @Override
-        public MOTInfo createFromParcel(Parcel parcel) {
-            return new MOTInfo(parcel);
+        public StatusItem createFromParcel(Parcel parcel) {
+            return new StatusItem(parcel);
         }
 
         @Override
-        public MOTInfo[] newArray(int i) {
-            return new MOTInfo[i];
+        public StatusItem[] newArray(int i) {
+            return new StatusItem[i];
         }
     };
 }

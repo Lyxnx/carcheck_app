@@ -2,17 +2,19 @@ package net.lyxnx.carcheck;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TableLayout;
-import android.widget.Toast;
 
-import net.lyxnx.carcheck.model.TaxInfo;
+import net.lyxnx.carcheck.adapter.CardItemRecyclerAdapter;
+import net.lyxnx.carcheck.model.CardItem;
 import net.lyxnx.carcheck.model.VehicleInfo;
-import net.lyxnx.carcheck.util.Util;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MoreInfoActivity extends InfoActivity {
 
@@ -32,23 +34,12 @@ public class MoreInfoActivity extends InfoActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        TableLayout table = findViewById(R.id.infoTable);
-        populateTable(table, info);
+        RecyclerView recyclerView = findViewById(R.id.card_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        CardItemRecyclerAdapter adapter = new CardItemRecyclerAdapter(this);
+        recyclerView.setAdapter(adapter);
 
-        ImageView img = findViewById(R.id.co2Image);
-
-        if (info.getTaxInfo() != null) {
-            String co2Output = info.getTaxInfo().getCo2Output().toLowerCase(); // ... g/km (A)
-
-            Integer resourceId = Util.getDrawableId("co2_" + co2Output.charAt(co2Output.length() - 2));
-
-            if (resourceId == null) {
-                Toast.makeText(this, getString(R.string.error), Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            img.setImageResource(resourceId);
-        }
+        populateAdapter(adapter, info);
     }
 
     @Override
@@ -61,17 +52,59 @@ public class MoreInfoActivity extends InfoActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void populateTable(TableLayout table, VehicleInfo info) {
-        addToTable(table, getString(R.string.mot_status), info.getMotInfo().getStatus());
+    private void populateAdapter(CardItemRecyclerAdapter adapter, VehicleInfo info) {
+        List<CardItem> items = new ArrayList<>();
 
-        TaxInfo taxInfo = info.getTaxInfo();
-        boolean isNull = taxInfo == null;
+        CardItem basicItem = new CardItem(getString(R.string.moreinfo_header_general));
+        basicItem.addItem(getString(R.string.euro_status), info.getEuroStatus());
+        basicItem.addItem(getString(R.string.v5c_issued), info.getV5CIssueDate());
 
-        addToTable(table, getString(R.string.tax_status), isNull ? "N/A" : taxInfo.getStatus());
-        addToTable(table, getString(R.string.tax_cost), isNull ? "N/A" : taxInfo.getCost());
-        addToTable(table, getString(R.string.tax_output), isNull ? "N/A" : taxInfo.getCo2Output());
-        addToTable(table, getString(R.string.euro_status), info.getEuroStatus());
-        addToTable(table, getString(R.string.v5c_issued), info.getV5CIssueDate());
-        addToTable(table, getString(R.string.registered_near), info.getRegistryLocation());
+        if (info.getRegistryLocation() != null) {
+            basicItem.addItem(getString(R.string.registered_near), info.getRegistryLocation());
+        }
+
+        if (info.getInsuranceGroup() != null) {
+            basicItem.addItem(getString(R.string.insurance_group), info.getInsuranceGroup());
+        }
+
+        items.add(basicItem);
+
+        CardItem taxItem = new CardItem(getString(R.string.moreinfo_header_tax));
+        taxItem.addItem(getString(R.string.status), info.getTaxStatus().getStatus());
+        taxItem.addItem(getString(R.string.days_left), info.getTaxStatus().getDaysLeft());
+
+        items.add(taxItem);
+
+        CardItem motItem = new CardItem(getString(R.string.moreinfo_header_mot));
+        motItem.addItem(getString(R.string.status), info.getMotStatus().getStatus());
+        motItem.addItem(getString(R.string.days_left), info.getMotStatus().getDaysLeft());
+
+        items.add(motItem);
+
+        CardItem co2Item = new CardItem(getString(R.string.moreinfo_header_co2));
+        co2Item.addItem(getString(R.string.cost_12_months), info.getCo2Info().getCost12Months());
+        co2Item.addItem(getString(R.string.cost_6_months), info.getCo2Info().getCost6Months());
+        co2Item.addItem(getString(R.string.output), info.getCo2Info().getOutput());
+
+        items.add(co2Item);
+
+        if (info.getPerformance() != null) {
+            CardItem performanceItem = new CardItem(getString(R.string.moreinfo_header_performance));
+            performanceItem.addItem(getString(R.string.zeroTo60), info.getPerformance().getZeroTo60());
+            performanceItem.addItem(getString(R.string.top_speed), info.getPerformance().getTopSpeed());
+
+            items.add(performanceItem);
+        }
+
+        if (info.getFuelEconomy() != null) {
+            CardItem fuelItem = new CardItem(getString(R.string.moreinfo_header_fuel_economy));
+            fuelItem.addItem(getString(R.string.urban), info.getFuelEconomy().getUrbanMpg());
+            fuelItem.addItem(getString(R.string.extra_urban), info.getFuelEconomy().getExtraUrbanMpg());
+            fuelItem.addItem(getString(R.string.combined), info.getFuelEconomy().getCombined());
+
+            items.add(fuelItem);
+        }
+
+        adapter.setItems(items);
     }
 }

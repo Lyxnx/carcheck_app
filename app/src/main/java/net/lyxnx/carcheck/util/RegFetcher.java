@@ -1,9 +1,23 @@
 package net.lyxnx.carcheck.util;
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.widget.FrameLayout;
+import android.widget.Toast;
+
+import net.lyxnx.carcheck.R;
 import net.lyxnx.carcheck.model.Attribute;
-import net.lyxnx.carcheck.model.MOTInfo;
-import net.lyxnx.carcheck.model.TaxInfo;
+import net.lyxnx.carcheck.model.CO2Info;
+import net.lyxnx.carcheck.model.FuelEconomy;
+import net.lyxnx.carcheck.model.StatusItem;
 import net.lyxnx.carcheck.model.VehicleInfo;
+import net.lyxnx.carcheck.model.VehiclePerformance;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -13,7 +27,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class RegFetcher {
 
@@ -29,7 +45,19 @@ public class RegFetcher {
     private static final int VEHICLE_TAX_DETAIL_TABLE = 11;
     private static final int VEHICLE_EMISSION_TABLE = 12;
 
-    public static Flowable<VehicleInfo> fetchVehicle(String reg) {
+    private static final int INSURANCE_GROUP = 0;
+
+    private final Activity activity;
+
+    private RegFetcher(Activity activity) {
+        this.activity = activity;
+    }
+
+    public static RegFetcher of(Activity activity) {
+        return new RegFetcher(activity);
+    }
+
+    public Flowable<VehicleInfo> fetchVehicle(String reg) {
         return Flowable.defer(() -> {
             try {
                 VehicleInfo info = getVehicleInfo0(reg);
@@ -38,10 +66,55 @@ public class RegFetcher {
             } catch (Exception ex) {
                 return Flowable.error(ex);
             }
-        });
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .doOnSubscribe(subscription -> {
+                    FrameLayout progressContainer = activity.findViewById(R.id.progress_container);
+
+                    AlphaAnimation in = new AlphaAnimation(0f, 1f);
+                    in.setDuration(200);
+
+                    progressContainer.setAnimation(in);
+                    progressContainer.setVisibility(View.VISIBLE);
+
+                    activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                })
+                .doOnTerminate(() -> {
+                    FrameLayout progressContainer = activity.findViewById(R.id.progress_container);
+
+                    AlphaAnimation out = new AlphaAnimation(1f, 0f);
+                    out.setDuration(200);
+
+                    progressContainer.setAnimation(out);
+                    progressContainer.setVisibility(View.GONE);
+
+                    activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+                    Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
+
+                    if (Build.VERSION.SDK_INT >= 26) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        vibrator.vibrate(150);
+                    }
+                })
+                .switchIfEmpty(val ->
+                        Toast.makeText(activity, activity.getString(R.string.no_data), Toast.LENGTH_LONG).show()
+                )
+                .doOnNext(result -> {
+                    if (result == null) {
+                        Toast.makeText(activity, activity.getString(R.string.invalid_plate), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    History.getHistory().insert(result.getReg(), result.getVehicleType());
+                });
     }
 
-    private static VehicleInfo getVehicleInfo0(String reg) throws IOException {
+    private VehicleInfo getVehicleInfo0(String reg) throws IOException {
         Element root = Jsoup.connect(URL)
                 .data(REGNO, reg)
                 .get()
@@ -53,9 +126,9 @@ public class RegFetcher {
             return null;
         }
 
-        Element infoTable = tables.get(VEHICLE_DETAILS_TABLE);
         // The title row spans 2 columns, so select all but that
-        Elements trs = infoTable.select(TR_NOT_COLSPAN);
+        Elements trs = tables.get(VEHICLE_DETAILS_TABLE)
+                .select(TR_NOT_COLSPAN);
 
         Map<Attribute, String> attributes = new HashMap<>();
         attributes.put(Attribute.REG, reg.toUpperCase());
@@ -72,42 +145,87 @@ public class RegFetcher {
             attributes.put(attribute, attribute.mutate(data));
         }
 
-        return new VehicleInfo(attributes, getMotInfo(tables), getTaxInfo(tables));
+        Elements extraRows = root.selectFirst("table:not([class])")
+                .select(TR_NOT_COLSPAN);
+
+        String insuranceGroup = getTableRowEntry(extraRows.get(INSURANCE_GROUP));
+
+        return new VehicleInfo(
+                attributes, getMotStatus(tables), getTaxInfo(tables), getCo2Info(tables),
+                insuranceGroup, getFuelEconomy(extraRows), getPerformance(extraRows)
+        );
     }
 
-    private static MOTInfo getMotInfo(Elements tables) {
+    private StatusItem getMotStatus(Elements tables) {
         Elements data = tables.get(VEHICLE_MOT_SUMMARY_TABLE)
                 .select(TR_NOT_COLSPAN);
 
-        String status = getTableRowEntry(data.get(0));
-        String daysLeft = getTableRowEntry(data.get(1));
-
-        return new MOTInfo(status, daysLeft);
+        return new StatusItem(getTableRowEntry(data.get(0)), getTableRowEntry(data.get(1)));
     }
 
-    private static String getTableRowEntry(Element row) {
-        return row.selectFirst("td span").text();
-    }
+    private String getTableRowEntry(Element row) {
+        Element item = row.selectFirst("td span");
 
-    private static TaxInfo getTaxInfo(Elements tables) {
-        Elements summaryData = tables.get(VEHICLE_TAX_SUMMARY_TABLE)
-                .select(TR_NOT_COLSPAN);
-
-        String status = getTableRowEntry(summaryData.get(0));
-        String daysLeft = getTableRowEntry(summaryData.get(1));
-
-        Elements taxInfoTable = tables.get(VEHICLE_TAX_DETAIL_TABLE)
-                .select(TR_NOT_COLSPAN);
-
-        Element costElement = taxInfoTable.select("td span").first();
-        // Is null if the tax info is unavailable
-        if (costElement == null) {
+        if (item == null) {
             return null;
         }
 
-        String cost = costElement.text();
+        return item.text();
+    }
+
+    private StatusItem getTaxInfo(Elements tables) {
+        Elements data = tables.get(VEHICLE_TAX_SUMMARY_TABLE)
+                .select(TR_NOT_COLSPAN);
+
+        return new StatusItem(getTableRowEntry(data.get(0)), getTableRowEntry(data.get(1)));
+    }
+
+    private CO2Info getCo2Info(Elements tables) {
+        Elements taxInfoTable = tables.get(VEHICLE_TAX_DETAIL_TABLE)
+                .select(TR_NOT_COLSPAN);
+
+        String cost12;
+        String cost6;
+
+        Elements costElements = taxInfoTable.select("td span");
+        // Is null if the tax info is unavailable
+        if (costElements == null || costElements.isEmpty()) {
+            cost12 = "N/A";
+            cost6 = "N/A";
+        } else {
+            cost12 = costElements.get(0).text();
+            cost6 = costElements.get(1).text();
+        }
+
         String co2Output = tables.get(VEHICLE_EMISSION_TABLE).selectFirst("td span").text();
 
-        return new TaxInfo(status, daysLeft, cost, co2Output);
+        return new CO2Info(cost12, cost6, co2Output);
+    }
+
+    private FuelEconomy getFuelEconomy(Elements rows) {
+        Elements mpgRows = rows.select("td:contains(mpg)");
+
+        if (mpgRows.isEmpty()) {
+            return null;
+        }
+
+        return new FuelEconomy(
+                getTableRowEntry(mpgRows.get(0)),
+                getTableRowEntry(mpgRows.get(1)),
+                getTableRowEntry(mpgRows.get(2))
+        );
+    }
+
+    private VehiclePerformance getPerformance(Elements rows) {
+        Elements perfRows = rows.select("td.certData:contains(mph),td.certData:contains(secs)");
+
+        if (perfRows.isEmpty()) {
+            return null;
+        }
+
+        return new VehiclePerformance(
+                getTableRowEntry(perfRows.get(0)),
+                getTableRowEntry(perfRows.get(1))
+        );
     }
 }

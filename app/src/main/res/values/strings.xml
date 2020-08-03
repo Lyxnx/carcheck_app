@@ -1,10 +1,15 @@
 <resources>
     <string name="app_name">Car Check</string>
     <string name="enter_reg">Enter reg</string>
+    <string name="history_sheet_title">Lookup History</string>
 
-    <string name="title_results">Results</string>
+    <string name="title_results">Results // %1$s</string>
     <string name="title_extra_info">Extra Info</string>
-    <string name="title_calculators">Calculators</string>
+    <string name="title_calculators">Calculator // %1$s</string>
+
+    <string name="title_journey">Journey</string>
+    <string name="title_fuel_cost">Fuel Cost</string>
+    <string name="title_finance">Finance</string>
 
     <string name="make">Make</string>
     <string name="model">Model</string>
@@ -14,40 +19,45 @@
     <string name="engine_size">Engine Size</string>
     <string name="year">Year</string>
 
-    <string name="delete">Delete</string>
+    <string name="moreinfo_header_general">General</string>
+    <string name="moreinfo_header_tax">Tax</string>
+    <string name="moreinfo_header_mot">MOT</string>
+    <string name="moreinfo_header_co2">CO₂ Output</string>
+    <string name="moreinfo_header_performance">Performance</string>
+    <string name="moreinfo_header_fuel_economy">Fuel Economy</string>
 
-    <string name="tax_status">Tax</string>
-    <string name="tax_cost">Tax Cost</string>
-    <string name="tax_output">CO₂</string>
-
-    <string name="mot_status">MOT</string>
+    <string name="status">Status</string>
+    <string name="days_left">Days Left</string>
 
     <string name="euro_status">Euro Status</string>
     <string name="v5c_issued">V5C Issued</string>
     <string name="registered_near">Registered</string>
+    <string name="insurance_group">Insurance Group</string>
+
+    <string name="cost_12_months">12 Months Cost</string>
+    <string name="cost_6_months">6 Months Cost</string>
+    <string name="output">Output</string>
+
+    <string name="zeroTo60">0–60</string>
+    <string name="top_speed">Top Speed</string>
+
+    <string name="urban">Urban</string>
+    <string name="extra_urban">Extra Urban</string>
+    <string name="combined">Combined</string>
 
     <string name="empty_reg">Please enter a registration</string>
     <string name="invalid_plate">Invalid registration</string>
     <string name="no_data">No data found for the registration</string>
     <string name="empty_history">There is nothing in history right now</string>
 
-    <string name="tooltip_gallery">View images for this car (opens in browser)</string>
-    <string name="tooltip_more">Tax and MOT information</string>
-    <string name="tooltip_go">Lookup registration</string>
+    <string name="tooltip_lookup">Lookup registration</string>
     <string name="tooltip_clear">Clear lookup history</string>
     <string name="confirm_clear_history_title">Clear history?</string>
     <string name="confirm_clear_history_text">Do you want to clear lookup history?</string>
     <string name="tooltip_calcs">Useful calculators</string>
     <string name="tooltip_history">Lookup history</string>
-    <string name="tooltip_mpg">Fuel consumption</string>
-    <string name="tooltip_finance">Finance calculator</string>
-    <string name="tooltip_journey">Journey cost calculator</string>
-
-    <string name="tooltip_mot">MOT history</string>
 
     <string name="insufficient_vrm_info">There is not enough info for this VRM</string>
-
-    <string name="calculators">Calculators</string>
 
     <string name="distance">Distance</string>
     <string name="mpg">mpg</string>
@@ -58,16 +68,15 @@
     <string name="cost_text">Cost: £%1$.2f</string>
     <string name="fuel_text">%1$.2f Litres</string>
 
-    <string name="price">I\'d like to borrow:</string>
+    <string name="id_like_to_borrow">I\'d like to borrow:</string>
     <string name="price_text">£%1$,.2f</string>
-    <string name="period">Over a period of:</string>
+    <string name="over_a_period_of">Over a period of:</string>
     <string name="period_text">%1$d months</string>
-    <string name="apr_text">With an APR of:</string>
-    <string name="APR">APR</string>
+    <string name="with_apr_of">With an APR of:</string>
+    <string name="apr">APR</string>
     <string name="summary">Summary</string>
     <string name="monthly_payment">Monthly repayment</string>
     <string name="total_payment">Total repayment</string>
-    <string name="no_price">£0.00</string>
 
     <string name="error">An error occurred</string>
     <string name="vehicle_type">Vehicle type</string>

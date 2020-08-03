@@ -1,152 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/apr"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:gravity="center"
-        android:hint="@string/APR"
-        android:importantForAutofill="no"
-        android:inputType="numberDecimal"
-        android:textColor="@color/primary_content"
-        android:textColorHint="@color/primary_content"
-        app:layout_constraintEnd_toStartOf="@id/aprDisplay"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/aprTitle" />
-
-    <SeekBar
-        android:id="@+id/price"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:max="25"
-        android:min="1"
-        app:layout_constraintEnd_toStartOf="@id/priceDisplay"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/priceTitle" />
-
-    <SeekBar
-        android:id="@+id/period"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:max="60"
-        android:min="12"
-        app:layout_constraintEnd_toStartOf="@id/periodDisplay"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/periodTitle" />
-
-    <TableLayout
-        android:id="@+id/table"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/summary">
+        android:orientation="vertical">
 
-        <include
-            android:id="@+id/monthlyRow"
-            layout="@layout/row_layout" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <include
-            android:id="@+id/totalRow"
-            layout="@layout/row_layout" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                style="@style/FinanceTitle"
+                android:text="@string/id_like_to_borrow" />
 
-    </TableLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/priceTitle"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_margin="16dp"
-        android:gravity="center|start"
-        android:text="@string/price"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+                <SeekBar
+                    android:id="@+id/finance_price_item"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:min="1"
+                    android:max="25" />
 
-    <TextView
-        android:id="@+id/priceDisplay"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
-        android:gravity="center|start"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/price"
-        app:layout_constraintTop_toBottomOf="@id/priceTitle" />
+                <TextView
+                    android:id="@+id/finance_price_display"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    style="@style/FinanceDisplay" />
+            </LinearLayout>
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/periodTitle"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_margin="16dp"
-        android:gravity="center|start"
-        android:text="@string/period"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/price" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/periodDisplay"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
-        android:gravity="center|start"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/period"
-        app:layout_constraintTop_toBottomOf="@id/periodTitle" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                style="@style/FinanceTitle"
+                android:text="@string/over_a_period_of" />
 
-    <TextView
-        android:id="@+id/aprTitle"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_margin="16dp"
-        android:gravity="center|start"
-        android:text="@string/apr_text"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/period" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/aprDisplay"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
-        android:gravity="center|start"
-        android:text="%"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/apr"
-        app:layout_constraintTop_toBottomOf="@id/aprTitle" />
+                <SeekBar
+                    android:id="@+id/finance_period_item"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:min="12"
+                    android:max="60" />
 
-    <TextView
-        android:id="@+id/summary"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_margin="16dp"
-        android:gravity="center|start"
-        android:text="@string/summary"
-        android:textColor="@color/warning"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/table"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/apr" />
+                <TextView
+                    android:id="@+id/finance_period_display"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    style="@style/FinanceDisplay" />
+            </LinearLayout>
+        </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                style="@style/FinanceTitle"
+                android:text="@string/with_apr_of" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/finance_apr_item"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:gravity="center"
+                    android:hint="@string/apr"
+                    android:fontFamily="@font/uknumberplate"
+                    android:textSize="24sp"
+                    android:importantForAutofill="no"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/primary_content"
+                    android:textColorHint="@color/primary_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    style="@style/FinanceDisplay"
+                    android:text="%" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            style="@style/MiniTitle"
+            android:text="@string/summary" />
+
+        <TableLayout
+            android:id="@+id/table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center">
+
+            <include
+                android:id="@+id/monthlyRow"
+                layout="@layout/row_layout" />
+
+            <include
+                android:id="@+id/totalRow"
+                layout="@layout/row_layout" />
+
+        </TableLayout>
+
+    </LinearLayout>
+</ScrollView>

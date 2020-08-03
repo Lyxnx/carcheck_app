@@ -13,9 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import static net.lyxnx.carcheck.CalculatorsActivity.isDouble;
-import static net.lyxnx.carcheck.CalculatorsActivity.round;
-import static net.lyxnx.carcheck.CalculatorsActivity.toDouble;
+import static net.lyxnx.carcheck.util.Util.isDouble;
+import static net.lyxnx.carcheck.util.Util.round;
+import static net.lyxnx.carcheck.util.Util.toDouble;
 
 public class FuelCostCalculatorFragment extends Fragment {
 

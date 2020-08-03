@@ -1,10 +1,16 @@
 package net.lyxnx.carcheck.util;
 
+import android.widget.EditText;
+
 import net.lyxnx.carcheck.R;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import androidx.annotation.DrawableRes;
 
 public class Util {
 
@@ -17,7 +23,7 @@ public class Util {
         return date.format(DateTimeFormatter.ofPattern(DATE_PATTERN));
     }
 
-    public static Integer getDrawableId(String name) {
+    public static @DrawableRes Integer getDrawableId(String name) {
         try {
             Field f = R.drawable.class.getDeclaredField(name);
             return f.getInt(f);
@@ -26,9 +32,31 @@ public class Util {
         }
     }
 
-    public static Integer getDrawableId(String name, Integer def) {
+    public static @DrawableRes Integer getDrawableId(String name, Integer def) {
         Integer val = getDrawableId(name);
 
         return val == null ? def : val;
+    }
+
+    public static double round(double value, int dp) {
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(dp, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    public static double toDouble(EditText e) {
+        return Double.parseDouble(e.getText().toString());
+    }
+
+    public static boolean isDouble(EditText e) {
+        if (e.getText().toString().isEmpty())
+            return false;
+
+        try {
+            toDouble(e);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
     }
 }
