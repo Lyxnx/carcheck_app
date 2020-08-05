@@ -2,13 +2,12 @@
 <resources>
 
     <!-- Primary colours, backgrounds, etc -->
-    <color name="primary">#ced8e0</color>
+    <color name="primary">#242633</color>
 
     <!-- Text colours -->
-    <color name="primary_content">#3d3838</color>
-    <color name="secondary_content">#47738C</color>
+    <color name="primary_content">#85858D</color>
+    <color name="secondary_content">#EFE8CF</color>
 
     <color name="card">#35384B</color>
     <color name="card_pressed">#737484</color>
-
 </resources>
