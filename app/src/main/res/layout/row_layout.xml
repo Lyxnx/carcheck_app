@@ -31,6 +31,7 @@
         android:gravity="center"
         android:layout_gravity="center"
         android:textSize="22sp"
+        android:textColor="@color/primary_content"
         tools:text="Portsmouth / Hampshire and Dorset (including Isle of Wight)" />
 
 </LinearLayout>

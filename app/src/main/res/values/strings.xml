@@ -3,7 +3,6 @@
     <string name="enter_reg">Enter reg</string>
     <string name="history_sheet_title">Lookup History</string>
 
-    <string name="title_results">Results // %1$s</string>
     <string name="title_extra_info">Extra Info</string>
     <string name="title_calculators">Calculator // %1$s</string>
 
@@ -17,6 +16,7 @@
     <string name="type">Type</string>
     <string name="bhp">BHP</string>
     <string name="engine_size">Engine Size</string>
+    <string name="fuel_type">Fuel Type</string>
     <string name="year">Year</string>
 
     <string name="moreinfo_header_general">General</string>
@@ -49,6 +49,7 @@
     <string name="invalid_plate">Invalid registration</string>
     <string name="no_data">No data found for the registration</string>
     <string name="empty_history">There is nothing in history right now</string>
+    <string name="empty_saved">There are no saved vehicles yet</string>
 
     <string name="tooltip_lookup">Lookup registration</string>
     <string name="tooltip_clear">Clear lookup history</string>
@@ -56,6 +57,7 @@
     <string name="confirm_clear_history_text">Do you want to clear lookup history?</string>
     <string name="tooltip_calcs">Useful calculators</string>
     <string name="tooltip_history">Lookup history</string>
+    <string name="tooltip_saved">Saved vehicles</string>
 
     <string name="insufficient_vrm_info">There is not enough info for this VRM</string>
 
@@ -80,4 +82,9 @@
 
     <string name="error">An error occurred</string>
     <string name="vehicle_type">Vehicle type</string>
+
+    <!-- Eg 2010 Audi A3, Blue, 1390cc, Petrol -->
+    <string name="saved_info">%1$s %2$s %3$s, %4$s, %5$s, %6$s</string>
+    <string name="saved_vehicles_title">Saved vehicles</string>
+    <string name="saved_vehicles_body">These are your saved vehicles</string>
 </resources>

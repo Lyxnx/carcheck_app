@@ -1,8 +1,8 @@
 package net.lyxnx.carcheck.adapter;
 
-import net.lyxnx.carcheck.FinanceCalculatorFragment;
-import net.lyxnx.carcheck.FuelCostCalculatorFragment;
-import net.lyxnx.carcheck.JourneyCostCalculatorFragment;
+import net.lyxnx.carcheck.fragments.FinanceCalculatorFragment;
+import net.lyxnx.carcheck.fragments.FuelCostCalculatorFragment;
+import net.lyxnx.carcheck.fragments.JourneyCostCalculatorFragment;
 import net.lyxnx.carcheck.R;
 
 import androidx.annotation.NonNull;

@@ -6,41 +6,34 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import net.lyxnx.carcheck.R;
-import net.lyxnx.carcheck.adapter.HistoryBottomSheetAdapter;
-import net.lyxnx.carcheck.managers.HistoryManager;
+import net.lyxnx.carcheck.adapter.SavedVehicleBottomSheetAdapter;
+import net.lyxnx.carcheck.managers.SavedVehicleManager;
 import net.lyxnx.carcheck.model.SavedVehicle;
 import net.lyxnx.carcheck.util.Singletons;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
-public class HistoryBottomSheetDialog extends BottomSheetDialogFragment {
+public class SavedVehicleBottomSheetDialog extends BottomSheetDialogFragment {
 
     private Context context;
-    private final HistoryManager historyManager;
-    private TextView clearButton;
+    private final SavedVehicleManager savedVehicleManager;
 
     private PublishSubject<SavedVehicle> selectedListener = PublishSubject.create();
 
-    public HistoryBottomSheetDialog(Context context) {
+    public SavedVehicleBottomSheetDialog(Context context) {
         this.context = context;
-        this.historyManager = Singletons.getHistoryManager(context);
+        this.savedVehicleManager = Singletons.getSavedVehicleManager(context);
     }
 
     @Override
@@ -54,24 +47,14 @@ public class HistoryBottomSheetDialog extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.sheet_history, container, false);
+        View view = inflater.inflate(R.layout.sheet_saved, container, false);
 
         getDialog().setOnShowListener(dialog -> {
             View bottomSheet = ((BottomSheetDialog) dialog).findViewById(com.google.android.material.R.id.design_bottom_sheet);
             if (bottomSheet != null) {
                 BottomSheetBehavior.from(bottomSheet).setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
 
-                clearButton.setOnClickListener(i -> new AlertDialog.Builder(context)
-                        .setTitle(getString(R.string.confirm_clear_history_title))
-                        .setMessage(getString(R.string.confirm_clear_history_text))
-                        .setPositiveButton(android.R.string.ok, (dialogInterface, pos) -> {
-                            historyManager.clear();
 
-                            BottomSheetBehavior.from(bottomSheet).setState(BottomSheetBehavior.STATE_HIDDEN);
-                        })
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .show()
-                );
             }
         });
 
@@ -82,20 +65,15 @@ public class HistoryBottomSheetDialog extends BottomSheetDialogFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        clearButton = getView().findViewById(R.id.clearButton);
+        RecyclerView savedRecyclerView = getView().findViewById(R.id.savedRecyclerView);
 
-        RecyclerView historyRecyclerView = getView().findViewById(R.id.historyRecyclerView);
-
-        historyManager.getSavedVehicles()
+        savedVehicleManager.getSavedVehicles()
                 .observe(getActivity(), response -> {
-                    List<SavedVehicle> items = new ArrayList<>(response);
-                    Collections.reverse(items);
+                    SavedVehicleBottomSheetAdapter adapter = new SavedVehicleBottomSheetAdapter(context);
+                    adapter.setData(savedVehicleManager.getSavedVehicles().getValue());
 
-                    HistoryBottomSheetAdapter adapter = new HistoryBottomSheetAdapter();
-                    adapter.setData(items);
-
-                    historyRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-                    historyRecyclerView.setAdapter(adapter);
+                    savedRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    savedRecyclerView.setAdapter(adapter);
 
                     adapter.getClickListener()
                             .subscribe(item -> {
@@ -109,7 +87,7 @@ public class HistoryBottomSheetDialog extends BottomSheetDialogFragment {
     }
 
     public boolean hasItems() {
-        return historyManager.isEmpty();
+        return savedVehicleManager.isEmpty();
     }
 
     public PublishSubject<SavedVehicle> getSelectedListener() {

@@ -3,11 +3,11 @@ package net.lyxnx.carcheck.model;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CardItem {
+public class ExtraInfoItem {
     private final String header;
     private Map<String, String> items;
 
-    public CardItem(String header) {
+    public ExtraInfoItem(String header) {
         this.header = header;
         this.items = new HashMap<>();
     }

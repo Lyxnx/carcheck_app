@@ -1,4 +1,4 @@
-package net.lyxnx.carcheck;
+package net.lyxnx.carcheck.fragments;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import net.lyxnx.carcheck.R;
 import net.lyxnx.carcheck.util.Util;
 
 import androidx.annotation.NonNull;

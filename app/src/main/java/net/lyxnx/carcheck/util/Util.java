@@ -38,6 +38,19 @@ public class Util {
         return val == null ? def : val;
     }
 
+    public static @DrawableRes int getVehicleType(String type) {
+        switch (type) {
+            case "HCV":
+                return R.drawable.ic_vehicle_hgv;
+            case "LCV":
+                return R.drawable.ic_vehicle_lcv;
+            case "Motorcycle":
+                return R.drawable.ic_vehicle_motorcycle;
+            default:
+                return R.drawable.ic_vehicle_car;
+        }
+    }
+
     public static double round(double value, int dp) {
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(dp, RoundingMode.HALF_UP);

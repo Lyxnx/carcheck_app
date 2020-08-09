@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import net.lyxnx.carcheck.dialog.HistoryBottomSheetDialog;
-import net.lyxnx.carcheck.util.History;
+import net.lyxnx.carcheck.dialog.SavedVehicleBottomSheetDialog;
 import net.lyxnx.carcheck.util.RegFetcher;
 import net.lyxnx.carcheck.util.RxUtils;
 
@@ -21,16 +21,10 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private History history;
-    private HistoryBottomSheetDialog historyDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        history = History.getHistory();
-        history.initialise(this);
 
         Button go = findViewById(R.id.buttonGo);
         EditText input = findViewById(R.id.input);
@@ -74,12 +68,12 @@ public class MainActivity extends AppCompatActivity {
         calcs.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, CalculatorsActivity.class)));
 
-        historyDialog = new HistoryBottomSheetDialog();
+        HistoryBottomSheetDialog historyDialog = new HistoryBottomSheetDialog(this);
 
         Button historyButton = findViewById(R.id.buttonHistory);
         TooltipCompat.setTooltipText(historyButton, getString(R.string.tooltip_history));
         historyButton.setOnClickListener(view -> {
-            if (history.isEmpty()) {
+            if (historyDialog.hasItems()) {
                 Toast.makeText(this, getString(R.string.empty_history), Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -90,17 +84,34 @@ public class MainActivity extends AppCompatActivity {
         });
 
         historyDialog.getSelectedListener()
-                .subscribe(item ->
-                        fetcher.fetchVehicle(item.getVrm())
-                                .subscribe(
-                                        result -> {
-                                            Intent i = new Intent(this, VehicleInfoActivity.class);
-                                            i.putExtra("info", result);
-                                            startActivity(i);
-                                        },
-                                        RxUtils.ERROR_CONSUMER.apply(TAG, this)
-                                )
+                .subscribe(item -> {
+                            Intent i = new Intent(this, VehicleInfoActivity.class);
+                            i.putExtra("info", item.getInfo());
+                            startActivity(i);
+                        }
                 );
+
+        SavedVehicleBottomSheetDialog savedDialog = new SavedVehicleBottomSheetDialog(this);
+
+        Button savedButton = findViewById(R.id.buttonSaved);
+        TooltipCompat.setTooltipText(savedButton, getString(R.string.tooltip_saved));
+        savedButton.setOnClickListener(view -> {
+            if (savedDialog.hasItems()) {
+                Toast.makeText(this, getString(R.string.empty_saved), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!savedDialog.isAdded()) {
+                savedDialog.show(getSupportFragmentManager(), SavedVehicleBottomSheetDialog.class.getSimpleName());
+            }
+        });
+
+        savedDialog.getSelectedListener()
+                .subscribe(item -> {
+                    Intent i = new Intent(this, VehicleInfoActivity.class);
+                    i.putExtra("info", item.getInfo());
+                    startActivity(i);
+                });
     }
 
     @Override

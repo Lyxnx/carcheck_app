@@ -13,9 +13,11 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
+import net.lyxnx.carcheck.managers.SavedVehicleManager;
 import net.lyxnx.carcheck.model.VehicleInfo;
 import net.lyxnx.carcheck.util.RegFetcher;
 import net.lyxnx.carcheck.util.RxUtils;
+import net.lyxnx.carcheck.util.Singletons;
 
 import java.util.stream.Stream;
 
@@ -36,7 +38,7 @@ public class VehicleInfoActivity extends InfoActivity {
 
         info = getIntent().getParcelableExtra("info");
 
-        setTitle(getString(R.string.title_results, info.getReg()));
+        setTitle(info.getReg());
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -74,7 +76,7 @@ public class VehicleInfoActivity extends InfoActivity {
                                 info = result;
                                 table.removeAllViews();
                                 populateTable(table, result);
-                                setTitle(getString(R.string.title_results, result.getReg()));
+                                setTitle(result.getReg());
                             },
                             RxUtils.ERROR_CONSUMER.apply(TAG, this)
                     );
@@ -90,6 +92,16 @@ public class VehicleInfoActivity extends InfoActivity {
         }
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If saved, highlight the icon
+        if (Singletons.getSavedVehicleManager(this).contains(info.getReg())) {
+            menu.findItem(R.id.action_save).setIcon(getDrawable(R.drawable.ic_favourite_selected));
+        }
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -122,6 +134,17 @@ public class VehicleInfoActivity extends InfoActivity {
 
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                 return true;
+            case R.id.action_save:
+                SavedVehicleManager svm = Singletons.getSavedVehicleManager(this);
+
+                if (svm.contains(info.getReg())) {
+                    item.setIcon(getDrawable(R.drawable.ic_favourite));
+                    svm.remove(info);
+                } else {
+                    item.setIcon(getDrawable(R.drawable.ic_favourite_selected));
+                    svm.insert(info);
+                }
+                return true;
             case android.R.id.home:
                 this.finish();
                 return true;
@@ -137,6 +160,7 @@ public class VehicleInfoActivity extends InfoActivity {
         addToTable(table, getString(R.string.type), info.getVehicleType());
         addToTable(table, getString(R.string.bhp), info.getBHP());
         addToTable(table, getString(R.string.engine_size), info.getEngineSize());
+        addToTable(table, getString(R.string.fuel_type), info.getFuelType());
         addToTable(table, getString(R.string.year), info.getRegisteredDate());
     }
 }

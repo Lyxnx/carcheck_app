@@ -1,6 +1,5 @@
 package net.lyxnx.carcheck.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.VibrationEffect;
@@ -24,9 +23,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -47,13 +49,15 @@ public class RegFetcher {
 
     private static final int INSURANCE_GROUP = 0;
 
-    private final Activity activity;
+    private static final List<String> INVALID_STATUSES = Arrays.asList("Expired", "SORN", "No data available");
 
-    private RegFetcher(Activity activity) {
+    private final AppCompatActivity activity;
+
+    private RegFetcher(AppCompatActivity activity) {
         this.activity = activity;
     }
 
-    public static RegFetcher of(Activity activity) {
+    public static RegFetcher of(AppCompatActivity activity) {
         return new RegFetcher(activity);
     }
 
@@ -110,7 +114,7 @@ public class RegFetcher {
                         return;
                     }
 
-                    History.getHistory().insert(result.getReg(), result.getVehicleType());
+                    Singletons.getHistoryManager(activity).insert(result);
                 });
     }
 
@@ -160,7 +164,19 @@ public class RegFetcher {
         Elements data = tables.get(VEHICLE_MOT_SUMMARY_TABLE)
                 .select(TR_NOT_COLSPAN);
 
-        return new StatusItem(getTableRowEntry(data.get(0)), getTableRowEntry(data.get(1)));
+        String status = getTableRowEntry(data.get(0));
+
+        // If it is expired, data.get(1) will throw an error since there are no days left
+        if (status != null && isInvalidStatus(status)) {
+            return new StatusItem(status, null);
+        }
+
+        return new StatusItem(status, getTableRowEntry(data.get(1)));
+    }
+
+    private static boolean isInvalidStatus(String status) {
+        return INVALID_STATUSES.stream()
+                .anyMatch(status::contains);
     }
 
     private String getTableRowEntry(Element row) {
@@ -177,7 +193,14 @@ public class RegFetcher {
         Elements data = tables.get(VEHICLE_TAX_SUMMARY_TABLE)
                 .select(TR_NOT_COLSPAN);
 
-        return new StatusItem(getTableRowEntry(data.get(0)), getTableRowEntry(data.get(1)));
+        String status = getTableRowEntry(data.get(0));
+
+        // If it is expired, data.get(1) will throw an error since there are no days left
+        if (status != null && isInvalidStatus(status)) {
+            return new StatusItem(status, null);
+        }
+
+        return new StatusItem(status, getTableRowEntry(data.get(1)));
     }
 
     private CO2Info getCo2Info(Elements tables) {
@@ -221,6 +244,10 @@ public class RegFetcher {
 
         if (perfRows.isEmpty()) {
             return null;
+        }
+
+        if (perfRows.size() == 1) {
+            return new VehiclePerformance(getTableRowEntry(perfRows.get(0)), null);
         }
 
         return new VehiclePerformance(

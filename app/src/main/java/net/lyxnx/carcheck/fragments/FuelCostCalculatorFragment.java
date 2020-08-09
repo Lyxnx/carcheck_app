@@ -1,4 +1,4 @@
-package net.lyxnx.carcheck;
+package net.lyxnx.carcheck.fragments;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import net.lyxnx.carcheck.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,14 +31,29 @@ public class FuelCostCalculatorFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        EditText distance = view.findViewById(R.id.distance);
-        EditText mpg = view.findViewById(R.id.mpg);
+        View milesItem = view.findViewById(R.id.milesItem);
+        EditText distance = milesItem.findViewById(R.id.calcEditText);
+        TextView milesDesc = milesItem.findViewById(R.id.calcDescription);
+
+        setupItem(distance, getString(R.string.distance), milesDesc, getString(R.string.miles));
+
+        View mpgItem = view.findViewById(R.id.mpgItem);
+        EditText mpg = mpgItem.findViewById(R.id.calcEditText);
+        TextView mpgDesc = mpgItem.findViewById(R.id.calcDescription);
+
+        setupItem(mpg, getString(R.string.mpg), mpgDesc, getString(R.string.mpg));
+
         TextView requiredFuel = view.findViewById(R.id.requiredFuel);
         requiredFuel.setText(getString(R.string.fuel_text, 0.0));
 
         RequiredFuelWatcher rfw = new RequiredFuelWatcher(distance, mpg, requiredFuel);
         distance.addTextChangedListener(rfw);
         mpg.addTextChangedListener(rfw);
+    }
+
+    private void setupItem(EditText editText, String hint, TextView desc, String description) {
+        editText.setHint(hint);
+        desc.setText(description);
     }
 
     public class RequiredFuelWatcher implements TextWatcher {

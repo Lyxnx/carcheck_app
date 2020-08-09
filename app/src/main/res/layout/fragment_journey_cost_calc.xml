@@ -1,109 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:gravity="center_vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include
+        android:id="@+id/milesItem"
+        layout="@layout/calc_text_layout" />
+
+    <include
+        android:id="@+id/mpgItem"
+        layout="@layout/calc_text_layout" />
+
+    <include
+        android:id="@+id/fuelCostItem"
+        layout="@layout/calc_text_layout" />
+
+    <TextView
+        android:id="@+id/journeyCost"
+        android:textColor="@color/primary_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="75dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_corners"
+        android:gravity="center"
+        android:textSize="24sp"/>
 
-        <EditText
-            android:id="@+id/journeyDistance"
-            style="@style/PlateBox"
-            android:layout_width="0dp"
-            android:layout_height="75dp"
-            android:layout_margin="16dp"
-            android:hint="@string/distance"
-            android:inputType="numberDecimal"
-            android:textSize="28sp"
-            app:layout_constraintEnd_toStartOf="@id/journeyDistanceTitle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/journeyConsumption"
-            style="@style/PlateBox"
-            android:layout_width="0dp"
-            android:layout_height="75dp"
-            android:layout_margin="16dp"
-            android:hint="@string/mpg"
-            android:inputType="numberDecimal"
-            android:textSize="28sp"
-            app:layout_constraintEnd_toStartOf="@id/journeyConsumptionTitle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/journeyDistance" />
-
-        <EditText
-            android:id="@+id/fuelCost"
-            style="@style/PlateBox"
-            android:layout_width="0dp"
-            android:layout_height="75dp"
-            android:layout_margin="16dp"
-            android:hint="@string/fuel_cost"
-            android:inputType="numberDecimal"
-            android:textSize="28sp"
-            app:layout_constraintEnd_toStartOf="@id/fuelCostTitle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/journeyConsumption" />
-
-        <TextView
-            android:id="@+id/journeyConsumptionTitle"
-            android:layout_width="0dp"
-            android:layout_height="75dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center|start"
-            android:text="@string/mpg"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/journeyConsumption"
-            app:layout_constraintTop_toBottomOf="@id/journeyDistanceTitle" />
-
-        <TextView
-            android:id="@+id/journeyDistanceTitle"
-            android:layout_width="0dp"
-            android:layout_height="75dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center|start"
-            android:text="@string/miles"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/journeyDistance"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/fuelCostTitle"
-            android:layout_width="0dp"
-            android:layout_height="75dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center|start"
-            android:text="@string/pence_litre"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/fuelCost"
-            app:layout_constraintTop_toBottomOf="@id/journeyConsumptionTitle" />
-
-        <TextView
-            android:id="@+id/journeyCost"
-            android:layout_width="0dp"
-            android:layout_height="75dp"
-            android:layout_margin="16dp"
-            android:background="@drawable/rounded_corners"
-            android:gravity="center"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fuelCost" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

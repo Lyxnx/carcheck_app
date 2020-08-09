@@ -8,7 +8,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import net.lyxnx.carcheck.R;
-import net.lyxnx.carcheck.model.CardItem;
+import net.lyxnx.carcheck.model.ExtraInfoItem;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class CardItemRecyclerAdapter extends RecyclerView.Adapter<CardItemRecyclerAdapter.ViewHolder> {
 
     private final Context context;
-    private List<CardItem> items;
+    private List<ExtraInfoItem> items;
 
     public CardItemRecyclerAdapter(Context context) {
         this.context = context;
@@ -32,7 +32,7 @@ public class CardItemRecyclerAdapter extends RecyclerView.Adapter<CardItemRecycl
 
     @Override
     public void onBindViewHolder(@NonNull CardItemRecyclerAdapter.ViewHolder holder, int position) {
-        CardItem item = items.get(position);
+        ExtraInfoItem item = items.get(position);
 
         holder.header.setText(item.getHeader());
 
@@ -53,7 +53,7 @@ public class CardItemRecyclerAdapter extends RecyclerView.Adapter<CardItemRecycl
         return items == null ? 0 : items.size();
     }
 
-    public void setItems(List<CardItem> items) {
+    public void setItems(List<ExtraInfoItem> items) {
         this.items = items;
         notifyDataSetChanged();
     }

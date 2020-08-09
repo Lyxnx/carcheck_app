@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import net.lyxnx.carcheck.adapter.CardItemRecyclerAdapter;
-import net.lyxnx.carcheck.model.CardItem;
+import net.lyxnx.carcheck.model.ExtraInfoItem;
 import net.lyxnx.carcheck.model.VehicleInfo;
 
 import java.util.ArrayList;
@@ -53,10 +53,14 @@ public class MoreInfoActivity extends InfoActivity {
     }
 
     private void populateAdapter(CardItemRecyclerAdapter adapter, VehicleInfo info) {
-        List<CardItem> items = new ArrayList<>();
+        List<ExtraInfoItem> items = new ArrayList<>();
 
-        CardItem basicItem = new CardItem(getString(R.string.moreinfo_header_general));
-        basicItem.addItem(getString(R.string.euro_status), info.getEuroStatus());
+        ExtraInfoItem basicItem = new ExtraInfoItem(getString(R.string.moreinfo_header_general));
+
+        if (info.getEuroStatus() != null) {
+            basicItem.addItem(getString(R.string.euro_status), info.getEuroStatus());
+        }
+
         basicItem.addItem(getString(R.string.v5c_issued), info.getV5CIssueDate());
 
         if (info.getRegistryLocation() != null) {
@@ -69,19 +73,25 @@ public class MoreInfoActivity extends InfoActivity {
 
         items.add(basicItem);
 
-        CardItem taxItem = new CardItem(getString(R.string.moreinfo_header_tax));
+        ExtraInfoItem taxItem = new ExtraInfoItem(getString(R.string.moreinfo_header_tax));
         taxItem.addItem(getString(R.string.status), info.getTaxStatus().getStatus());
-        taxItem.addItem(getString(R.string.days_left), info.getTaxStatus().getDaysLeft());
+
+        if (info.getTaxStatus().getDaysLeft() != null) {
+            taxItem.addItem(getString(R.string.days_left), info.getTaxStatus().getDaysLeft());
+        }
 
         items.add(taxItem);
 
-        CardItem motItem = new CardItem(getString(R.string.moreinfo_header_mot));
+        ExtraInfoItem motItem = new ExtraInfoItem(getString(R.string.moreinfo_header_mot));
         motItem.addItem(getString(R.string.status), info.getMotStatus().getStatus());
-        motItem.addItem(getString(R.string.days_left), info.getMotStatus().getDaysLeft());
+
+        if (info.getMotStatus().getDaysLeft() != null) {
+            motItem.addItem(getString(R.string.days_left), info.getMotStatus().getDaysLeft());
+        }
 
         items.add(motItem);
 
-        CardItem co2Item = new CardItem(getString(R.string.moreinfo_header_co2));
+        ExtraInfoItem co2Item = new ExtraInfoItem(getString(R.string.moreinfo_header_co2));
         co2Item.addItem(getString(R.string.cost_12_months), info.getCo2Info().getCost12Months());
         co2Item.addItem(getString(R.string.cost_6_months), info.getCo2Info().getCost6Months());
         co2Item.addItem(getString(R.string.output), info.getCo2Info().getOutput());
@@ -89,7 +99,7 @@ public class MoreInfoActivity extends InfoActivity {
         items.add(co2Item);
 
         if (info.getPerformance() != null) {
-            CardItem performanceItem = new CardItem(getString(R.string.moreinfo_header_performance));
+            ExtraInfoItem performanceItem = new ExtraInfoItem(getString(R.string.moreinfo_header_performance));
             performanceItem.addItem(getString(R.string.zeroTo60), info.getPerformance().getZeroTo60());
             performanceItem.addItem(getString(R.string.top_speed), info.getPerformance().getTopSpeed());
 
@@ -97,7 +107,7 @@ public class MoreInfoActivity extends InfoActivity {
         }
 
         if (info.getFuelEconomy() != null) {
-            CardItem fuelItem = new CardItem(getString(R.string.moreinfo_header_fuel_economy));
+            ExtraInfoItem fuelItem = new ExtraInfoItem(getString(R.string.moreinfo_header_fuel_economy));
             fuelItem.addItem(getString(R.string.urban), info.getFuelEconomy().getUrbanMpg());
             fuelItem.addItem(getString(R.string.extra_urban), info.getFuelEconomy().getExtraUrbanMpg());
             fuelItem.addItem(getString(R.string.combined), info.getFuelEconomy().getCombined());

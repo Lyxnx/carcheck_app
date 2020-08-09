@@ -1,4 +1,4 @@
-package net.lyxnx.carcheck;
+package net.lyxnx.carcheck.fragments;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import net.lyxnx.carcheck.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,9 +31,23 @@ public class JourneyCostCalculatorFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        EditText journeyDistance = view.findViewById(R.id.journeyDistance);
-        EditText journeyConsumption = view.findViewById(R.id.journeyConsumption);
-        EditText fuelCost = view.findViewById(R.id.fuelCost);
+        View milesItem = view.findViewById(R.id.milesItem);
+        EditText journeyDistance = milesItem.findViewById(R.id.calcEditText);
+        TextView milesDesc = milesItem.findViewById(R.id.calcDescription);
+
+        setupItem(journeyDistance, getString(R.string.distance), milesDesc, getString(R.string.miles));
+
+        View mpgItem = view.findViewById(R.id.mpgItem);
+        EditText journeyConsumption = mpgItem.findViewById(R.id.calcEditText);
+        TextView mpgDesc = mpgItem.findViewById(R.id.calcDescription);
+
+        setupItem(journeyConsumption, getString(R.string.mpg), mpgDesc, getString(R.string.mpg));
+
+        View fuelCostItem = view.findViewById(R.id.fuelCostItem);
+        EditText fuelCost = fuelCostItem.findViewById(R.id.calcEditText);
+        TextView fuelCostDesc = fuelCostItem.findViewById(R.id.calcDescription);
+
+        setupItem(fuelCost, getString(R.string.fuel_cost), fuelCostDesc, getString(R.string.pence_litre));
 
         TextView journeyCost = view.findViewById(R.id.journeyCost);
         journeyCost.setText(getString(R.string.cost_text, 0.0));
@@ -40,6 +56,11 @@ public class JourneyCostCalculatorFragment extends Fragment {
         journeyDistance.addTextChangedListener(jcw);
         journeyConsumption.addTextChangedListener(jcw);
         fuelCost.addTextChangedListener(jcw);
+    }
+
+    private void setupItem(EditText editText, String hint, TextView desc, String description) {
+        editText.setHint(hint);
+        desc.setText(description);
     }
 
     public class JourneyCostWatcher implements TextWatcher {
