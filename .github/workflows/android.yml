@@ -22,4 +22,4 @@ jobs:
     - uses: AButler/upload-release-assets@v2.0
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        files: app/build/outputs/apk/debug/app-debug.apk
+        files: 'app/build/outputs/apk/debug/app-debug.apk'
