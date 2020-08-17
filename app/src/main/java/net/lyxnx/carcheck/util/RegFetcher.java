@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -130,7 +131,7 @@ public class RegFetcher {
                 .select(TR_NOT_COLSPAN);
 
         Map<Attribute, String> attributes = new HashMap<>();
-        attributes.put(Attribute.REG, reg.toUpperCase());
+        attributes.put(Attribute.REG, reg.toUpperCase(Locale.ROOT));
 
         for (Element el : trs) {
             Attribute attribute = Attribute.of(el.selectFirst("td.certLabel").text());

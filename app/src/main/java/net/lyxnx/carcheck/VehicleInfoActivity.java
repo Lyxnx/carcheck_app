@@ -24,6 +24,7 @@ import java.util.stream.Stream;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 public class VehicleInfoActivity extends InfoActivity {
 
@@ -110,7 +111,7 @@ public class VehicleInfoActivity extends InfoActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If saved, highlight the icon
         if (Singletons.getSavedVehicleManager(this).contains(info.getVrm())) {
-            menu.findItem(R.id.action_save).setIcon(getDrawable(R.drawable.ic_favourite_selected));
+            menu.findItem(R.id.action_save).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_favourite_selected));
         }
 
         return super.onPrepareOptionsMenu(menu);
@@ -150,10 +151,10 @@ public class VehicleInfoActivity extends InfoActivity {
                 SavedVehicleManager svm = Singletons.getSavedVehicleManager(this);
 
                 if (svm.contains(info.getVrm())) {
-                    item.setIcon(getDrawable(R.drawable.ic_favourite));
+                    item.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_favourite));
                     svm.remove(info);
                 } else {
-                    item.setIcon(getDrawable(R.drawable.ic_favourite_selected));
+                    item.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_favourite_selected));
                     svm.insert(info);
                 }
                 return true;

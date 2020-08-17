@@ -1,5 +1,6 @@
 package net.lyxnx.carcheck;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TableLayout;
@@ -14,6 +15,7 @@ public abstract class InfoActivity extends AppCompatActivity {
         finish();
     }
 
+    @SuppressLint("InflateParams")
     protected void addToTable(TableLayout table, String header, String value) {
         View v = LayoutInflater.from(this).inflate(R.layout.row_layout, null);
 

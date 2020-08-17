@@ -105,4 +105,9 @@
         <item name="android:textColorPrimary">@color/primary_content</item>
         <item name="colorAccent">@color/primary_content</item>
     </style>
+
+    <style name="ProgressContainer">
+        <item name="android:alpha">0.4</item>
+        <item name="android:background">#000</item>
+    </style>
 </resources>

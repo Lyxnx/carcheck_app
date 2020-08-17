@@ -1,5 +1,6 @@
 package net.lyxnx.carcheck.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ public class CardItemRecyclerAdapter extends RecyclerView.Adapter<CardItemRecycl
         return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.info_card, parent, false));
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public void onBindViewHolder(@NonNull CardItemRecyclerAdapter.ViewHolder holder, int position) {
         ExtraInfoItem item = items.get(position);
