@@ -4,7 +4,6 @@ import android.widget.EditText;
 
 import net.lyxnx.carcheck.R;
 
-import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -23,22 +22,8 @@ public class Util {
         return date.format(DateTimeFormatter.ofPattern(DATE_PATTERN));
     }
 
-    public static @DrawableRes Integer getDrawableId(String name) {
-        try {
-            Field f = R.drawable.class.getDeclaredField(name);
-            return f.getInt(f);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    public static @DrawableRes Integer getDrawableId(String name, Integer def) {
-        Integer val = getDrawableId(name);
-
-        return val == null ? def : val;
-    }
-
-    public static @DrawableRes int getVehicleType(String type) {
+    @DrawableRes
+    public static int getVehicleType(String type) {
         switch (type) {
             case "HCV":
                 return R.drawable.ic_vehicle_hgv;
@@ -61,15 +46,15 @@ public class Util {
         return Double.parseDouble(e.getText().toString());
     }
 
-    public static boolean isDouble(EditText e) {
+    public static boolean isNotDouble(EditText e) {
         if (e.getText().toString().isEmpty())
-            return false;
+            return true;
 
         try {
             toDouble(e);
-            return true;
-        } catch (NumberFormatException ex) {
             return false;
+        } catch (NumberFormatException ex) {
+            return true;
         }
     }
 }

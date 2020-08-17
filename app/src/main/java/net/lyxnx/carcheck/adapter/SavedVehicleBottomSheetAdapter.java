@@ -20,9 +20,9 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class SavedVehicleBottomSheetAdapter extends RecyclerView.Adapter<SavedVehicleBottomSheetAdapter.ViewHolder> {
 
-    private Context context;
+    private final Context context;
     private List<SavedVehicle> data;
-    private PublishSubject<SavedVehicle> clickListener = PublishSubject.create();
+    private final PublishSubject<SavedVehicle> clickListener = PublishSubject.create();
 
     public SavedVehicleBottomSheetAdapter(Context context) {
         this.context = context;
@@ -73,9 +73,9 @@ public class SavedVehicleBottomSheetAdapter extends RecyclerView.Adapter<SavedVe
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView vehicleType;
-        private TextView vrm;
-        private TextView saveInfo;
+        private final ImageView vehicleType;
+        private final TextView vrm;
+        private final TextView saveInfo;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

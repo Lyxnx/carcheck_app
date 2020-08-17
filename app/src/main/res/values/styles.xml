@@ -92,4 +92,17 @@
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:layout_marginBottom">8dp</item>
     </style>
+
+    <style name="TextButton" parent="@style/PrimaryContent">
+        <item name="android:background">@drawable/card_background</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/secondary_content</item>
+    </style>
+
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/primary</item>
+        <item name="android:textColorPrimary">@color/primary_content</item>
+        <item name="colorAccent">@color/primary_content</item>
+    </style>
 </resources>

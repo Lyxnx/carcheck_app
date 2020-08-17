@@ -26,7 +26,4 @@ public class RxUtils {
             Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_LONG).show();
         }
     };
-
-    public static final Consumer<Object> EMPTY_CONSUMER = v -> {
-    };
 }

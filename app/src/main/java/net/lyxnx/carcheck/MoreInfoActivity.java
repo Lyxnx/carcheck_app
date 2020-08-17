@@ -2,6 +2,7 @@ package net.lyxnx.carcheck;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import net.lyxnx.carcheck.adapter.CardItemRecyclerAdapter;
 import net.lyxnx.carcheck.model.ExtraInfoItem;
@@ -25,6 +26,12 @@ public class MoreInfoActivity extends InfoActivity {
         setTitle(getString(R.string.title_extra_info));
 
         VehicleInfo info = getIntent().getParcelableExtra("info");
+
+        if (info == null) {
+            Toast.makeText(this, getString(R.string.null_info), Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

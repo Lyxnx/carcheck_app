@@ -17,7 +17,7 @@ public class SavedVehicleManager extends FileBasedManager {
     public void remove(VehicleInfo info) {
         List<SavedVehicle> vehicles = getSavedVehicles0();
 
-        if (vehicles.removeIf(sv -> sv.getVrm().equals(info.getReg()))) {
+        if (vehicles.removeIf(sv -> sv.getVrm().equals(info.getVrm()))) {
             getSavedVehicles().setValue(vehicles);
             updateSavedVehicles();
         }

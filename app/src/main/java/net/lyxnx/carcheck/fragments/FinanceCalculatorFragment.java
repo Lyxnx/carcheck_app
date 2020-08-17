@@ -20,7 +20,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class FinanceCalculatorFragment extends Fragment {
 
-    private PublishSubject<String> progressChangeListener = PublishSubject.create();
+    private final PublishSubject<String> progressChangeListener = PublishSubject.create();
 
     @Nullable
     @Override
@@ -41,7 +41,7 @@ public class FinanceCalculatorFragment extends Fragment {
 
         SeekBar period = view.findViewById(R.id.finance_period_item);
         TextView periodDisplay = view.findViewById(R.id.finance_period_display);
-        periodDisplay.setText(getString(R.string.period_text, period.getProgress()));
+        periodDisplay.setText(getResources().getQuantityString(R.plurals.period_text, period.getProgress(), period.getProgress()));
 
         EditText apr = view.findViewById(R.id.finance_apr_item);
 
@@ -106,7 +106,7 @@ public class FinanceCalculatorFragment extends Fragment {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                periodDisplay.setText(getString(R.string.period_text, progress));
+                periodDisplay.setText(getResources().getQuantityString(R.plurals.period_text, progress, progress));
 
                 progressChangeListener.onNext(apr.getText().toString());
             }

@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import static net.lyxnx.carcheck.util.Util.isDouble;
+import static net.lyxnx.carcheck.util.Util.isNotDouble;
 import static net.lyxnx.carcheck.util.Util.round;
 import static net.lyxnx.carcheck.util.Util.toDouble;
 
@@ -86,7 +86,7 @@ public class JourneyCostCalculatorFragment extends Fragment {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (!isDouble(distance) || !isDouble(mpg) || !isDouble(cost)) {
+            if (isNotDouble(distance) || isNotDouble(mpg) || isNotDouble(cost)) {
                 return;
             }
 

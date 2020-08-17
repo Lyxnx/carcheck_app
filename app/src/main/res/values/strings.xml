@@ -73,18 +73,24 @@
     <string name="id_like_to_borrow">I\'d like to borrow:</string>
     <string name="price_text">£%1$,.2f</string>
     <string name="over_a_period_of">Over a period of:</string>
-    <string name="period_text">%1$d months</string>
+    <plurals name="period_text">
+        <item quantity="one">1 month</item>
+        <item quantity="other">%1$d months</item>
+    </plurals>
     <string name="with_apr_of">With an APR of:</string>
     <string name="apr">APR</string>
+    <string name="percent">%</string>
     <string name="summary">Summary</string>
     <string name="monthly_payment">Monthly repayment</string>
     <string name="total_payment">Total repayment</string>
 
     <string name="error">An error occurred</string>
+    <string name="null_info">The info object cannot be null</string>
+
     <string name="vehicle_type">Vehicle type</string>
 
     <!-- Eg 2010 Audi A3, Blue, 1390cc, Petrol -->
     <string name="saved_info">%1$s %2$s %3$s, %4$s, %5$s, %6$s</string>
     <string name="saved_vehicles_title">Saved vehicles</string>
-    <string name="saved_vehicles_body">These are your saved vehicles</string>
+    <string name="saved_vehicles_body">These are your saved vehicles. Any changes to the vehicle information will be updated on next search.</string>
 </resources>

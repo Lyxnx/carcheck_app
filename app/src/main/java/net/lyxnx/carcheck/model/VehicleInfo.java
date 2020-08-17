@@ -71,7 +71,7 @@ public class VehicleInfo implements Parcelable {
         return attributes.get(Attribute.REGISTERED_NEAR);
     }
 
-    public String getReg() {
+    public String getVrm() {
         return attributes.get(Attribute.REG);
     }
 

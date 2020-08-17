@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     );
         });
 
-        Button calcs = findViewById(R.id.buttonCalcs);
+        Button calcs = findViewById(R.id.buttonCalculators);
         TooltipCompat.setTooltipText(calcs, getString(R.string.tooltip_calcs));
         calcs.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, CalculatorsActivity.class)));

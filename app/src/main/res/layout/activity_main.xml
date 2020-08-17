@@ -27,7 +27,7 @@
 
 
     <Button
-        android:id="@+id/buttonCalcs"
+        android:id="@+id/buttonCalculators"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginHorizontal="16dp"

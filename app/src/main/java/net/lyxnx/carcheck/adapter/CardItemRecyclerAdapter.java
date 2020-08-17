@@ -45,7 +45,7 @@ public class CardItemRecyclerAdapter extends RecyclerView.Adapter<CardItemRecycl
 
                     return view;
                 })
-                .forEach(view -> holder.table.addView(view));
+                .forEach(holder.table::addView);
     }
 
     @Override
@@ -60,8 +60,8 @@ public class CardItemRecyclerAdapter extends RecyclerView.Adapter<CardItemRecycl
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView header;
-        TableLayout table;
+        final TextView header;
+        final TableLayout table;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

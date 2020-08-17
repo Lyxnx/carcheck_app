@@ -26,10 +26,10 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class SavedVehicleBottomSheetDialog extends BottomSheetDialogFragment {
 
-    private Context context;
+    private final Context context;
     private final SavedVehicleManager savedVehicleManager;
 
-    private PublishSubject<SavedVehicle> selectedListener = PublishSubject.create();
+    private final PublishSubject<SavedVehicle> selectedListener = PublishSubject.create();
 
     public SavedVehicleBottomSheetDialog(Context context) {
         this.context = context;

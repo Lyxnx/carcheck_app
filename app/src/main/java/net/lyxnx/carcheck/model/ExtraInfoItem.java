@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class ExtraInfoItem {
     private final String header;
-    private Map<String, String> items;
+    private final Map<String, String> items;
 
     public ExtraInfoItem(String header) {
         this.header = header;

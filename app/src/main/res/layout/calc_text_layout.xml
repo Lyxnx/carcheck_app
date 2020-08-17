@@ -14,7 +14,9 @@
         android:layout_margin="16dp"
         tools:hint="Distance"
         android:layout_gravity="center"
-        android:inputType="numberDecimal"/>
+        android:inputType="numberDecimal"
+        android:importantForAutofill="no"
+        tools:ignore="LabelFor" />
 
     <TextView
         android:id="@+id/calcDescription"

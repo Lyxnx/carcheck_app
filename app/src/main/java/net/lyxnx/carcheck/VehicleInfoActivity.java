@@ -38,7 +38,19 @@ public class VehicleInfoActivity extends InfoActivity {
 
         info = getIntent().getParcelableExtra("info");
 
-        setTitle(info.getReg());
+        if (info == null) {
+            Toast.makeText(this, getString(R.string.null_info), Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+        SavedVehicleManager svm = Singletons.getSavedVehicleManager(this);
+
+        if (svm.contains(info.getVrm())) {
+            svm.update(info);
+        }
+
+        setTitle(info.getVrm());
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,7 +63,7 @@ public class VehicleInfoActivity extends InfoActivity {
         TableLayout table = findViewById(R.id.infoTable);
         populateTable(table, info);
 
-        setText(findViewById(R.id.reg), info.getReg());
+        setText(findViewById(R.id.reg), info.getVrm());
 
         EditText reg = findViewById(R.id.reg);
         reg.setOnEditorActionListener((v, actionId, event) -> {
@@ -76,7 +88,7 @@ public class VehicleInfoActivity extends InfoActivity {
                                 info = result;
                                 table.removeAllViews();
                                 populateTable(table, result);
-                                setTitle(result.getReg());
+                                setTitle(result.getVrm());
                             },
                             RxUtils.ERROR_CONSUMER.apply(TAG, this)
                     );
@@ -97,7 +109,7 @@ public class VehicleInfoActivity extends InfoActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If saved, highlight the icon
-        if (Singletons.getSavedVehicleManager(this).contains(info.getReg())) {
+        if (Singletons.getSavedVehicleManager(this).contains(info.getVrm())) {
             menu.findItem(R.id.action_save).setIcon(getDrawable(R.drawable.ic_favourite_selected));
         }
 
@@ -137,7 +149,7 @@ public class VehicleInfoActivity extends InfoActivity {
             case R.id.action_save:
                 SavedVehicleManager svm = Singletons.getSavedVehicleManager(this);
 
-                if (svm.contains(info.getReg())) {
+                if (svm.contains(info.getVrm())) {
                     item.setIcon(getDrawable(R.drawable.ic_favourite));
                     svm.remove(info);
                 } else {

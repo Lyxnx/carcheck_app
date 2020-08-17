@@ -25,7 +25,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class FileBasedManager {
 
-    private MutableLiveData<List<SavedVehicle>> savedVehicles = new MutableLiveData<>();
+    private final MutableLiveData<List<SavedVehicle>> savedVehicles = new MutableLiveData<>();
 
     private final File file;
     private final Gson gson = new GsonBuilder()
@@ -110,6 +110,25 @@ public class FileBasedManager {
     public boolean contains(String vrm) {
         return getSavedVehicles0().stream()
                 .anyMatch(sv -> sv.getVrm().equalsIgnoreCase(vrm));
+    }
+
+    public void update(VehicleInfo info) {
+        List<SavedVehicle> vehicles = getSavedVehicles0();
+
+        if (vehicles.isEmpty()) {
+            return;
+        }
+
+        SavedVehicle sv = vehicles.stream()
+                .filter(saved -> saved.getVrm().equals(info.getVrm()))
+                .findFirst()
+                .orElse(null);
+
+        if (sv == null) {
+            return;
+        }
+
+        sv.setInfo(info);
     }
 
     public void clear() {

@@ -25,6 +25,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,11 +33,11 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class HistoryBottomSheetDialog extends BottomSheetDialogFragment {
 
-    private Context context;
+    private final Context context;
     private final HistoryManager historyManager;
     private TextView clearButton;
 
-    private PublishSubject<SavedVehicle> selectedListener = PublishSubject.create();
+    private final PublishSubject<SavedVehicle> selectedListener = PublishSubject.create();
 
     public HistoryBottomSheetDialog(Context context) {
         this.context = context;
@@ -61,7 +62,7 @@ public class HistoryBottomSheetDialog extends BottomSheetDialogFragment {
             if (bottomSheet != null) {
                 BottomSheetBehavior.from(bottomSheet).setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
 
-                clearButton.setOnClickListener(i -> new AlertDialog.Builder(context)
+                clearButton.setOnClickListener(i -> new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.AlertDialogStyle))
                         .setTitle(getString(R.string.confirm_clear_history_title))
                         .setMessage(getString(R.string.confirm_clear_history_text))
                         .setPositiveButton(android.R.string.ok, (dialogInterface, pos) -> {

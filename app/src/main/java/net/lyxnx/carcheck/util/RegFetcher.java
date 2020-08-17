@@ -1,7 +1,6 @@
 package net.lyxnx.carcheck.util;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.View;
@@ -99,11 +98,7 @@ public class RegFetcher {
 
                     Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
 
-                    if (Build.VERSION.SDK_INT >= 26) {
-                        vibrator.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
-                    } else {
-                        vibrator.vibrate(150);
-                    }
+                    vibrator.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
                 })
                 .switchIfEmpty(val ->
                         Toast.makeText(activity, activity.getString(R.string.no_data), Toast.LENGTH_LONG).show()

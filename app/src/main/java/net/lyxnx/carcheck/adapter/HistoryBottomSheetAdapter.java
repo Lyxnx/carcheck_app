@@ -19,7 +19,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 public class HistoryBottomSheetAdapter extends RecyclerView.Adapter<HistoryBottomSheetAdapter.ViewHolder> {
 
     private List<SavedVehicle> data;
-    private PublishSubject<SavedVehicle> clickListener = PublishSubject.create();
+    private final PublishSubject<SavedVehicle> clickListener = PublishSubject.create();
 
     public HistoryBottomSheetAdapter() {
     }
@@ -57,9 +57,9 @@ public class HistoryBottomSheetAdapter extends RecyclerView.Adapter<HistoryBotto
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView vehicleType;
-        private TextView vrm;
-        private TextView date;
+        private final ImageView vehicleType;
+        private final TextView vrm;
+        private final TextView date;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

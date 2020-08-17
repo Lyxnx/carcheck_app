@@ -15,7 +15,7 @@ public class SavedVehicle {
     }
 
     public SavedVehicle(VehicleInfo info, LocalDateTime date) {
-        this(info.getReg(), date, info.getVehicleType());
+        this(info.getVrm(), date, info.getVehicleType());
         this.info = info;
     }
 
@@ -33,6 +33,10 @@ public class SavedVehicle {
 
     public VehicleInfo getInfo() {
         return info;
+    }
+
+    public void setInfo(VehicleInfo info) {
+        this.info = info;
     }
 
     public static SavedVehicle ofNow(VehicleInfo info) {
