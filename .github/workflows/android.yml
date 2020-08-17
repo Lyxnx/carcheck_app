@@ -19,11 +19,10 @@ jobs:
       - name: Build project
         run: ./gradlew build
       - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: svenstaro/upload-release-action@v2
         with:
-          upload_url: 'https://uploads.github.com/repos/Lyxnx/carcheck_app/releases/29773516/assets{?name,label}'
-          asset_path: 'app/build/outputs/apk/debug/app-debug.apk'
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+#           upload_url: 'https://uploads.github.com/repos/Lyxnx/carcheck_app/releases/29773516/assets{?name,label}'
+          file: 'app/build/outputs/apk/debug/app-debug.apk'
           asset_name: 'CarCheck.apk'
-          asset_content_type: application/vnd.android.package-archive
+          overwrite: true
