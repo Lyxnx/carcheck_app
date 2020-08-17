@@ -23,7 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-        <!-- Elevation doesn't work properly unless the background for the bottomnav is white -->
+    <!-- Elevation doesn't work properly unless the background for the bottomnav is white -->
     <!-- So we shall add a shadow manually. Why hath thou forsaken me shitty android api -->
     <View
         android:id="@+id/shadow"
@@ -39,7 +39,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary"
-        android:elevation="16dp"
         android:itemBackground="@android:color/transparent"
         app:itemIconTint="@drawable/nav_icon_state"
         app:labelVisibilityMode="unlabeled"
