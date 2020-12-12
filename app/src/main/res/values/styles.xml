@@ -4,6 +4,7 @@
     <style name="Theme.CarCheck" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary</item>
+        <item name="android:navigationBarColor">@color/primary</item>
     </style>
 
     <style name="RegularFont">
@@ -94,7 +95,6 @@
     </style>
 
     <style name="TextButton" parent="@style/PrimaryContent">
-        <item name="android:background">@drawable/card_background</item>
         <item name="android:padding">8dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/secondary_content</item>

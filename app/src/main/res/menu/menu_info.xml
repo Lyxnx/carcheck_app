@@ -4,12 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/action_save"
-        android:icon="@drawable/ic_favourite"
-        app:showAsAction="ifRoom"
-        tools:ignore="MenuTitle"/>
-
-    <item
         android:id="@+id/action_more"
         android:icon="@drawable/ic_information"
         app:showAsAction="ifRoom"
