@@ -4,9 +4,9 @@
     <string name="history_sheet_title">Lookup History</string>
 
     <string name="title_extra_info">Extra Info</string>
-    <string name="title_calculators">Calculator // %1$s</string>
+    <string name="title_calculators">Calculator | %s</string>
 
-    <string name="title_journey">Journey</string>
+    <string name="title_journey">Journey Cost</string>
     <string name="title_fuel_cost">Fuel Cost</string>
     <string name="title_finance">Finance</string>
 
@@ -22,7 +22,7 @@
     <string name="moreinfo_header_general">General</string>
     <string name="moreinfo_header_tax">Tax</string>
     <string name="moreinfo_header_mot">MOT</string>
-    <string name="moreinfo_header_co2">CO₂ Output</string>
+    <string name="moreinfo_header_emissions">Emissions</string>
     <string name="moreinfo_header_performance">Performance</string>
     <string name="moreinfo_header_fuel_economy">Fuel Economy</string>
 
@@ -57,7 +57,6 @@
     <string name="confirm_clear_history_text">Do you want to clear lookup history?</string>
     <string name="tooltip_calcs">Useful calculators</string>
     <string name="tooltip_history">Lookup history</string>
-    <string name="tooltip_saved">Saved vehicles</string>
 
     <string name="insufficient_vrm_info">There is not enough info for this VRM</string>
 
@@ -84,7 +83,7 @@
     <string name="monthly_payment">Monthly repayment</string>
     <string name="total_payment">Total repayment</string>
 
-    <string name="error">An error occurred</string>
+    <string name="an_error_occurred">An error occurred</string>
     <string name="null_info">The info object cannot be null</string>
 
     <string name="vehicle_type">Vehicle type</string>
@@ -93,4 +92,8 @@
     <string name="saved_info">%1$s %2$s %3$s, %4$s, %5$s, %6$s</string>
     <string name="saved_vehicles_title">Saved vehicles</string>
     <string name="saved_vehicles_body">These are your saved vehicles. Any changes to the vehicle information will be updated on next search.</string>
+
+    <string name="info">Info</string>
+    <string name="error">Error</string>
+    <string name="close">Close</string>
 </resources>
