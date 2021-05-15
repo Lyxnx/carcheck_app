@@ -1,29 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    android:gravity="center_vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
 
-    <include
-        android:id="@+id/milesItem"
-        layout="@layout/calc_text_layout" />
+    <net.lyxnx.carcheck.widgets.EditTextTitle
+            android:id="@+id/distanceItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            app:hint="@string/distance"
+            app:description="@string/miles"
+            android:inputType="numberDecimal" />
 
-    <include
-        android:id="@+id/mpgItem"
-        layout="@layout/calc_text_layout" />
+    <net.lyxnx.carcheck.widgets.EditTextTitle
+            android:id="@+id/consumptionItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            app:hint="@string/mpg_title"
+            app:description="@string/mpg"
+            android:inputType="numberDecimal" />
 
     <TextView
-        android:id="@+id/requiredFuel"
-        android:layout_width="match_parent"
-        android:textColor="@color/primary_content"
-        android:layout_height="75dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/rounded_corners"
-        android:gravity="center"
-        android:textSize="24sp"/>
+            android:id="@+id/requiredFuel"
+            android:layout_width="match_parent"
+            android:textColor="@color/primary_content"
+            android:layout_height="75dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/rounded_corners"
+            android:gravity="center"
+            android:textSize="24sp"
+            tools:text="@string/fuel_text" />
 
 </LinearLayout>

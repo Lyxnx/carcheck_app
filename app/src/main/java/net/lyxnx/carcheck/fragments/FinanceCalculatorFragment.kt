@@ -1,91 +1,78 @@
 package net.lyxnx.carcheck.fragments
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.SeekBar
-import android.widget.SeekBar.OnSeekBarChangeListener
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import io.reactivex.rxjava3.subjects.PublishSubject
 import net.lyxnx.carcheck.R
+import net.lyxnx.carcheck.widgets.FinanceDisplayItem
+import net.lyxnx.carcheck.widgets.InfoTableRow
 import kotlin.math.pow
 
 class FinanceCalculatorFragment : Fragment() {
-
-    private val progressChangeListener = PublishSubject.create<String>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_finance_calc, container, false)
     }
 
+    private lateinit var costItem: FinanceDisplayItem
+    private lateinit var periodItem: FinanceDisplayItem
+    private lateinit var aprItem: FinanceDisplayItem
+
+    private lateinit var monthlyRow: InfoTableRow
+    private lateinit var totalRow: InfoTableRow
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setHeader(view.findViewById(R.id.monthlyRow), getString(R.string.monthly_payment))
-        setHeader(view.findViewById(R.id.totalRow), getString(R.string.total_payment))
+        costItem = view.findViewById(R.id.cost_item)
+        periodItem = view.findViewById(R.id.period_item)
+        aprItem = view.findViewById(R.id.apr_item)
 
-        val price = view.findViewById<SeekBar>(R.id.finance_price_item)
-        val priceDisplay = view.findViewById<TextView>(R.id.finance_price_display)
-        priceDisplay.text = getString(R.string.price_text, price.progress.toFloat() * 1000)
+        monthlyRow = view.findViewById(R.id.monthly_row)
+        totalRow = view.findViewById(R.id.total_row)
 
-        val period = view.findViewById<SeekBar>(R.id.finance_period_item)
-        val periodDisplay = view.findViewById<TextView>(R.id.finance_period_display)
-        periodDisplay.text = resources.getQuantityString(R.plurals.period_text, period.progress, period.progress)
+        costItem.apply {
+            setDisplay(getString(R.string.price_text, getProgress().toFloat() * 1000))
 
-        val apr = view.findViewById<EditText>(R.id.finance_apr_item)
-        progressChangeListener.subscribe { result: String ->
-            if (result.isEmpty()) {
-                return@subscribe
+            onProgressChanged.subscribe {
+                setDisplay(getString(R.string.price_text, getProgress().toFloat() * 1000))
+                calculateValues()
             }
+        }
+        periodItem.apply {
+            setDisplay(resources.getQuantityString(R.plurals.period_text, getProgress(), getProgress()))
 
-            val total = price.progress * 1000.toDouble()
-            val interest = apr.text.toString().toDouble()
-            val months = period.progress
-            val monthlyInterest = interest / 12 * .01
-            val monthlyCost = total /
-                    (((1 + monthlyInterest).pow(months.toDouble()) - 1) / (monthlyInterest * (1 + monthlyInterest).pow(months.toDouble())))
+            onProgressChanged.subscribe {
+                setDisplay(resources.getQuantityString(R.plurals.period_text, getProgress(), getProgress()))
+                calculateValues()
+            }
+        }
+        aprItem.onTextChanged.subscribe {
+            calculateValues()
+        }
+    }
 
-            setValue(view.findViewById(R.id.monthlyRow), getString(R.string.price_text, monthlyCost))
-            setValue(view.findViewById(R.id.totalRow), getString(R.string.price_text, monthlyCost * months))
+    private fun calculateValues() {
+        val interest = with(aprItem.getText()) {
+            if (this.isEmpty()) 0.toDouble() else this.toDouble()
         }
 
-        apr.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                progressChangeListener.onNext(s.toString())
-            }
-        })
+        val total = costItem.getProgress() * 1000.toDouble()
+        val months = periodItem.getProgress()
 
-        price.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar) {}
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                priceDisplay.text = getString(R.string.price_text, progress.toFloat() * 1000)
-                progressChangeListener.onNext(apr.text.toString())
-            }
-        })
+        if (interest == 0.toDouble()) {
+            monthlyRow.setValue(getString(R.string.price_text, total / months))
+            totalRow.setValue(getString(R.string.price_text, total))
+            return
+        }
 
-        period.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar) {}
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                periodDisplay.text = resources.getQuantityString(R.plurals.period_text, progress, progress)
-                progressChangeListener.onNext(apr.text.toString())
-            }
-        })
-    }
+        val monthlyInterest = interest / 12 * .01
+        val monthlyCost = total /
+                (((1 + monthlyInterest).pow(months.toDouble()) - 1) / (monthlyInterest * (1 + monthlyInterest).pow(months.toDouble())))
 
-    private fun setHeader(view: View, header: String) {
-        view.findViewById<TextView>(R.id.rowHeader).text = header
-    }
-
-    private fun setValue(view: View, value: String) {
-        view.findViewById<TextView>(R.id.rowValue).text = value
+        monthlyRow.setValue(getString(R.string.price_text, monthlyCost))
+        totalRow.setValue(getString(R.string.price_text, monthlyCost * months))
     }
 }

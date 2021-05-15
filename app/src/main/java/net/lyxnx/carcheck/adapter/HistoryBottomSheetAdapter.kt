@@ -14,13 +14,13 @@ import net.lyxnx.carcheck.viewmodels.SavedVehicle
 
 class HistoryBottomSheetAdapter : RecyclerView.Adapter<HistoryBottomSheetAdapter.ViewHolder>() {
 
-    var vehicleHistory: List<SavedVehicle> = ArrayList()
+    var vehicleHistory: List<SavedVehicle> = mutableListOf()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    val clickListener = PublishSubject.create<SavedVehicle>()
+    val clickListener: PublishSubject<SavedVehicle> = PublishSubject.create()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_history_row, parent, false))
@@ -38,11 +38,11 @@ class HistoryBottomSheetAdapter : RecyclerView.Adapter<HistoryBottomSheetAdapter
         }
     }
 
-    override fun getItemCount(): Int = vehicleHistory.size
+    override fun getItemCount() = vehicleHistory.size
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val vehicleType = itemView.findViewById<ImageView>(R.id.historyVehicleType)
-        val vrm = itemView.findViewById<TextView>(R.id.historyVrm)
-        val date = itemView.findViewById<TextView>(R.id.historyDate)
+        val vehicleType: ImageView = itemView.findViewById(R.id.historyVehicleType)
+        val vrm: TextView = itemView.findViewById(R.id.historyVrm)
+        val date: TextView = itemView.findViewById(R.id.historyDate)
     }
 }

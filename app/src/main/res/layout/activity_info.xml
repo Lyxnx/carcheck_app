@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".VehicleInfoActivity"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:theme="@style/ToolbarTheme"/>
+        style="@style/ToolbarStyle" />
 
     <LinearLayout
         android:layout_weight="1"
@@ -23,33 +21,20 @@
         android:layout_gravity="center"
         android:gravity="center">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/reg"
-            style="@style/PlateHeader"
+            style="@style/PlateInput"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:gravity="center"
-            android:hint="@string/enter_reg"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            android:inputType="textCapCharacters"
-            android:maxLength="7"
-            android:textAlignment="center" />
+            android:hint="@string/enter_reg" />
 
     </LinearLayout>
 
-    <LinearLayout
+    <TableLayout
+        android:id="@+id/infoTable"
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="16dp">
-
-        <TableLayout
-            android:id="@+id/infoTable"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        android:layout_height="wrap_content" />
 
     <include layout="@layout/progress_layout" />
 

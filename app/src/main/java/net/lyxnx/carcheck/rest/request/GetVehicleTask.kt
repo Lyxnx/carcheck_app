@@ -1,17 +1,17 @@
 package net.lyxnx.carcheck.rest.request
 
-import android.content.Context
 import io.reactivex.rxjava3.core.Observable
 import net.lyxnx.carcheck.rest.RestApi
 import net.lyxnx.carcheck.rest.Singletons
 import net.lyxnx.carcheck.rest.parser.VehicleHtmlParser
 import net.lyxnx.carcheck.rest.response.GetVehicleResponse
 import net.lyxnx.carcheck.rest.response.ScrapeResponse
+import net.lyxnx.simplerest.request.ApiRequestTask
 import org.jsoup.Jsoup
 
-class GetVehicleTask(context: Context, private val vrm: String) : ApiRequestTask<GetVehicleResponse>(context) {
+class GetVehicleTask(private val vrm: String) : ApiRequestTask<GetVehicleResponse, RestApi>() {
 
-    override fun buildObservable(context: Context, api: RestApi): Observable<GetVehicleResponse> {
+    override fun buildObservable(api: RestApi): Observable<GetVehicleResponse> {
         return api.scrapeUrl(Singletons.apiKey, "https://totalcarcheck.co.uk/FreeCheck?regno=$vrm")
                 .flatMap { scrapeResponse: ScrapeResponse ->
                     val response = GetVehicleResponse()

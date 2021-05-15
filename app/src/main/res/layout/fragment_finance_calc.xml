@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,128 +9,58 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <net.lyxnx.carcheck.widgets.FinanceDisplayItem
+            android:id="@+id/cost_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:description="@string/id_like_to_borrow"
+            app:min="1"
+            app:max="25"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                style="@style/FinanceTitle"
-                android:text="@string/id_like_to_borrow" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <SeekBar
-                    android:id="@+id/finance_price_item"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:min="1"
-                    android:max="25" />
-
-                <TextView
-                    android:id="@+id/finance_price_display"
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
-                    style="@style/FinanceDisplay" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
+        <net.lyxnx.carcheck.widgets.FinanceDisplayItem
+            android:id="@+id/period_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:description="@string/over_a_period_of"
+            app:min="12"
+            app:max="60"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                style="@style/FinanceTitle"
-                android:text="@string/over_a_period_of" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <SeekBar
-                    android:id="@+id/finance_period_item"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:min="12"
-                    android:max="60" />
-
-                <TextView
-                    android:id="@+id/finance_period_display"
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
-                    style="@style/FinanceDisplay" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
+        <net.lyxnx.carcheck.widgets.FinanceDisplayItem
+            android:id="@+id/apr_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                style="@style/FinanceTitle"
-                android:text="@string/with_apr_of" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/finance_apr_item"
-                    style="@style/PlateBox"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:gravity="center"
-                    android:hint="@string/apr"
-                    android:importantForAutofill="no"
-                    android:inputType="numberDecimal" />
-
-                <TextView
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
-                    style="@style/FinanceDisplay"
-                    android:text="@string/percent" />
-            </LinearLayout>
-        </LinearLayout>
+            app:description="@string/with_apr_of"
+            app:is_seekbar="false"
+            app:hint="@string/apr"
+            android:inputType="numberDecimal"
+            app:display="%" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="8dp"
             style="@style/MiniTitle"
             android:text="@string/summary" />
 
         <TableLayout
-            android:id="@+id/table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="16dp"
             android:gravity="center">
 
-            <include
-                android:id="@+id/monthlyRow"
-                layout="@layout/row_layout" />
+            <net.lyxnx.carcheck.widgets.InfoTableRow
+                android:id="@+id/monthly_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:header="@string/monthly_payment" />
 
-            <include
-                android:id="@+id/totalRow"
-                layout="@layout/row_layout" />
+            <net.lyxnx.carcheck.widgets.InfoTableRow
+                android:id="@+id/total_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:header="@string/total_payment" />
 
         </TableLayout>
 

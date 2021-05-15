@@ -1,13 +1,17 @@
 package net.lyxnx.carcheck.util
 
 import android.app.Activity
+import android.text.Editable
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ProgressBar
+import android.widget.SeekBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import net.lyxnx.carcheck.R
+import net.lyxnx.carcheck.dialog.popup
 import kotlin.math.round
 
 fun AppCompatActivity.toggleProgress(show: Boolean) {
@@ -15,11 +19,11 @@ fun AppCompatActivity.toggleProgress(show: Boolean) {
 }
 
 fun AppCompatActivity.showAlert(title: String, message: String) {
-    AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle))
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton(android.R.string.ok, null)
-            .show()
+    popup(this) {
+        title(title)
+        message(message)
+        positiveButton(android.R.string.ok, null)
+    }.show()
 }
 
 fun AppCompatActivity.showAlert(message: String) {
@@ -47,4 +51,14 @@ fun Double.round(decimals: Int): Double {
     var multiplier = 1.0
     repeat(decimals) { multiplier *= 10 }
     return round(this * multiplier) / multiplier
+}
+
+fun SeekBar.onProgressChanged(onProgressChanged: (Int, Boolean) -> Unit) {
+    setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        override fun onStartTrackingTouch(seekBar: SeekBar) {}
+        override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            onProgressChanged(progress, fromUser)
+        }
+    })
 }

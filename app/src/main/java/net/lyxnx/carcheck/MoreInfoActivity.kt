@@ -10,7 +10,6 @@ import net.lyxnx.carcheck.adapter.CardItemRecyclerAdapter
 import net.lyxnx.carcheck.adapter.MoreInfoCardItem
 import net.lyxnx.carcheck.rest.model.Vehicle
 import net.lyxnx.carcheck.util.showError
-import java.util.*
 
 class MoreInfoActivity : InfoActivity() {
 
@@ -52,7 +51,7 @@ class MoreInfoActivity : InfoActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.card_list)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        adapter = CardItemRecyclerAdapter(this)
+        adapter = CardItemRecyclerAdapter()
         recyclerView.adapter = adapter
         populateAdapter()
     }
@@ -65,22 +64,22 @@ class MoreInfoActivity : InfoActivity() {
     }
 
     private fun populateAdapter() {
-        val items = ArrayList<MoreInfoCardItem>()
+        val items = mutableListOf<MoreInfoCardItem>()
 
         items.add(MoreInfoCardItem(
                 getString(R.string.moreinfo_header_general),
                 listOf(
                         vehicle!!.euroStatus?.let {
-                            Pair(getString(R.string.euro_status), it)
+                            getString(R.string.euro_status) to it
                         },
                         vehicle!!.v5CIssueDate?.let {
-                            Pair(getString(R.string.v5c_issued), it)
+                            getString(R.string.v5c_issued) to it
                         },
                         vehicle!!.registryLocation?.let {
-                            Pair(getString(R.string.registered_near), it)
+                            getString(R.string.registered_near) to it
                         },
                         vehicle!!.insuranceGroup?.let {
-                            Pair(getString(R.string.insurance_group), it)
+                            getString(R.string.insurance_group) to it
                         }
                 )
         ))
@@ -90,10 +89,10 @@ class MoreInfoActivity : InfoActivity() {
                     getString(R.string.moreinfo_header_tax),
                     listOf(
                             taxStatus.status?.let {
-                                Pair(getString(R.string.status), it)
+                                getString(R.string.status) to it
                             },
                             taxStatus.daysLeft?.let {
-                                Pair(getString(R.string.days_left), it)
+                                getString(R.string.days_left) to it
                             }
                     )
             ))
@@ -104,10 +103,10 @@ class MoreInfoActivity : InfoActivity() {
                     getString(R.string.moreinfo_header_mot),
                     listOf(
                             motStatus.status?.let {
-                                Pair(getString(R.string.status), it)
+                                getString(R.string.status) to it
                             },
                             motStatus.daysLeft?.let {
-                                Pair(getString(R.string.days_left), it)
+                                getString(R.string.days_left) to it
                             }
                     )
             ))
@@ -117,33 +116,33 @@ class MoreInfoActivity : InfoActivity() {
             items.add(MoreInfoCardItem(
                     getString(R.string.moreinfo_header_emissions),
                     listOf(
-                            Pair(getString(R.string.cost_12_months), it.cost12Months),
+                            getString(R.string.cost_12_months) to it.cost12Months,
                             // Some tax can only be paid 12 mo at a time
-                            Pair(getString(R.string.cost_6_months), if (it.cost6Months == "£N/A") "N/A" else it.cost6Months),
-                            Pair(getString(R.string.output), it.co2Output)
+                            getString(R.string.cost_6_months) to if (it.cost6Months == "£N/A") "N/A" else it.cost6Months,
+                            getString(R.string.output) to it.co2Output
                     )
             ))
         }
 
-        vehicle!!.performance?.let { performance ->
+        vehicle!!.performance?.let {
             items.add(MoreInfoCardItem(
                     getString(R.string.moreinfo_header_performance),
                     listOf(
-                            performance.acceleration?.let {
-                                Pair(getString(R.string.zeroTo60), it)
+                            it.acceleration?.let { acceleration ->
+                                getString(R.string.zeroTo60) to acceleration
                             },
-                            Pair(getString(R.string.top_speed), performance.topSpeed)
+                            getString(R.string.top_speed) to it.topSpeed
                     )
             ))
         }
 
-        vehicle!!.economy?.let { econ ->
+        vehicle!!.economy?.let {
             items.add(MoreInfoCardItem(
                     getString(R.string.moreinfo_header_fuel_economy),
                     listOf(
-                            Pair(getString(R.string.urban), econ.urban),
-                            Pair(getString(R.string.extra_urban), econ.extraUrban),
-                            Pair(getString(R.string.combined), econ.combined)
+                            getString(R.string.urban) to it.urban,
+                            getString(R.string.extra_urban) to it.extraUrban,
+                            getString(R.string.combined) to it.combined
                     )
             ))
         }

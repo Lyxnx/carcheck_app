@@ -1,9 +1,8 @@
 package net.lyxnx.carcheck
 
-import android.view.LayoutInflater
 import android.widget.TableLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import net.lyxnx.carcheck.widgets.InfoTableRow
 
 open class InfoActivity : AppCompatActivity() {
 
@@ -12,11 +11,11 @@ open class InfoActivity : AppCompatActivity() {
     }
 
     fun TableLayout.add(header: String, value: String) {
-        val v = LayoutInflater.from(this@InfoActivity).inflate(R.layout.row_layout, null)
+        val row = InfoTableRow(context)
 
-        v.findViewById<TextView>(R.id.rowHeader).text = header
-        v.findViewById<TextView>(R.id.rowValue).text = value
+        row.setHeader(header)
+        row.setValue(value)
 
-        addView(v)
+        addView(row)
     }
 }

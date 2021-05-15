@@ -3,6 +3,7 @@ package net.lyxnx.carcheck.rest
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import net.lyxnx.carcheck.rest.response.ScrapeResponse
+import net.lyxnx.simplerest.ApiInterface
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Converter
@@ -11,9 +12,9 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import java.lang.reflect.Type
 import java.util.concurrent.TimeUnit
 
-object ApiInterface {
+class CarCheckApi : ApiInterface<RestApi> {
 
-    fun buildApiInterface(): RestApi {
+    override fun build(): RestApi {
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://api.scrapestack.com/")
                 .addConverterFactory(ScrapeResponseConverter.create())

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout"
+            style="@style/TextInputLayoutOutline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:hint="Input"
+            android:layout_margin="8dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input"
+                style="@style/TextInputEditText"
+                android:textSize="24sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:importantForAutofill="no" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/description"
+            style="@style/PrimaryContent"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            tools:text="miles"
+            android:textSize="24sp"/>
+
+    </LinearLayout>
+</merge>

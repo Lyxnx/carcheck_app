@@ -3,12 +3,11 @@ package net.lyxnx.carcheck
 import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import net.lyxnx.carcheck.dialog.HistoryBottomSheetDialog
 import net.lyxnx.carcheck.util.hideKeyboard
 import net.lyxnx.carcheck.util.showError
@@ -18,8 +17,8 @@ import net.lyxnx.carcheck.viewmodels.VehicleDetailsViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var vehicleDetailsViewModel: VehicleDetailsViewModel
-    private lateinit var historyViewModel: HistoryViewModel
+    private val vehicleDetailsViewModel: VehicleDetailsViewModel by viewModels()
+    private val historyViewModel: HistoryViewModel by viewModels()
 
     private lateinit var historyDialog: HistoryBottomSheetDialog
 
@@ -27,15 +26,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        vehicleDetailsViewModel = ViewModelProvider(this).get(VehicleDetailsViewModel::class.java)
-        historyViewModel = ViewModelProvider(this).get(HistoryViewModel::class.java)
-
         historyDialog = HistoryBottomSheetDialog()
 
         val go = findViewById<Button>(R.id.buttonGo)
         val input = findViewById<EditText>(R.id.input)
 
-        input.setOnEditorActionListener { _, actionId: Int, _ ->
+        input.setOnEditorActionListener { _, actionId, _ ->
             if (actionId != EditorInfo.IME_ACTION_DONE) {
                 return@setOnEditorActionListener false
             }
@@ -75,14 +71,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        historyDialog.selectedListener.subscribe { vehicle ->
+        historyDialog.selectedListener.subscribe {
             val i = Intent(this, VehicleInfoActivity::class.java)
-            i.putExtra(VehicleInfoActivity.PARAM_VEHICLE, vehicle.vehicle)
+            i.putExtra(VehicleInfoActivity.PARAM_VEHICLE, it.vehicle)
             startActivity(i)
         }
 
         historyDialog.clearListener.subscribe {
             historyViewModel.clear()
+            Toast.makeText(this, getString(R.string.history_cleared), Toast.LENGTH_SHORT).show()
         }
 
         setupObservers()
@@ -90,27 +87,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        vehicleDetailsViewModel.vehicleDetails.observe(this, { vehicle ->
+        vehicleDetailsViewModel.vehicleDetails.observe(this) {
             toggleProgress(false)
 
-            historyViewModel.push(vehicle)
+            historyViewModel.push(it)
 
             val intent = Intent(this, VehicleInfoActivity::class.java)
-            intent.putExtra(VehicleInfoActivity.PARAM_VEHICLE, vehicle)
+            intent.putExtra(VehicleInfoActivity.PARAM_VEHICLE, it)
             startActivity(intent)
-        })
+        }
 
-        vehicleDetailsViewModel.vehicleError.observe(this, { error ->
+        vehicleDetailsViewModel.vehicleError.observe(this) {
             toggleProgress(false)
-            showError(error)
-        })
+            showError(it)
+        }
 
-        historyViewModel.readErrorMessage.observe(this, { error -> showError(error) })
+        historyViewModel.readErrorMessage.observe(this, ::showError)
 
-        historyViewModel.writeErrorMessage.observe(this, { error -> showError(error) })
+        historyViewModel.writeErrorMessage.observe(this, ::showError)
 
-        historyViewModel.vehicleHistory.observe(this, { history ->
-            historyDialog.vehicleHistory = history
-        })
+        historyViewModel.vehicleHistory.observe(this) {
+            historyDialog.vehicleHistory = it
+        }
     }
 }

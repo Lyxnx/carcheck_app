@@ -1,6 +1,5 @@
 package net.lyxnx.carcheck.adapter
 
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import net.lyxnx.carcheck.R
@@ -17,25 +16,19 @@ class CalculatorsPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
         private const val TAB_COUNT = 3
     }
 
-    private val titles: Array<String> = arrayOf(
+    private val titles = arrayOf(
             fa.getString(R.string.title_journey),
             fa.getString(R.string.title_fuel_cost),
             fa.getString(R.string.title_finance)
     )
 
-    override fun createFragment(position: Int): Fragment {
-        return when (position) {
-            MPG -> FuelCostCalculatorFragment()
-            FINANCE -> FinanceCalculatorFragment()
-            else -> JourneyCostCalculatorFragment()
-        }
+    override fun createFragment(position: Int) = when (position) {
+        MPG -> FuelCostCalculatorFragment()
+        FINANCE -> FinanceCalculatorFragment()
+        else -> JourneyCostCalculatorFragment()
     }
 
-    override fun getItemCount(): Int {
-        return TAB_COUNT
-    }
+    override fun getItemCount() = TAB_COUNT
 
-    fun getTitle(position: Int): String {
-        return titles[position]
-    }
+    fun getTitle(position: Int) = titles[position]
 }

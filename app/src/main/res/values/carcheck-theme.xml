@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.CarCheck" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary_content</item>
+        <item name="android:windowBackground">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary</item>
+        <item name="android:textColor">@color/primary_content</item>
+    </style>
+
+    <style name="RegularFont">
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+    </style>
+
+    <style name="PrimaryContent" parent="@style/RegularFont">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="BoldFont" parent="PrimaryContent">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MiniTitle" parent="BoldFont">
+        <item name="android:textColor">@color/secondary_content</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="TitleThree" parent="BoldFont">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="PlateFont">
+        <item name="android:fontFamily">@font/uknumberplate</item>
+    </style>
+
+    <style name="PlateInput" parent="PlateFont">
+        <item name="android:textSize">50sp</item>
+        <item name="android:background">@drawable/rounded_corners</item>
+        <item name="android:textColor">@color/primary_content</item>
+        <item name="android:textColorHint">@color/primary_content</item>
+        <item name="android:layout_marginHorizontal">50dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:importantForAutofill">no</item>
+        <item name="android:maxLength">7</item>
+        <item name="android:inputType">textCapCharacters</item>
+        <item name="android:imeOptions">actionDone</item>
+    </style>
+
+    <style name="BaseButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <style name="TextButton" parent="@style/PrimaryContent">
+        <item name="android:padding">8dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/secondary_content</item>
+    </style>
+
+    <style name="IconButton">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
+    <!-- Toolbar styles -->
+
+    <style name="ToolbarStyle">
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.DayNight</item>
+        <item name="android:background">@color/primary</item>
+        <item name="android:theme">@style/ToolbarTheme</item>
+        <item name="titleTextAppearance">@style/ToolbarTitleTextAppearance</item>
+        <item name="subtitleTextAppearance">@style/ToolbarSubtitleTextAppearance</item>
+        <item name="android:elevation">8dp</item>
+    </style>
+
+    <style name="ToolbarTheme">
+        <!-- Color used for the title of the Toolbar - as long as not overridden -->
+        <item name="android:textColorPrimary">@color/primary_content</item>
+        <!-- Used to color back button and three dots -->
+        <item name="android:textColorSecondary">@color/primary_content</item>
+    </style>
+
+    <style name="ToolbarTitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/primary_content</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ToolbarSubtitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/primary_content</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <!-- Dialog styles -->
+
+    <style name="BasePopupDialogTheme" parent="Theme.MaterialComponents.Dialog.Alert" />
+
+    <style name="PopupDialog" parent="BasePopupDialogTheme">
+        <item name="android:windowBackground">@color/primary</item>
+    </style>
+
+    <style name="DialogButton" parent="BaseButton">
+        <item name="android:minWidth">36dp</item>
+        <item name="android:minHeight">36dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@drawable/dialog_buttons_text_colour_selector</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="DialogStyle" parent="Theme.MaterialComponents.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="backgroundTint">@color/primary</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="shapeAppearanceOverlay">@style/CustomShapeAppearanceBottomSheetDialog</item>
+    </style>
+
+    <style name="CustomShapeAppearanceBottomSheetDialog">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">8dp</item>
+        <item name="cornerSizeTopLeft">8dp</item>
+    </style>
+
+    <!-- Input boxes -->
+
+    <style name="TextInputEditTextTheme" parent="ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox">
+        <item name="colorControlActivated">@color/secondary_content</item>
+    </style>
+
+    <style name="TextInputEditText" parent="ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox">
+        <item name="android:textColor">@drawable/inputlayout_selector</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+    </style>
+
+    <style name="TextInputLayoutHintText" parent="TextAppearance.Design.Hint">
+        <item name="android:textColor">@color/secondary_content</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:lineSpacingMultiplier">1.22</item>
+    </style>
+
+    <style name="TextInputLayoutHelperText" parent="TextAppearance.Design.HelperText">
+        <item name="android:textColor">@color/secondary_content</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:lineSpacingMultiplier">1.22</item>
+    </style>
+
+    <style name="TextInputLayoutErrorText" parent="TextAppearance.Design.Error">
+        <item name="android:textColor">@color/error</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+    </style>
+
+    <style name="TextInputLayoutOutline" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextAppearance">@style/TextInputLayoutHintText</item>
+        <item name="helperTextTextAppearance">@style/TextInputLayoutHelperText</item>
+        <item name="errorTextAppearance">@style/TextInputLayoutErrorText</item>
+        <item name="boxStrokeColor">@drawable/inputlayout_selector</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="android:textColorHint">@color/primary_content</item> <!-- Placeholder text when field is not active -->
+        <item name="hintTextColor">@color/secondary_content</item> <!-- Hint text when field is active -->
+        <item name="materialThemeOverlay">@style/TextInputEditTextTheme</item>
+        <item name="passwordToggleTint">@color/secondary_content</item>
+        <item name="errorTextColor">@color/error</item>
+        <item name="errorIconTint">@color/error</item>
+        <item name="errorIconDrawable">@null</item>
+    </style>
+
+    <!-- Other -->
+
+    <style name="ProgressContainer">
+        <item name="android:alpha">0.4</item>
+        <item name="android:background">#000</item>
+    </style>
+</resources>

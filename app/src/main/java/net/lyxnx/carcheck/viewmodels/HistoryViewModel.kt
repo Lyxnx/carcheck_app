@@ -1,7 +1,6 @@
 package net.lyxnx.carcheck.viewmodels
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
@@ -10,9 +9,10 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.lyxnx.carcheck.rest.model.Vehicle
-import net.lyxnx.carcheck.rest.request.RequestTask
 import net.lyxnx.carcheck.util.gson.LocalDateTimeAdapter
+import net.lyxnx.simplerest.request.RequestTask
 import java.io.*
+import java.nio.file.Files
 import java.time.LocalDateTime
 import java.util.*
 
@@ -25,23 +25,22 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
     private val file = File(application.dataDir, "history.json")
 
     fun loadVehicleHistory() {
-        ParseVehicleFileTask(getApplication(), file).observable
+        ParseVehicleFileTask(file).observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ vehicles ->
-                    vehicleHistory.value = vehicles?.toMutableList() ?: ArrayList()
-                }, { throwable ->
-                    readErrorMessage.value = throwable.message
+                .subscribe({
+                    vehicleHistory.value = it?.toMutableList() ?: ArrayList()
+                }, {
+                    readErrorMessage.value = it.message
                 })
     }
 
     private fun writeVehicleFile() {
-        WriteVehicleFileTask(getApplication(), vehicleHistory.value!!, file).observable
+        WriteVehicleFileTask(vehicleHistory.value!!, file).observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                }, { throwable ->
-                    writeErrorMessage.value = throwable.message
+                .subscribe({}, {
+                    writeErrorMessage.value = it.message
                 })
     }
 
@@ -71,25 +70,26 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
         writeVehicleFile()
     }
 
-    fun isEmpty(): Boolean = vehicleHistory.value!!.isEmpty()
+    fun isEmpty() = vehicleHistory.value!!.isEmpty()
 
-    private class ParseVehicleFileTask(context: Context, private val file: File) : RequestTask<List<SavedVehicle>>(context) {
+    private class ParseVehicleFileTask(private val file: File) : RequestTask<List<SavedVehicle>>() {
 
         private val gson = GsonBuilder()
                 .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeAdapter())
                 .create()
 
-        override fun buildObservable(context: Context): Observable<List<SavedVehicle>> {
+        override fun buildObservable(): Observable<List<SavedVehicle>> {
             if (!file.exists()) {
                 return try {
                     file.createNewFile()
+                    Files.write(file.toPath(), "[]".toByteArray())
                     Observable.just(emptyList())
                 } catch (e: IOException) {
                     Observable.error(e)
                 }
             }
 
-            BufferedReader(FileReader(file)).use {
+            Files.readAllLines(file.toPath()).joinToString(separator = "").let {
                 val vehicles = gson.fromJson<List<SavedVehicle>>(it, object : TypeToken<List<SavedVehicle>>() {}.type)
                         ?: return Observable.error(IOException("Could not parse vehicle file"))
 
@@ -98,13 +98,13 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    private class WriteVehicleFileTask(context: Context, private val data: Any, private val file: File) : RequestTask<Unit>(context) {
+    private class WriteVehicleFileTask(private val data: Any, private val file: File) : RequestTask<Unit>() {
 
         private val gson = GsonBuilder()
                 .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeAdapter())
                 .create()
 
-        override fun buildObservable(context: Context): Observable<Unit> {
+        override fun buildObservable(): Observable<Unit> {
             BufferedWriter(FileWriter(file)).use {
                 return Observable.just(gson.toJson(data, it))
             }

@@ -46,10 +46,8 @@
     <string name="combined">Combined</string>
 
     <string name="empty_reg">Please enter a registration</string>
-    <string name="invalid_plate">Invalid registration</string>
-    <string name="no_data">No data found for the registration</string>
     <string name="empty_history">There is nothing in history right now</string>
-    <string name="empty_saved">There are no saved vehicles yet</string>
+    <string name="history_cleared">Lookup history cleared</string>
 
     <string name="tooltip_lookup">Lookup registration</string>
     <string name="tooltip_clear">Clear lookup history</string>
@@ -61,6 +59,7 @@
     <string name="insufficient_vrm_info">There is not enough info for this VRM</string>
 
     <string name="distance">Distance</string>
+    <string name="mpg_title">Mpg</string>
     <string name="mpg">mpg</string>
     <string name="fuel_cost">Fuel cost</string>
 
@@ -78,22 +77,14 @@
     </plurals>
     <string name="with_apr_of">With an APR of:</string>
     <string name="apr">APR</string>
-    <string name="percent">%</string>
     <string name="summary">Summary</string>
     <string name="monthly_payment">Monthly repayment</string>
     <string name="total_payment">Total repayment</string>
 
-    <string name="an_error_occurred">An error occurred</string>
     <string name="null_info">The info object cannot be null</string>
 
     <string name="vehicle_type">Vehicle type</string>
 
-    <!-- Eg 2010 Audi A3, Blue, 1390cc, Petrol -->
-    <string name="saved_info">%1$s %2$s %3$s, %4$s, %5$s, %6$s</string>
-    <string name="saved_vehicles_title">Saved vehicles</string>
-    <string name="saved_vehicles_body">These are your saved vehicles. Any changes to the vehicle information will be updated on next search.</string>
-
     <string name="info">Info</string>
     <string name="error">Error</string>
-    <string name="close">Close</string>
 </resources>

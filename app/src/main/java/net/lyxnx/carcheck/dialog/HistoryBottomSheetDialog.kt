@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -44,15 +42,15 @@ class HistoryBottomSheetDialog : BottomSheetDialogFragment() {
                 BottomSheetBehavior.from(bottomSheet).state = BottomSheetBehavior.STATE_HALF_EXPANDED
 
                 clearButton.setOnClickListener {
-                    AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogStyle))
-                            .setTitle(getString(R.string.confirm_clear_history_title))
-                            .setMessage(getString(R.string.confirm_clear_history_text))
-                            .setPositiveButton(android.R.string.ok) { _, _ ->
-                                clearListener.onNext(Unit)
-                                BottomSheetBehavior.from(bottomSheet).setState(BottomSheetBehavior.STATE_HIDDEN)
-                            }
-                            .setNegativeButton(android.R.string.cancel, null)
-                            .show()
+                    popup(requireContext()) {
+                        title(getString(R.string.confirm_clear_history_title))
+                        message(getString(R.string.confirm_clear_history_text))
+                        positiveButton(android.R.string.ok) { _, _ ->
+                            clearListener.onNext(Unit)
+                            BottomSheetBehavior.from(bottomSheet).state = BottomSheetBehavior.STATE_HIDDEN
+                        }
+                        negativeButton(android.R.string.cancel, null)
+                    }.show()
                 }
             }
         }
