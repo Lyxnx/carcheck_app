@@ -1,37 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools" package="net.lyxnx.carcheck">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="net.lyxnx.carcheck">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
-            android:name=".base.BaseApplication"
-            android:usesCleartextTraffic="true"
-            android:allowBackup="false"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/Theme.CarCheck"
-            tools:ignore="GoogleAppIndexingWarning">
+        android:name=".base.BaseApplication"
+        android:usesCleartextTraffic="true"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.CarCheck"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-                android:name=".MainActivity"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="stateHidden|adjustResize">
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".CalculatorsActivity"
-                android:screenOrientation="portrait" />
-        <activity android:name=".VehicleInfoActivity"
-                android:screenOrientation="portrait" />
-        <activity android:name=".MoreInfoActivity"
-                android:screenOrientation="portrait" />
+        <activity
+            android:name=".CalculatorsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VehicleInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MoreInfoActivity"
+            android:screenOrientation="portrait" />
+
+        <meta-data
+            android:name="com.google.android.gms.car.application"
+            android:resource="@xml/automotive_app_desc" />
+
+        <service
+            android:name=".auto.CarCheckAutoService"
+            android:exported="true"
+            tools:ignore="ExportedService">
+
+            <intent-filter>
+                <action android:name="androidx.car.app.CarAppService" />
+                <category android:name="androidx.car.app.category.PARKING" />
+            </intent-filter>
+        </service>
     </application>
 </manifest>
