@@ -1,5 +1,6 @@
 package net.lyxnx.carcheck.util
 
+import android.content.Context
 import androidx.annotation.DrawableRes
 import net.lyxnx.carcheck.R
 
@@ -18,5 +19,9 @@ object UiUtil {
             "Motorcycle" -> R.drawable.ic_vehicle_motorcycle
             else -> R.drawable.ic_vehicle_car
         }
+    }
+
+    fun getGenericErrorMessage(context: Context): String {
+        return context.getString(R.string.generic_error)
     }
 }

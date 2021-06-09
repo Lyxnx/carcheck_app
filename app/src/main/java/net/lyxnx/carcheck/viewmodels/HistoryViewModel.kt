@@ -14,13 +14,12 @@ import net.lyxnx.simplerest.request.RequestTask
 import java.io.*
 import java.nio.file.Files
 import java.time.LocalDateTime
-import java.util.*
 
 class HistoryViewModel(application: Application) : AndroidViewModel(application) {
 
     val readErrorMessage = MutableLiveData<String>()
     val writeErrorMessage = MutableLiveData<String>()
-    val vehicleHistory = MutableLiveData<MutableList<SavedVehicle>>()
+    val vehicleHistory = MutableLiveData<List<SavedVehicle>>()
 
     private val file = File(application.dataDir, "history.json")
 
@@ -45,7 +44,7 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun push(vehicle: Vehicle) {
-        val vehicles = vehicleHistory.value!!
+        val vehicles = vehicleHistory.value!!.toMutableList()
 
         vehicles.apply {
             add(SavedVehicle.ofNow(vehicle))
@@ -56,7 +55,7 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun clear() {
-        val vehicles = vehicleHistory.value!!
+        val vehicles = vehicleHistory.value!!.toMutableList()
 
         if (vehicles.isEmpty()) {
             return

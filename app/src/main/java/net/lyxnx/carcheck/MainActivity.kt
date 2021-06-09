@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import net.lyxnx.carcheck.dialog.HistoryBottomSheetDialog
+import net.lyxnx.carcheck.enums.RequestStatus
 import net.lyxnx.carcheck.util.hideKeyboard
 import net.lyxnx.carcheck.util.showError
 import net.lyxnx.carcheck.util.toggleProgress

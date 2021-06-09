@@ -10,7 +10,9 @@ enum class Attribute(val mutator: (String) -> String = { s -> s }) {
     EURO_STATUS,
 
     // need the contains check since some BHPs show as "Not Available", causing an exception
+    // "XXX BHP"
     BHP({ data -> if (data.contains("B")) data.substring(0, data.indexOf("B")) else data }),
+    // Eg 01 June 2025, only care about the year
     REGISTERED_DATE({ data -> data.substring(data.length - 4) }),
     V5C_ISSUE_DATE,
     REGISTERED_NEAR,
